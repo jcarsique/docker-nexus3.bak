@@ -1,0 +1,82 @@
+[
+    {
+	"name" : "gradle-distributions",
+	"type" : "raw",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "https://services.gradle.org/distributions/",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "jenkins-public",
+	"type" : "maven",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "https://repo.jenkins-ci.org/public/",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "jenkins-release",
+	"type" : "maven",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "https://repo.jenkins-ci.org/releases/",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "jitpack",
+	"type" : "maven",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "https://jitpack.io",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "maven-jenkinsci",
+	"type" : "maven",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "https://repo.jenkins-ci.org/releases/",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "npmjs-registry",
+	"type" : "npm",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "https://registry.npmjs.org",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "plugins-gradle",
+	"type" : "maven",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "https://plugins.gradle.org/m2",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "spring-milestone",
+	"type" : "maven",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "http://repo.spring.io/milestone/",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "spring-release",
+	"type" : "maven",
+	"hostedtype" : "proxy",
+	"blobstore" : "store",
+	"url" : "http://repo.spring.io/release/",
+	"contentMaxAge" : "-1"
+    },
+    {
+	"name" : "maven-group",
+	"type" : "maven",
+	"hostedType" : "group",
+	"blobstore" : "store",
+	"members" : [ "maven-public","maven-central", "maven-releases", "maven-snapshots", "spring-milestone", "spring-release", "jitpack", "jenkins-release", "maven-jenkinsci", "jenkins-public", "plugins-gradle" ]
+    }
+
+]
