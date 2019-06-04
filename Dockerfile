@@ -1,47 +1,33 @@
-# JSON early builder (see addUpdateScriptBody.groovy)
-FROM centos:centos7 as builder
-RUN yum -y makecache && yum install -y groovy
-COPY scripts /scripts
-WORKDIR /scripts
-RUN groovy addUpdateScriptBody.groovy -f blobstore.groovy -n blobstore> blobstore-body.json
-RUN groovy addUpdateScriptBody.groovy -f repository.groovy -n repository > repository-body.json
-RUN groovy addUpdateScriptBody.groovy -f security.groovy -n security > security-body.json
+# (C) Copyright 2019 Nuxeo (http://nuxeo.com/) and others.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-# Base Nuxeo Nexus layer
-FROM sonatype/nexus3:3.15.1 as base
+ARG DOCKER_REGISTRY=jenkins-x-docker-registry
+ARG VERSION=0.0.0-SNAPSHOT
+FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/builder:${VERSION} as builder
 
-ARG VERSION=unknown
-ARG SCM_REF=unknown
-ARG SCM_REPOSITORY=git@github.com:nuxeo/jx-docker-images.git
-ARG DESCRIPTION="Base Nexus 3 image layer for Nuxeo custom deployments"
+ARG DOCKER_REGISTRY=jenkins-x-docker-registry
+ARG VERSION=0.0.0-SNAPSHOT
+FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/base:${VERSION} as base
 
-LABEL description=${DESCRIPTION}
-LABEL version=${VERSION}
-LABEL scm-ref=${SCM_REF}
-LABEL scm-url=${SCM_REPOSITORY}
-
-USER root
-
-RUN yum -y makecache && yum -y install epel-release && yum -y install supervisor && yum -y install jq
-
-COPY ./supervisord.conf /etc/supervisord.conf
-COPY ./supervisord-boot.conf /etc/supervisord.d/boot.conf
-COPY ./supervisord-nexus-config-license.conf /etc/supervisord.d/nexus-config-license.conf
-COPY ./supervisord-nexus.conf /etc/supervisord.d/nexus.conf
-
-USER nexus
-
-COPY --from=builder /scripts /opt/sonatype/nexus/scripts/
-COPY postStart.sh /opt/sonatype/nexus/
-
-USER root
-
-VOLUME /nexus-data /nexus-store
-
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
-
-# Custom Nexus
+# Custom Nexus (patched version of nexus3 sonatype)
+ARG DOCKER_REGISTRY=jenkins-x-docker-registry
+ARG VERSION=0.0.0-SNAPSHOT
 FROM base
+ARG DOCKER_REGISTRY=jenkins-x-docker-registry
+ARG VERSION=0.0.0-SNAPSHOT
 ARG PARMS=jenkins
+COPY postStart.sh /opt/sonatype/nexus/
+COPY --from=builder /scripts /opt/sonatype/nexus/scripts/
 COPY parms/${PARMS}/*.json /opt/sonatype/nexus/scripts/
 
