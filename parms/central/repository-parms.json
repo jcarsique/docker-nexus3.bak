@@ -29,26 +29,26 @@ Repository groups:
     "name": "arender",
     "type": "maven",
     "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-in",
+    "blobstore": "nuxeo-devtools-nexus-central",
     "url": "http://arender.fr/artifactory/repository/"
   },
   {
     "name": "daily-snapshots",
     "type": "maven",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "hotfix-releases",
     "type": "maven",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "hotfix-snapshots",
     "type": "maven",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "internal-releases",
@@ -65,7 +65,7 @@ Repository groups:
     "name": "internal-snapshots",
     "type": "maven",
     "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-in",
+    "blobstore": "nuxeo-devtools-nexus-central",
     "members": [
       "daily-snapshots",
       "public-snapshots",
@@ -77,13 +77,13 @@ Repository groups:
     "name": "nightly-staging",
     "type": "maven",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "npm-all",
     "type": "npm",
     "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-in",
+    "blobstore": "nuxeo-devtools-nexus-central",
     "members": [
       "npmjs-nuxeo",
       "npmjs",
@@ -95,28 +95,28 @@ Repository groups:
     "name": "npmjs",
     "type": "npm",
     "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-in",
+    "blobstore": "nuxeo-devtools-nexus-central",
     "url": "https://registry.npmjs.org"
   },
   {
     "name": "npmjs-nuxeo",
     "type": "npm",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "nuxeo-studio",
     "type": "maven",
     "hostedtype": "proxy",
     "url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "nuxeo-studio-snapshots",
     "type": "maven",
     "hostedtype": "proxy",
     "url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "public",
@@ -128,19 +128,19 @@ Repository groups:
       "nuxeo-studio",
       "hotfix-releases"
     ],
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "public-releases",
     "type": "maven",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "public-snapshot",
     "type": "maven",
     "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-in",
+    "blobstore": "nuxeo-devtools-nexus-central",
     "members": [
       "public-snapshots",
       "thirdparty-snapshots",
@@ -152,20 +152,20 @@ Repository groups:
     "name": "public-snapshots",
     "type": "maven",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "thirdparty-releases",
     "type": "maven",
     "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-in",
+    "blobstore": "nuxeo-devtools-nexus-central",
     "url": "http://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-releases/"
   },
   {
     "name": "thirdparty-snapshots",
     "type": "maven",
     "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-in",
+    "blobstore": "nuxeo-devtools-nexus-central",
     "url": "http://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-snapshots/"
   }
 ]
