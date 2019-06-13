@@ -38,14 +38,18 @@ VOLUME /nexus-data /nexus-store
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
+# Jenkins default embedded Nexus
 FROM base as jenkins
 COPY parms/jenkins/*.json /scripts
 
+# GCP packages-<team>.prod.dev.nuxeo.com & packages-<team>.preprod.dev.nuxeo.com
 FROM base as team
 COPY parms/team/*.json /scripts
 
+# GCP packages.prod.dev.nuxeo.com & packages.preprod.dev.nuxeo.com
 FROM base as cluster
 COPY parms/cluster/*.json /scripts
 
+# AWS packages.nuxeo.com
 FROM base as central
 COPY parms/central/*.json /scripts

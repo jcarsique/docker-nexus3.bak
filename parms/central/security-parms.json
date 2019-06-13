@@ -1,0 +1,87 @@
+/*
+Users:
+- admin
+- anonymous
+- deployment
+- readonly
+Roles:
+- nuxeo-anonymous
+- nuxeo-developer
+- nuxeo
+- nuxeo-admin
+*/
+
+[
+  {
+    "type": "user",
+    "id": "admin",
+    "firstname": "Administrator",
+    "lastname": "admin",
+    "mail": "devtools+central-admin@nuxeo.com",
+    "roles": ["nx-admin"]
+  },
+  {
+    "type": "user",
+    "id": "anonymous",
+    "firstname": "NA",
+    "lastname": "anonymous",
+    "mail": "devnull@nuxeo.com",
+    "roles": ["nuxeo-anonymous", "nx-anonymous"]
+  },
+  {
+    "type": "user",
+    "id": "deployment",
+    "firstname": "Deployment",
+    "lastname": "User",
+    "mail": "devtools+central-deployment@nuxeo.com",
+    "roles": ["nuxeo-developer"]
+  },
+  {
+    "type": "user",
+    "id": "readonly",
+    "firstname": "NA",
+    "lastname": "NA",
+    "mail": "devtools+central-readonly@nuxeo.com",
+    "roles": ["nx-anonymous"]
+  },
+  {
+    "type":"role",
+    "id": "nx2-anonymous",
+    "name": "nuxeo-anonymous",
+    "description": "nuxeo-anonymous",
+    "privileges": ["nx-healthcheck-read", "nx-healthcheck-summary-read",
+      "nx-repository-view-maven2-public-releases-browse", "nx-repository-view-maven2-public-releases-read",
+      "nx-repository-view-maven2-public-snapshots-browse", "nx-repository-view-maven2-public-snapshots-read"
+      "nx-search-read"],
+    "roles": []
+  },
+  {
+    "type":"role",
+    "id": "nuxeodev",
+    "name": "nuxeo-developer",
+    "description": "Developer role for Nuxeo",
+    "privileges": ["All Repositories - (read)", "nx-component-upload", "nx-repository-view-*-*-*"],
+    "roles": ["nuxeo-anonymous", "nx-developer"]
+  },
+  {
+    "type":"role",
+    "id": "nuxeo",
+    "name": "nuxeo",
+    "description": "External mapping for nuxeo (LDAP)",
+    "privileges": [],
+    "roles": ["nuxeo-anonymous", "nuxeo-developer"]
+  },
+  {
+    "type":"role",
+    "id": "nuxeoadm",
+    "name": "nuxeo-admin",
+    "description": "Administration role for Nuxeo",
+    "privileges": ["nx-all"],
+    "roles": ["nx-admin", "nuxeo-developer"]
+  },
+  {
+    "type": "anonymous",
+    "enabled": "true"
+  }
+]
+
