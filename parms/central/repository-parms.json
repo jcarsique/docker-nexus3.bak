@@ -1,27 +1,27 @@
 /*
-Repositories
+Repository hosts:
+- daily-snapshots
+- hotfix-releases
+- hotfix-snapshots
+- nightly-staging
+- npmjs-nuxeo
+- public-releases
+- public-snapshots
 
-arender
-daily-snapshots
-deprecated
-hotfix-releases
-hotfix-snapshots
-internal-releases
-internal-snapshots
-nightly-staging
-npm-all
-npmjs
-npmjs-nuxeo
-npmjs-nuxeo-legacy
-npmjs-nuxeo-release-legacy
-nuxeo-studio
-nuxeo-studio-snapshots
-public
-public-releases
-public-snapshot
-public-snapshots
-thirdparty-releases
-thirdparty-snapshots
+Repository proxies:
+- arender
+- npmjs
+- nuxeo-studio
+- nuxeo-studio-snapshots
+- thirdparty-releases
+- thirdparty-snapshots
+
+Repository groups:
+- internal-releases
+- internal-snapshots
+- npm-all
+- public
+- public-snapshot
 */
 
 [
@@ -37,12 +37,6 @@ thirdparty-snapshots
     "type": "maven",
     "hostedtype": "hosted",
     "blobstore": "nuxeo-devtools-nexus-in"
-  },
-  {
-    "name": "deprecated",
-    "type": "maven",
-    "hostedtype": "hosted",
-    "blobstore": "deprecated"
   },
   {
     "name": "hotfix-releases",
@@ -108,20 +102,6 @@ thirdparty-snapshots
     "name": "npmjs-nuxeo",
     "type": "npm",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-in"
-  },
-  {
-    "name": "npmjs-nuxeo-legacy",
-    "type": "npm",
-    "hostedtype": "proxy",
-    "url": "http://172.17.0.2:8083/nexus3/repository/npmjs-nuxeo/",
-    "blobstore": "nuxeo-devtools-nexus-in"
-  },
-  {
-    "name": "npmjs-nuxeo-release-legacy",
-    "type": "npm",
-    "hostedtype": "proxy",
-    "url": "http://172.17.0.2:8083/nexus3/repository/npmjs-nuxeo-release/",
     "blobstore": "nuxeo-devtools-nexus-in"
   },
   {
