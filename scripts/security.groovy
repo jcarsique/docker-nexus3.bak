@@ -7,11 +7,15 @@ import org.sonatype.nexus.security.role.NoSuchRoleException;
 
 
 // Change admin password if password file exists in filesystem
-String pass = new File('/opt/sonatype/nexus/config/password').text
-if (!pass) {
-    log.info("Cannot find password file ... I am not updating the admin password ....")
-} else {
-    security.securitySystem.changePassword('admin', pass.trim())
+try {
+    String pass = new File('/opt/sonatype/nexus/config/password').text
+    if (!pass) {
+        log.info("Cannot find password file ... I am not updating the admin password ....")
+    } else {
+        security.securitySystem.changePassword('admin', pass.trim())
+    }
+} catch (Exception e) { 
+        log.info("Cannot find password file")
 }
 
 List<Map<String, String>> actionDetails = []
@@ -28,8 +32,8 @@ created = 0
  * @param password Password of the user
  * @param roles Roles to be associated with the user (List<String>)
  */
-def createUser(Map argsLine) {
-    log.info("Create user {}", id)
+def createUser(Map argsLine, password) {
+    log.info("Create user {}", argsLine.id)
     security.addUser(argsLine.id, argsLine.firstname, argsLine.lastname, argsLine.mail, true, password, argsLine.roles)
 }
 
@@ -42,13 +46,13 @@ def createUser(Map argsLine) {
  * @param roles List of inherithed roles (ie: nx-anonymous / nx-admin)
  */
 def createRole(Map argsLine) {
-    log.info("Create role {}", id)
+    log.info("Create role {}", argsLine.id)
     security.addRole(argsLine.id, argsLine.name, argsLine.description, argsLine.privileges, argsLine.roles)
 }
 
 pwdFile = new File('/opt/sonatype/nexus/config/passwords')
 if (pwdFile.exists()) {
-    passwords = new JsonSlurper().parseText(.text)
+    passwords = new JsonSlurper().parseText(pwdFile.text)
 } else {
     passwords = [:]
 }

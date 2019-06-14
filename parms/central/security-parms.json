@@ -1,16 +1,3 @@
-/*
-Users:
-- admin
-- anonymous
-- deployment
-- readonly
-Roles:
-- nuxeo-anonymous
-- nuxeo-developer
-- nuxeo
-- nuxeo-admin
-*/
-
 [
   {
     "type": "user",
@@ -51,7 +38,7 @@ Roles:
     "description": "nuxeo-anonymous",
     "privileges": ["nx-healthcheck-read", "nx-healthcheck-summary-read",
       "nx-repository-view-maven2-public-releases-browse", "nx-repository-view-maven2-public-releases-read",
-      "nx-repository-view-maven2-public-snapshots-browse", "nx-repository-view-maven2-public-snapshots-read"
+      "nx-repository-view-maven2-public-snapshots-browse", "nx-repository-view-maven2-public-snapshots-read",
       "nx-search-read"],
     "roles": []
   },
@@ -81,7 +68,7 @@ Roles:
   },
   {
     "type": "anonymous",
-    "enabled": "true"
+    "enabled": true
   }
 ]
 

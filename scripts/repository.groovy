@@ -94,7 +94,7 @@ parsed_args.each { repoDef ->
 
             if (repoDef.hostedtype == "hosted") {
 
-                createhosted(repodef.name, repodef.type, repodef.blobstore)
+                createHosted(repoDef.name, repoDef.type, repoDef.blobstore)
                 msg = "hosted repository {} created"
             }  else if (repoDef.hostedtype == "proxy") {
                 if (repoDef.url == null) {

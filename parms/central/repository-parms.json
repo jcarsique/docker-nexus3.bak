@@ -1,29 +1,3 @@
-/*
-Repository hosts:
-- daily-snapshots
-- hotfix-releases
-- hotfix-snapshots
-- nightly-staging
-- npmjs-nuxeo
-- public-releases
-- public-snapshots
-
-Repository proxies:
-- arender
-- npmjs
-- nuxeo-studio
-- nuxeo-studio-snapshots
-- thirdparty-releases
-- thirdparty-snapshots
-
-Repository groups:
-- internal-releases
-- internal-snapshots
-- npm-all
-- public
-- public-snapshot
-*/
-
 [
   {
     "name": "arender",
@@ -51,45 +25,10 @@ Repository groups:
     "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
-    "name": "internal-releases",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "internal-releases",
-    "members": [
-      "public-releases",
-      "thirdparty-releases",
-      "hotfix-releases"
-    ]
-  },
-  {
-    "name": "internal-snapshots",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "daily-snapshots",
-      "public-snapshots",
-      "thirdparty-snapshots",
-      "hotfix-snapshots"
-    ]
-  },
-  {
     "name": "nightly-staging",
     "type": "maven",
     "hostedtype": "hosted",
     "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "npm-all",
-    "type": "npm",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "npmjs-nuxeo",
-      "npmjs",
-      "npmjs-nuxeo-release-legacy",
-      "nmpjs-nuxeo-legacy"
-    ]
   },
   {
     "name": "npmjs",
@@ -119,34 +58,10 @@ Repository groups:
     "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
-    "name": "public",
-    "type": "maven",
-    "hostedtype": "group",
-    "members": [
-      "public-releases",
-      "thirdparty-releases",
-      "nuxeo-studio",
-      "hotfix-releases"
-    ],
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
     "name": "public-releases",
     "type": "maven",
     "hostedtype": "hosted",
     "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "public-snapshot",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "public-snapshots",
-      "thirdparty-snapshots",
-      "nuxeo-studio-snapshots",
-      "hotfix-snapshots"
-    ]
   },
   {
     "name": "public-snapshots",
@@ -167,5 +82,62 @@ Repository groups:
     "hostedtype": "proxy",
     "blobstore": "nuxeo-devtools-nexus-central",
     "url": "http://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-snapshots/"
+  },
+  {
+    "name": "internal-releases",
+    "type": "maven",
+    "hostedtype": "group",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "members": [
+      "public-releases",
+      "thirdparty-releases",
+      "hotfix-releases"
+    ]
+  },
+  {
+    "name": "internal-snapshots",
+    "type": "maven",
+    "hostedtype": "group",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "members": [
+      "daily-snapshots",
+      "public-snapshots",
+      "thirdparty-snapshots",
+      "hotfix-snapshots"
+    ]
+  },
+  {
+    "name": "npm-all",
+    "type": "npm",
+    "hostedtype": "group",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "members": [
+      "npmjs-nuxeo",
+      "npmjs"
+    ]
+  },
+  {
+    "name": "public",
+    "type": "maven",
+    "hostedtype": "group",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "members": [
+      "public-releases",
+      "thirdparty-releases",
+      "nuxeo-studio",
+      "hotfix-releases"
+    ]
+  },
+  {
+    "name": "public-snapshot",
+    "type": "maven",
+    "hostedtype": "group",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "members": [
+      "public-snapshots",
+      "thirdparty-snapshots",
+      "nuxeo-studio-snapshots",
+      "hotfix-snapshots"
+    ]
   }
 ]
