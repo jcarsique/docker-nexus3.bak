@@ -1,10 +1,10 @@
 ## SYNOPSYS
 
-Scripts to configure nexus non-interactively once the service is running
+Scripts to configure Nexus non-interactively once the service is running
 
 ## REQUIREMENT
 
-Have groovy installed
+Have Groovy installed
 
 ## USAGE
 

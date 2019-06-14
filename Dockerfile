@@ -1,3 +1,4 @@
+# JSON early builder (see addUpdateScriptBody.groovy)
 FROM centos:centos7 as builder
 RUN yum -y makecache && yum install -y groovy
 COPY scripts /scripts
@@ -6,6 +7,7 @@ RUN groovy addUpdateScriptBody.groovy -f blobstore.groovy -n blobstore> blobstor
 RUN groovy addUpdateScriptBody.groovy -f repository.groovy -n repository > repository-body.json
 RUN groovy addUpdateScriptBody.groovy -f security.groovy -n security > security-body.json
 
+# Base Nuxeo Nexus layer
 FROM sonatype/nexus3:3.15.1 as base
 
 ARG VERSION=unknown
@@ -38,24 +40,8 @@ VOLUME /nexus-data /nexus-store
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
-Jenkins default embedded Nexus
-FROM base as jenkins
-COPY parms/jenkins/*.json /scripts/
-
-# GCP packages-<team>.prod.dev.nuxeo.com & packages-<team>.preprod.dev.nuxeo.com
-FROM base as team
-COPY parms/team/*.json /scripts/
-
-# GCP packages.prod.dev.nuxeo.com & packages.preprod.dev.nuxeo.com
-FROM base as cluster
-COPY parms/cluster/*.json /scripts/
-
-# AWS packages.nuxeo.com
-FROM base as central
-COPY parms/central/*.json /opt/sonatype/nexus/scripts/
-RUN mkdir -p /opt/sonatype/nexus/config/
-COPY parms/central/passwords /opt/sonatype/nexus/config/passwords
-
-
-
+# Custom Nexus
+FROM base
+ARG PARMS=jenkins
+COPY parms/${PARMS}/*.json /opt/sonatype/nexus/scripts/
 
