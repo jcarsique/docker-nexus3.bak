@@ -6,16 +6,12 @@ import org.sonatype.nexus.security.role.Role;
 import org.sonatype.nexus.security.role.NoSuchRoleException;
 
 
-// Change admin password if password file exists in filesystem
-try {
-    String pass = new File('/opt/sonatype/nexus/config/password').text
-    if (!pass) {
-        log.info("Cannot find password file ... I am not updating the admin password ....")
-    } else {
-        security.securitySystem.changePassword('admin', pass.trim())
-    }
-} catch (Exception e) { 
-        log.info("Cannot find password file")
+// Admin password
+String pass = new File('/opt/sonatype/nexus/config/password')?.text
+if (pass) {
+    security.securitySystem.changePassword('admin', pass.trim())
+} else {
+    log.warn("No admin password file! Default password is unchanged.")
 }
 
 List<Map<String, String>> actionDetails = []
@@ -23,34 +19,17 @@ Map scriptResults = [changed: false, error: false]
 scriptResults.put('action_details', actionDetails)
 created = 0
 
-/**
- * Create a Nexus User.
- * @param id ID of the user
- * @param firstname Firstname of the user
- * @param lastname Lastname of the user
- * @param mail Mail of the user
- * @param password Password of the user
- * @param roles Roles to be associated with the user (List<String>)
- */
 def createUser(Map argsLine, password) {
     log.info("Create user {}", argsLine.id)
     security.addUser(argsLine.id, argsLine.firstname, argsLine.lastname, argsLine.mail, true, password, argsLine.roles)
 }
 
-/**
- * Create a Nexus Role.
- * @param id ID of the role
- * @param name Name of the role
- * @param description Description of the role
- * @param privileges List of privileges (ie: nx-healthcheck-read)
- * @param roles List of inherithed roles (ie: nx-anonymous / nx-admin)
- */
 def createRole(Map argsLine) {
     log.info("Create role {}", argsLine.id)
     security.addRole(argsLine.id, argsLine.name, argsLine.description, argsLine.privileges, argsLine.roles)
 }
 
-pwdFile = new File('/opt/sonatype/nexus/config/passwords')
+pwdFile = new File('/opt/sonatype/nexus/config/passwords.json')
 if (pwdFile.exists()) {
     passwords = new JsonSlurper().parseText(pwdFile.text)
 } else {
@@ -61,14 +40,32 @@ if (pwdFile.exists()) {
  * Create a Nexus User or Role
  * type="user", see #createUser()
  * type="role", see #createRole()
+ * type="anonymous": whether to activate anonymous access
  */
 new JsonSlurper().parseText(args).each { argsLine ->
-    Map<String, String> userResult = [type: argsLine.type, \
-                                      id: argsLine.id, firstname: argsLine.firstname, lastname: argsLine.lastname, \
-                                      mail: argsLine.mail, roles: argsLine.roles]
-    Map<String, String> roleResult = [type: argsLine.type, \
-                                      id: argsLine.id, name: argsLine.name, description: argsLine.description, \
-                                      privileges: argsLine.privileges, roles: argsLine.roles]
+    /**
+     * JSON user definition
+     * @param id ID of the user
+     * @param firstname Firstname of the user
+     * @param lastname Lastname of the user
+     * @param mail Mail of the user
+     * @param password Password of the user
+     * @param roles Roles to be associated with the user (List<String>)
+     */
+    Map<String, String> userResult = [type: argsLine.type, id: argsLine.id, firstname: argsLine.firstname,
+        lastname: argsLine.lastname, mail: argsLine.mail, roles: argsLine.roles]
+
+    /**
+     * JSON role definition
+     * @param id ID of the role
+     * @param name Name of the role
+     * @param description Description of the role
+     * @param privileges List of privileges (ie: nx-healthcheck-read)
+     * @param roles List of inherithed roles (ie: nx-anonymous / nx-admin)
+     */
+    Map<String, String> roleResult = [type: argsLine.type, id: argsLine.id, name: argsLine.name,
+        description: argsLine.description, privileges: argsLine.privileges, roles: argsLine.roles]
+
     if (argsLine.type == "user") {
         try {
             users = security.getSecuritySystem().searchUsers(new UserSearchCriteria(argsLine.id))
@@ -86,8 +83,7 @@ new JsonSlurper().parseText(args).each { argsLine ->
             scriptResults['error'] = true
             scriptResults['action_details'].add(userResult)
         }
-    }
-    if (argsLine.type == "role") {
+    } else if (argsLine.type == "role") {
         try {
             try {
                 Role role = security.getSecuritySystem().getAuthorizationManager("default").getRole(argsLine.id)
@@ -104,8 +100,7 @@ new JsonSlurper().parseText(args).each { argsLine ->
             scriptResults['error'] = true
             scriptResults['action_details'].add(roleResult)
         }
-    }
-    if (argsLine.type == "anonymous") {
+    } else if (argsLine.type == "anonymous") {
         security.setAnonymousAccess(argsLine.enabled)
         log.info('Anonymous access {}', argsLine.enabled)
     }

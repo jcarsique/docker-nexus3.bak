@@ -34,7 +34,7 @@ Sample usage:
 
 `<CONFIG>`: configuration folder containing
 - `password`: the admin credentials file (mandatory)
-- `passwords`: the users credentials file (optional)
+- `passwords.json`: the users credentials file (optional)
 
     ```json
     {
@@ -42,7 +42,20 @@ Sample usage:
         "user2" : "password2"
     }
     ```
+- `<blobstore name>-config.json`: a config file per blobstore (mandatory for S3)
 
+    ```json
+    "config": [
+      {
+        "bucket": "<blobstore name>",
+        "accessKeyId": "****",
+        "secretAccessKey": "****",
+        "prefix": "storage",
+        "region": "<AWS region>",
+        "expiration": "3"
+      }
+    ]
+    ```
 `<LICENSE>`: path to the Nexus license file (optional)
 
 Available mount points: `/nexus-store` and `/nexus-data`
@@ -55,6 +68,8 @@ Data provisioning is performed on start:
 ## Resources
 
 https://github.com/jenkins-x-charts/nexus
+https://github.com/sonatype-nexus-community/nexus-scripting-examples
+
+[Nexus Repository Manager 3 > REST and Integration API > Script API > Examples](https://help.sonatype.com/repomanager3/rest-and-integration-api/script-api/examples)
 
 https://blog.sonatype.com/deploy-private-docker-registry-on-google-cloud-platform-with-nexus
-

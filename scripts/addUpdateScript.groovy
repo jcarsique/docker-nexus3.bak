@@ -1,5 +1,6 @@
 /**
  * An example script that handles adding or updating a groovy script via the REST API.
+ * Forked from https://github.com/sonatype-nexus-community/nexus-scripting-examples/blob/master/complex-script/addUpdateScript.groovy
  */
 @Grab('org.sonatype.nexus:nexus-rest-client:3.9.0-01')
 @Grab('org.sonatype.nexus:nexus-rest-jackson2:3.9.0-01')
