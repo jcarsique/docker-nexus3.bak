@@ -22,7 +22,7 @@ LABEL scm-url=${SCM_REPOSITORY}
 
 USER root
 
-RUN yum -y makecache && yum -y install epel-release && yum -y install supervisor
+RUN yum -y makecache && yum -y install epel-release && yum -y install supervisor && yum -y install jq
 
 COPY ./supervisord.conf /etc/supervisord.conf
 COPY ./supervisord-boot.conf /etc/supervisord.d/boot.conf

@@ -21,7 +21,7 @@ def createHosted(String name, String type, String blobstore) {
 
 def createProxy(String name, String type, String blobstore, String url) {
   if (url == null) {
-      throw new BadRequestException("Missing proxy URL for {}", name)
+      throw new Exception("Missing proxy URL for {}", name)
   }
   log.info("Create proxy repository {}", name)
   if (type == "maven") {
