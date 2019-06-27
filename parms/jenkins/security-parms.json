@@ -17,6 +17,6 @@
   },
   {
     "type": "anonymous",
-    "enabled": "true"
+    "enabled": true
   }
 ]
