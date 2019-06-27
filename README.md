@@ -23,7 +23,7 @@ Sample usage:
     docker build -t nexus3:jenkins .
 
     export PARMS=central SCM_REF="$(git id)" VERSION="0.1" DESCRIPTION="README sample with 'central'"
-    docker build --build-arg PARMS --build-arg SCM_REF --build-arg VERSION --build-arg DESCRIPTION -t nexus3:$PARMS .
+    docker build --build-arg PARMS=$PARMS --build-arg SCM_REF=$SCM_REF --build-arg VERSION=$VERSION --build-arg               DESCRIPTION=$DESCRIPTION -t nexus3:$PARMS .
 
 
 ### Image Run
