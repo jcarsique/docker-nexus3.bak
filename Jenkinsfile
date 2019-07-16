@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Contributors:
- *     Arnaud Kervern <akervern@nuxeo.com>
- *     Antoine Taillefer <ataillefer@nuxeo.com>
  */
 
- properties([
+properties([
   [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/nuxeo/jx-docker-images'],
-  [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60', numToKeepStr: '60', artifactNumToKeepStr: '5']],
+  [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60', numToKeepStr: '60', artifactNumToKeepStr: '1']],
 ])
 
 pipeline {
