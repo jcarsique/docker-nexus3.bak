@@ -4,7 +4,7 @@ import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl
 
 import groovy.json.JsonSlurper
 
-def createHosted(String name, String type, String blobstore) {
+def createHosted(String name, String type, String blobstore, Map repoDef) {
   log.info("Create hosted repository {}", name)
   if (type == "maven") {
     repository.createMavenHosted(name, blobstore);
@@ -16,10 +16,12 @@ def createHosted(String name, String type, String blobstore) {
     repository.createRawHosted(name, blobstore);
   } else if (type == "bower") {
       repository.createBowerHosted(name, blobstore);
+  } else if (type == "docker") {
+      repository.createDockerHosted(name, blobstore, repoDef.httpPort, repoDef.httpsPort)
   }
 }
 
-def createProxy(String name, String type, String blobstore, String url) {
+def createProxy(String name, String type, String blobstore, String url, Map repoDef) {
   if (url == null) {
       throw new Exception("Missing proxy URL for {}", name)
   }
@@ -34,6 +36,8 @@ def createProxy(String name, String type, String blobstore, String url) {
     repository.createRawProxy(name, url, blobstore)
   } else if (type == "bower") {
     repository.createBowerProxy(name, url, blobstore)
+  } else if (type == "docker") {
+      repository.createDockerProxy(name, url, repoDef.indexType, repoDef.indexUrl, repoDef.httpPort, repoDef.httpsPort, blobstore)
   }
   //repository.getRepositoryManager().get(name).getConfiguration().getAttributes().'proxy'.'contentMaxAge' = contentMaxAge
 }
@@ -60,11 +64,15 @@ new JsonSlurper().parseText(args).each { repoDef ->
     /**
     * JSON repository definition
     * @param name The name of the new Repository
-    * @param type The type of the Repository (maven / npm / nuget / raw / bower)
+    * @param type The type of the Repository (maven / npm / nuget / raw / bower / docker)
     * @param hostedtype The hosting type of the Repository (hosted / proxy / group)
     * @param blobStore The name of the BlobStore the Repository should use
     * @param url /OPTIONAL/ Only used with hostedtype == proxy, The URL the repository points to
     * @param members /OPTIONAL/ Only used with hostedtype == group, The list of Repositories in the group
+    * @param httpPort /OPTIONAL/ Only used with type == docker
+    * @param httpsPort /OPTIONAL/ Only used with type == docker
+    * @param indexType /OPTIONAL/ Only used with type == docker and hostedtype == proxy
+    * @param indexUrl /OPTIONAL/ Only used with type == docker and hostedtype == proxy
     */
     Map<String, String> currentResult = [name: repoDef.name, type: repoDef.type, hostedtype: repoDef.hostedtype,
         blobstore: repoDef.blobstore]
@@ -74,9 +82,9 @@ new JsonSlurper().parseText(args).each { repoDef ->
     if (existingRepo == null) {
         try {
             if (repoDef.hostedtype == "hosted") {
-                createHosted(repoDef.name, repoDef.type, repoDef.blobstore)
+                createHosted(repoDef.name, repoDef.type, repoDef.blobstore, repoDef)
             }  else if (repoDef.hostedtype == "proxy") {
-                createProxy(repoDef.name, repoDef.type, repoDef.blobstore, repoDef.url)
+                createProxy(repoDef.name, repoDef.type, repoDef.blobstore, repoDef.url, repoDef)
             } else if (repoDef.hostedtype == "group") {
                 if (repoDef.members == null) {
                     log.warn("Repository group {} is empty", repoDef.name);
