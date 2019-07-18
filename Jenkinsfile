@@ -61,6 +61,19 @@ pipeline {
         }
       }
     }
+    stage('Ensure we're not on a detached head') {
+      when {
+        branch 'master'
+      }
+      steps {
+        container('jx-base') {
+          sh '''#!/bin/sh -xe
+git checkout master
+git config --global credential.helper store
+jx step git credentials'''
+        }
+      }
+    }
     stage('Build and push release') {
       when {
         branch 'master'
@@ -78,11 +91,6 @@ pipeline {
       steps {
         container('jx-base') {
           dir('nexus3') {
-            // ensure we're not on a detached head
-            sh '''#!/bin/sh -xe
-git checkout master
-git config --global credential.helper store
-jx step git credentials'''
             sh 'jx step changelog --version v$(jx-release-version)'
           }
         }
