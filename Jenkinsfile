@@ -16,13 +16,29 @@
  */
 
 properties([
-  [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/nuxeo/jx-docker-images'],
-  [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60', numToKeepStr: '60', artifactNumToKeepStr: '1']],
+  [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/nuxeo/jx-docker-images']
 ])
+
+void setGitHubBuildStatus(String context, String message, String state) {
+  step([
+    $class: 'GitHubCommitStatusSetter',
+    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/nuxeo/jx-docker-images'],
+    contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: context],
+    statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: message, state: state]]],
+  ])
+}
+
+void getReleaseVersion() {
+  return sh(returnStdout: true, script: 'jx-release-version')
+}
 
 pipeline {
   agent {
     label "jenkins-jx-base"
+  }
+  options {
+    disableConcurrentBuilds()
+    buildDiscarder(logRotator(daysToKeepStr: '60', numToKeepStr: '60', artifactNumToKeepStr: '1'))
   }
   environment {
     ORG = 'nuxeo'
@@ -51,17 +67,26 @@ pipeline {
         VERSION = "$PREVIEW_VERSION"
       }
       steps {
+        setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
         container('jx-base') {
           dir('nexus3') {
-	    sh 'make base'
-	    sh 'make builder'
-	    sh 'make jenkins'
-	    sh 'make central'
-	  }
+            sh 'make base'
+            sh 'make builder'
+            sh 'make jenkins'
+            sh 'make central'
+          }
+        }
+      }
+      post {
+        success {
+          setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'SUCCESS')
+        }
+        failure {
+          setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'FAILURE')
         }
       }
     }
-    stage('Ensure we\'re not on a detached head') {
+    stage('Prepare release') {
       when {
         branch 'master'
       }
@@ -79,8 +104,21 @@ jx step git credentials'''
         branch 'master'
       }
       steps {
+        setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
         container('jx-base') {
-          dir('nexus3') { sh 'VERSION=$(jx-release-version) make build' }
+          withEnv(["VERSION=${getReleaseVersion()}"]) {
+            dir('nexus3') {
+              sh 'make build'
+            }
+          }
+        }
+      }
+      post {
+        success {
+          setGitHubBuildStatus('release', 'Build and push release images', 'SUCCESS')
+        }
+        failure {
+          setGitHubBuildStatus('release', 'Build and push release images', 'FAILURE')
         }
       }
     }
@@ -90,8 +128,10 @@ jx step git credentials'''
       }
       steps {
         container('jx-base') {
-          dir('nexus3') {
-            sh 'jx step changelog --version v$(jx-release-version)'
+          withEnv(["VERSION=${getReleaseVersion()}"]) {
+            dir('nexus3') {
+              sh 'jx step changelog --version v$VERSION'
+            }
           }
         }
       }
