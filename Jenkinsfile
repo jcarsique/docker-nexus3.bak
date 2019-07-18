@@ -61,7 +61,7 @@ pipeline {
         }
       }
     }
-    stage('Ensure we're not on a detached head') {
+    stage('Ensure we\'re not on a detached head') {
       when {
         branch 'master'
       }
