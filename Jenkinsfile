@@ -35,7 +35,7 @@ pipeline {
       steps {
         container('jx-base') {
           dir('nexus3') { 
-            sh 'make skaffold@up' 
+            sh(script: 'make skaffold@up')
           }
         }
       }
@@ -65,21 +65,15 @@ pipeline {
       when {
         branch 'master'
       }
-      environment {
-          VERSION=sh(returnStdout: true, script: 'jx-release-version') 
-     }
       steps {
         container('jx-base') {
-          dir('nexus3') { sh 'make build' }
+          dir('nexus3') { sh 'VERSION=$(jx-release-version) make build' }
         }
       }
     }
     stage('Promote release to environments') {
       when {
         branch 'master'
-      }
-      environment {
-          VERSION=sh(returnStdout: true, script: 'jx-release-version') 
       }
       steps {
         container('jx-base') {
@@ -89,7 +83,7 @@ pipeline {
 git checkout master
 git config --global credential.helper store
 jx step git credentials'''
-            sh 'jx step changelog --version v$($VERSION)'
+            sh 'jx step changelog --version v$(jx-release-version)'
           }
         }
       }
