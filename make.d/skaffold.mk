@@ -46,7 +46,7 @@ export SKAFFOLD
 
 skaffold@up:
 	@echo "$$skaffold_pod_template" | kubectl apply -f -
-	@kubectl wait --for=condition=Ready pod/$(skaffold-pod-name)
+	@kubectl wait --timeout=-1s --for=condition=Ready pod/$(skaffold-pod-name)
 
 skaffold@down:
 	kubectl delete pod/$(skaffold-pod-name)
