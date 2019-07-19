@@ -1,14 +1,16 @@
-## SYNOPSYS
+# Nexus 3 Builder
+
+## Synopsys
 
 Scripts to configure Nexus non-interactively once the service is running
 
-## REQUIREMENT
+## Requirements
 
-Have Groovy installed
+- Groovy
 
-## USAGE
+## Development
 
-#### Upload script into nexus through its API:
+### Upload script into Nexus through its API
 
 Call provision.sh with 2 parameters : first parameter = remote_script_name / second parameter = local_script_to_upload
 ie : `./provision.sh blobstore blobstore.groovy`

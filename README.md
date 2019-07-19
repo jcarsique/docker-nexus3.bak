@@ -1,3 +1,5 @@
+# Nexus 3
+
 ## SYNOPSIS
 
 Nuxeo Nexus Docker custom image.
@@ -11,12 +13,23 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
     export PARMS=<PARMS> SCM_REF="$(git id)" VERSION="..." DESCRIPTION="..."
     docker build --build-arg PARMS --build-arg SCM_REF --build-arg VERSION --build-arg DESCRIPTION -t nexus3 .
 
+- `<PARMS>`: custom parameters folder name
 
-`<PARMS>`: custom parameters name
-- `jenkins`: Jenkins default embedded Nexus. See [parms/jenkins]
-- `central`: AWS packages.nuxeo.com
-- `team`: GCP packages-<team>.prod.dev.nuxeo.com or packages-<team>.preprod.dev.nuxeo.com (TODO)
-- `cluster`: GCP packages.prod.dev.nuxeo.com or packages.preprod.dev.nuxeo.com (TODO)
+      .
+      ├── Dockerfile
+      ├── parms
+      │   ├── central
+      │   ├── cluster
+      │   ├── jenkins
+      │   └── <team>..
+
+  - `jenkins`: Jenkins default embedded Nexus. See [parms/jenkins](parms/jenkins)
+  - `central`: AWS packages.nuxeo.com
+  - `team`: Team namespace level.
+[packages-\<team\>.prod.dev.nuxeo.com](packages-\<team\>.prod.dev.nuxeo.com) or
+[packages-\<team\>.preprod.dev.nuxeo.com](packages-\<team\>.preprod.dev.nuxeo.com)
+  - `cluster`: Google cluster level.
+packages.prod.dev.nuxeo.com or packages.preprod.dev.nuxeo.com
 
 Sample usage:
 
@@ -25,12 +38,10 @@ Sample usage:
     export PARMS=central SCM_REF="$(git id)" VERSION="0.1" DESCRIPTION="README sample with 'central'"
     docker build --build-arg PARMS=$PARMS --build-arg SCM_REF=$SCM_REF --build-arg VERSION=$VERSION --build-arg               DESCRIPTION=$DESCRIPTION -t nexus3:$PARMS .
 
-
 ### Image Run
 
     docker run -p 8081:8081 -v <CONFIG>:/opt/sonatype/nexus/config/ \
     [-v nexus-store:/nexus-store] [-v nexus-data:/nexus-data] [-v <LICENSE>:/nexus-data/etc/licence.lic] -itd nexus3
-
 
 `<CONFIG>`: configuration folder containing
 - `password`: the admin credentials file (mandatory)
