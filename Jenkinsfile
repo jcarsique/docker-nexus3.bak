@@ -16,13 +16,13 @@
  */
 
 properties([
-  [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/nuxeo/jx-docker-images']
+  [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/nuxeo/docker-nexus3']
 ])
 
 void setGitHubBuildStatus(String context, String message, String state) {
   step([
     $class: 'GitHubCommitStatusSetter',
-    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/nuxeo/jx-docker-images'],
+    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/nuxeo/docker-nexus3'],
     contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: context],
     statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: message, state: state]]],
   ])
@@ -50,9 +50,7 @@ pipeline {
     stage('Prepare environment') {
       steps {
         container('jx-base') {
-          dir('nexus3') { 
-            sh(script: 'make skaffold@up')
-          }
+          sh(script: 'make skaffold@up')
         }
       }
     }
@@ -69,12 +67,10 @@ pipeline {
       steps {
         setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
         container('jx-base') {
-          dir('nexus3') {
-            sh 'make base'
-            sh 'make builder'
-            sh 'make jenkins'
-            sh 'make central'
-          }
+          sh 'make base'
+          sh 'make builder'
+          sh 'make jenkins'
+          sh 'make central'
         }
       }
       post {
@@ -107,9 +103,7 @@ jx step git credentials'''
         setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
         container('jx-base') {
           withEnv(["VERSION=${getReleaseVersion()}"]) {
-            dir('nexus3') {
-              sh 'make build'
-            }
+            sh 'make build'
           }
         }
       }
@@ -129,9 +123,7 @@ jx step git credentials'''
       steps {
         container('jx-base') {
           withEnv(["VERSION=${getReleaseVersion()}"]) {
-            dir('nexus3') {
-              sh 'jx step changelog --version v$VERSION'
-            }
+            sh 'jx step changelog --version v$VERSION'
           }
         }
       }
@@ -140,7 +132,7 @@ jx step git credentials'''
   post {
     always {
       container('jx-base') {
-        dir('nexus3') { sh 'make skaffold@down' }
+        sh 'make skaffold@down'
         cleanWs()
       }
     }
