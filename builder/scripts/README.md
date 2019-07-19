@@ -1,6 +1,6 @@
 # Nexus 3 Builder
 
-## Synopsys
+## Synopsis
 
 Scripts to configure Nexus non-interactively once the service is running
 

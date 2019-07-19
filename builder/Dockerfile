@@ -20,4 +20,3 @@ WORKDIR /scripts
 RUN groovy addUpdateScriptBody.groovy -f blobstore.groovy -n blobstore> blobstore-body.json
 RUN groovy addUpdateScriptBody.groovy -f repository.groovy -n repository > repository-body.json
 RUN groovy addUpdateScriptBody.groovy -f security.groovy -n security > security-body.json
-

@@ -13,21 +13,25 @@
 # limitations under the License.
 
 ARG DOCKER_REGISTRY=jenkins-x-docker-registry
-ARG VERSION=0.0.0-SNAPSHOT
+ARG VERSION=0.1-SNAPSHOT
 FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/builder:${VERSION} as builder
 
 ARG DOCKER_REGISTRY=jenkins-x-docker-registry
-ARG VERSION=0.0.0-SNAPSHOT
+ARG VERSION=0.1-SNAPSHOT
 FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/base:${VERSION} as base
 
-# Custom Nexus (patched version of nexus3 sonatype)
-ARG DOCKER_REGISTRY=jenkins-x-docker-registry
-ARG VERSION=0.0.0-SNAPSHOT
+# Custom Nexus
 FROM base
 ARG DOCKER_REGISTRY=jenkins-x-docker-registry
-ARG VERSION=0.0.0-SNAPSHOT
+ARG VERSION=0.1-SNAPSHOT
 ARG PARMS=jenkins
+ARG DESCRIPTION="JX default Nexus 3"
+ARG SCM_REF=unknown
+
+LABEL description=${DESCRIPTION}
+LABEL version=${VERSION}
+LABEL scm-ref=${SCM_REF}
+
 COPY postStart.sh /opt/sonatype/nexus/
 COPY --from=builder /scripts /opt/sonatype/nexus/scripts/
 COPY parms/${PARMS}/*.json /opt/sonatype/nexus/scripts/
-

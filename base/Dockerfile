@@ -1,16 +1,17 @@
 ARG NEXUS3_VERSION=latest
-FROM sonatype/nexus3:${NEXUS3_VERSION}
+FROM sonatype/nexus3:${NEXUS3_VERSION} as base
 
-ARG VERSION=unknown
+ARG NEXUS3_VERSION=latest
+ARG VERSION=0.1-SNAPSHOT
 ARG SCM_REF=unknown
-ARG SCM_REPOSITORY=git@github.com:nuxeo/jx-docker-images.git
+ARG SCM_REPOSITORY=git@github.com:nuxeo/docker-nexus3.git
 ARG DESCRIPTION="Base Nexus 3 image layer for Nuxeo custom deployments"
 
 LABEL description=${DESCRIPTION}
 LABEL version=${VERSION}
 LABEL scm-ref=${SCM_REF}
 LABEL scm-url=${SCM_REPOSITORY}
-LABEL nexus3-version=${NEXUS3_VERSION}
+LABEL com.sonatype.version=${NEXUS3_VERSION}
 
 USER root
 
