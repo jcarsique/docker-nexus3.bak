@@ -41,7 +41,7 @@ Sample usage:
 ### Image Run
 
     docker run -p 8081:8081 -v <CONFIG>:/opt/sonatype/nexus/config/ \
-    [-v nexus-store:/nexus-store] [-v nexus-data:/nexus-data] [-v <LICENSE>:/nexus-data/etc/licence.lic] -itd nexus3
+    [-v nexus-store:/nexus-store] [-v nexus-data:/nexus-data] [-v <LICENSE>:/nexus-data/etc/license.lic] -itd nexus3
 
 `<CONFIG>`: configuration folder containing
 - `password`: the admin credentials file (mandatory)
