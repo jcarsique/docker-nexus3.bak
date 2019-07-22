@@ -145,6 +145,6 @@
     "type": "docker",
     "hostedtype": "hosted",
     "blobstore": "nuxeo-devtools-nexus-central",
-    "httpPort": 5000
+    "httpPort": 32005
   }
 ]

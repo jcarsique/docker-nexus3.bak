@@ -1,8 +1,8 @@
-import org.sonatype.nexus.script.plugin.RepositoryApi
-import groovy.json.JsonOutput
-import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl
-
-import groovy.json.JsonSlurper
+import org.sonatype.nexus.script.plugin.RepositoryApi;
+import groovy.json.JsonOutput;
+import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl;
+import groovy.json.JsonSlurper;
+import org.sonatype.nexus.repository.storage.WritePolicy;
 
 def createHosted(String name, String type, String blobstore, Map repoDef) {
   log.info("Create hosted repository {}", name)
@@ -17,7 +17,7 @@ def createHosted(String name, String type, String blobstore, Map repoDef) {
   } else if (type == "bower") {
       repository.createBowerHosted(name, blobstore);
   } else if (type == "docker") {
-      repository.createDockerHosted(name, blobstore, repoDef.httpPort, repoDef.httpsPort)
+      repository.createDockerHosted(name, repoDef.httpPort, repoDef.httpsPort, blobstore, true, true, WritePolicy.ALLOW, false)
   }
 }
 

@@ -4,7 +4,13 @@ import org.sonatype.nexus.security.SecuritySystem;
 import org.sonatype.nexus.security.user.UserSearchCriteria;
 import org.sonatype.nexus.security.role.Role;
 import org.sonatype.nexus.security.role.NoSuchRoleException;
+import org.sonatype.nexus.security.realm.RealmManager;
 
+
+realmManager = container.lookup(RealmManager.class.getName())
+if (!(realmManager.isRealmEnabled("DockerToken"))) {
+    realmManager.enableRealm("DockerToken", true)
+}
 
 // Admin password
 String pass = new File('/opt/sonatype/nexus/config/password')?.text
