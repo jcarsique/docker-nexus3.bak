@@ -50,6 +50,22 @@ build:
         cache: 
           repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
     context: .
+  - image: nuxeo/nexus3/cluster
+    kaniko:
+        dockerfile: Dockerfile
+        buildArgs:
+         DOCKER_REGISTRY: ${DOCKER_REGISTRY}
+         VERSION: ${VERSION}
+         PARMS: cluster
+        flags:
+        - --insecure
+        - --insecure-pull
+        - --insecure-registry=${DOCKER_REGISTRY}
+        buildContext:
+          localDir: {}
+        cache: 
+          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
+    context: .
   cluster: 
     namespace: admin
   tagPolicy:

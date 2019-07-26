@@ -18,7 +18,7 @@ include make.d/skaffold.mk
 
 .PHONY: all build base builder jenkins central
 
-VERSION=0.0.0
+VERSION ?= 0.0.0
 
 all: skaffold@up build skaffold@down
 
