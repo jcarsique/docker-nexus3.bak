@@ -56,7 +56,7 @@ pipeline {
     }
     stage('Build and push snapshot') {
       when {
-        anyOf { branch 'PR-*'; branch 'feature-*'; branch 'fix-*'; }
+        anyOf { branch 'PR-*'; branch 'feature-*'; branch 'fix-*'; branch 'improve-*'; }
       }
       environment {
         PREVIEW_VERSION = "0.0.0-$BRANCH_NAME-$BUILD_NUMBER"
