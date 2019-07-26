@@ -38,18 +38,14 @@ endef
 export skaffold_pod_template
 
 define SKAFFOLD =
-	tar cf - . | kubectl exec -i $(skaffold-pod-name) tar xf -
-	kubectl exec $(skaffold-pod-name) -- env VERSION=$(VERSION) DOCKER_REGISTRY=$(DOCKER_REGISTRY) skaffold
+	skaffold
 endef
 export SKAFFOLD
 
 
 skaffold@up:
-	@echo "$$skaffold_pod_template" | kubectl apply -f -
-	@kubectl wait --timeout=-1s --for=condition=Ready pod/$(skaffold-pod-name)
 
 skaffold@down:
-	kubectl delete pod/$(skaffold-pod-name)
 
 skaffold.yaml~gen: skaffold.yaml
 	VERSION=$(VERSION) DOCKER_REGISTRY=$(DOCKER_REGISTRY) envsubst '$$DOCKER_REGISTRY $$VERSION' < skaffold.yaml > skaffold.yaml~gen
