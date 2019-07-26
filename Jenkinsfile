@@ -71,6 +71,7 @@ pipeline {
           sh 'make builder'
           sh 'make jenkins'
           sh 'make central'
+          sh 'make cluster'
         }
       }
       post {

@@ -22,7 +22,7 @@ VERSION=0.0.0
 
 all: skaffold@up build skaffold@down
 
-build: base builder jenkins central
+build: base builder jenkins central cluster
 
 base:
 	$(MAKE) --directory base build
@@ -35,4 +35,7 @@ jenkins: skaffold.yaml~gen
 
 central: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
+
+cluster: skaffold.yaml~gen
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
 
