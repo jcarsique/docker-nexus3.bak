@@ -1,0 +1,54 @@
+[
+  {
+    "name": "internal-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/internal-releases/"
+  },
+  {
+    "name": "internal-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/internal-snapshots/"
+  },
+  {
+    "name": "npm-all",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/npm-all/"
+  }, 
+  {
+    "name": "public",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/public/"
+  },
+ {
+    "name": "public-snapshot",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/public-snapshot/"
+  },
+  {
+    "name": "public-snapshot",
+    "type": "maven", 
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/public-snapshot/"
+  },
+  {
+    "name": "docker-registry",
+    "type": "docker",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "indexType": "REGISTRY",
+    "indexUrl": null,
+    "httpPort": 5000,
+    "url": "https://packages.nuxeo.com/repository/docker-registry/"
+  }
+]
