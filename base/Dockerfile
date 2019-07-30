@@ -15,12 +15,17 @@ LABEL com.sonatype.version=${NEXUS3_VERSION}
 
 USER root
 
-RUN yum -y makecache && yum -y install epel-release && yum -y install supervisor
+RUN yum -y makecache && yum -y install epel-release && yum -y install supervisor && \
+    yum install -y unzip wget
 
 COPY ./supervisord.conf /etc/supervisord.conf
 COPY ./supervisord-boot.conf /etc/supervisord.d/boot.conf
 COPY ./supervisord-nexus-config-license.conf /etc/supervisord.d/nexus-config-license.conf
+COPY ./supervisord-nexus-github-plugin.conf /etc/supervisord.d/nexus-github-plugin.conf
 COPY ./supervisord-nexus.conf /etc/supervisord.d/nexus.conf
+COPY ./githuboauth.properties /opt/sonatype/nexus/etc/githuboauth.properties
+
+RUN chown -R nexus:nexus /opt/sonatype
 
 VOLUME /nexus-data /nexus-store
 
