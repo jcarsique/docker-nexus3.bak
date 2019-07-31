@@ -56,7 +56,7 @@
     "name": "nuxeo-Developers",
     "description": "Github Developer role for Nuxeo",
     "privileges": ["All Repositories - (read)", "nx-component-upload", "nx-repository-view-*-*-*"],
-    "roles": ["nuxeo-anonymous", "nx-developer"]
+    "roles": ["nuxeodev"]
   },
   {
     "type":"role",
@@ -80,7 +80,7 @@
     "name": "nuxeo-Administrators",
     "description": "Github Administration role for Nuxeo",
     "privileges": ["nx-all"],
-    "roles": ["nx-admin", "nuxeo-developer"]
+    "roles": ["nuxeoadm"]
   },
   {
     "type": "anonymous",
