@@ -6,10 +6,22 @@ import org.sonatype.nexus.security.role.Role;
 import org.sonatype.nexus.security.role.NoSuchRoleException;
 import org.sonatype.nexus.security.realm.RealmManager;
 
+nexusRealms = ["NexusAuthenticatingRealm",
+               "NexusAuthorizingRealm",
+               "DockerToken",
+               "Crowd",
+               "LdapRealm",
+               "NpmToken",
+               "NuGetApiKey",
+               "rutauth-realm",
+               "User-Token-Realm",
+               "com.larscheidschmitzhermes.nexus3.github.oauth.plugin.GithubOauthAuthenticatingRealm"]
 
 realmManager = container.lookup(RealmManager.class.getName())
-if (!(realmManager.isRealmEnabled("DockerToken"))) {
-    realmManager.enableRealm("DockerToken", true)
+nexusRealms.each {
+    if (!(realmManager.isRealmEnabled(it))) {
+        realmManager.enableRealm(it, true)
+    }
 }
 
 // Admin password
