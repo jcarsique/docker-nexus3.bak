@@ -35,7 +35,7 @@
     "type":"role",
     "id": "nx2-anonymous",
     "name": "nuxeo-anonymous",
-    "description": "nuxeo-anonymous",
+    "description": "Anonymous role for Nuxeo",
     "privileges": ["nx-healthcheck-read", "nx-healthcheck-summary-read",
       "nx-repository-view-maven2-public-releases-browse", "nx-repository-view-maven2-public-releases-read",
       "nx-repository-view-maven2-public-snapshots-browse", "nx-repository-view-maven2-public-snapshots-read",
@@ -47,39 +47,39 @@
     "id": "nuxeodev",
     "name": "nuxeo-developer",
     "description": "Developer role for Nuxeo",
-    "privileges": ["All Repositories - (read)", "nx-component-upload", "nx-repository-view-*-*-*"],
-    "roles": ["nuxeo-anonymous", "nx-developer"]
+    "privileges": ["nx-apikey-all", "nx-component-upload", "nx-iq-violation-summary-read", "nx-tags-all", "nx-repository-view-*-*-*"],
+    "roles": ["nx2-anonymous"]
   },
   {
     "type":"role",
     "id": "nuxeo/Developers",
-    "name": "nuxeo-Developers",
-    "description": "Github Developer role for Nuxeo",
-    "privileges": ["All Repositories - (read)", "nx-component-upload", "nx-repository-view-*-*-*"],
+    "name": "nuxeo-Developers-github",
+    "description": "Developer role for Nuxeo (GitHub)",
+    "privileges": [],
     "roles": ["nuxeodev"]
   },
   {
     "type":"role",
     "id": "nuxeo",
-    "name": "nuxeo",
-    "description": "External mapping for nuxeo (LDAP)",
+    "name": "nuxeo-ldap",
+    "description": "Developer role for nuxeo (LDAP)",
     "privileges": [],
-    "roles": ["nuxeo-anonymous", "nuxeo-developer"]
+    "roles": ["nx2-anonymous", "nuxeodev"]
   },
   {
     "type":"role",
     "id": "nuxeoadm",
     "name": "nuxeo-admin",
     "description": "Administration role for Nuxeo",
-    "privileges": ["nx-all"],
-    "roles": ["nx-admin", "nuxeo-developer"]
+    "privileges": [],
+    "roles": ["nx-admin", "nuxeodev"]
   },
   {
     "type":"role",
     "id": "nuxeo/Administrators",
-    "name": "nuxeo-Administrators",
-    "description": "Github Administration role for Nuxeo",
-    "privileges": ["nx-all"],
+    "name": "nuxeo-Administrators-github",
+    "description": "Administration role for Nuxeo (GitHub)",
+    "privileges": [],
     "roles": ["nuxeoadm"]
   },
   {
