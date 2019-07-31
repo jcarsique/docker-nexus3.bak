@@ -6,6 +6,8 @@ import org.sonatype.nexus.security.role.Role;
 import org.sonatype.nexus.security.role.NoSuchRoleException;
 import org.sonatype.nexus.security.realm.RealmManager;
 
+import static org.sonatype.nexus.security.user.UserManager.DEFAULT_SOURCE
+
 nexusRealms = ["NexusAuthenticatingRealm",
                "NexusAuthorizingRealm",
                "DockerToken",
@@ -40,6 +42,16 @@ created = 0
 def createUser(Map argsLine, password) {
     log.info("Create user {}", argsLine.id)
     security.addUser(argsLine.id, argsLine.firstname, argsLine.lastname, argsLine.mail, true, password, argsLine.roles)
+}
+
+def updateUser(Map argsLine, password) {
+    def user = security.securitySystem.getUser(argsLine.id)
+    log.info("Update user {}", user.toString())
+    user.setFirstName(argsLine.firstname)
+    user.setLastName(argsLine.lastname)
+    user.setEmailAddress(argsLine.mail)
+    user.setRoles(argsLine.roles.collect{ new RoleIdentifier(DEFAULT_SOURCE, it)})
+    security.securitySystem.updateUser(user)
 }
 
 def createRole(Map argsLine) {
@@ -79,45 +91,45 @@ new JsonSlurper().parseText(args).each { argsLine ->
      * @param name Name of the role
      * @param description Description of the role
      * @param privileges List of privileges (ie: nx-healthcheck-read)
-     * @param roles List of inherithed roles (ie: nx-anonymous / nx-admin)
+     * @param roles List of roles (ie: nx-anonymous / nx-admin)
      */
     Map<String, String> roleResult = [type: argsLine.type, id: argsLine.id, name: argsLine.name,
         description: argsLine.description, privileges: argsLine.privileges, roles: argsLine.roles]
 
     if (argsLine.type == "user") {
         try {
-            users = security.getSecuritySystem().searchUsers(new UserSearchCriteria(argsLine.id))
+            users = security.securitySystem.searchUsers(new UserSearchCriteria(argsLine.id))
             if (users.isEmpty())
                 createUser(argsLine, passwords[argsLine.id])
+                userResult.put('status', 'created')
             else {
-                userResult.put('status', 'exists')
-                log.info("User {} already exists. Left untouched", argsLine.id)
+                // password changes are ignored for now
+                updateUser(argsLine)
+                userResult.put('status', 'updated')
             }
-            scriptResults['action_details'].add(userResult)
         } catch (Exception e) { // TODO better exception handling
             log.error('Could not create user {}: {}', argsLine.id, e.toString())
             userResult.put('status', 'error')
             userResult.put('error_msg', e.toString())
             scriptResults['error'] = true
-            scriptResults['action_details'].add(userResult)
         }
+        scriptResults['action_details'].add(userResult)
     } else if (argsLine.type == "role") {
         try {
             try {
-                Role role = security.getSecuritySystem().getAuthorizationManager("default").getRole(argsLine.id)
+                Role role = security.securitySystem.getAuthorizationManager("default").getRole(argsLine.id)
                 log.info("Role {} already exists. Left untouched", argsLine.id)
                 roleResult.put('status', 'exists')
             } catch (NoSuchRoleException e) {
                 createRole(argsLine)
             }
-            scriptResults['action_details'].add(roleResult)
         } catch (Exception e) { // TODO better exception handling
             log.error('Could not create role {}: {}', argsLine.id, e.toString())
             roleResult.put('status', 'error')
             roleResult.put('error_msg', e.toString())
             scriptResults['error'] = true
-            scriptResults['action_details'].add(roleResult)
         }
+        scriptResults['action_details'].add(roleResult)
     } else if (argsLine.type == "anonymous") {
         security.setAnonymousAccess(argsLine.enabled)
         log.info('Anonymous access {}', argsLine.enabled)
