@@ -5,7 +5,9 @@ import org.sonatype.nexus.security.user.UserSearchCriteria;
 import org.sonatype.nexus.security.role.Role;
 import org.sonatype.nexus.security.role.NoSuchRoleException;
 import org.sonatype.nexus.security.realm.RealmManager;
-
+import org.sonatype.nexus.security.role.RoleIdentifier;
+import java.util.Set;
+import java.util.stream.Collectors;
 import static org.sonatype.nexus.security.user.UserManager.DEFAULT_SOURCE
 
 nexusRealms = ["NexusAuthenticatingRealm",
@@ -44,13 +46,13 @@ def createUser(Map argsLine, password) {
     security.addUser(argsLine.id, argsLine.firstname, argsLine.lastname, argsLine.mail, true, password, argsLine.roles)
 }
 
-def updateUser(Map argsLine, password) {
+def updateUser(Map argsLine) {
     def user = security.securitySystem.getUser(argsLine.id)
     log.info("Update user {}", user.toString())
     user.setFirstName(argsLine.firstname)
     user.setLastName(argsLine.lastname)
     user.setEmailAddress(argsLine.mail)
-    user.setRoles(argsLine.roles.collect{ new RoleIdentifier(DEFAULT_SOURCE, it)})
+    user.setRoles(argsLine.roles.collect{ new RoleIdentifier(DEFAULT_SOURCE, it)}.toSet())
     security.securitySystem.updateUser(user)
 }
 
@@ -99,10 +101,10 @@ new JsonSlurper().parseText(args).each { argsLine ->
     if (argsLine.type == "user") {
         try {
             users = security.securitySystem.searchUsers(new UserSearchCriteria(argsLine.id))
-            if (users.isEmpty())
+            if (users.isEmpty()) {
                 createUser(argsLine, passwords[argsLine.id])
                 userResult.put('status', 'created')
-            else {
+            } else {
                 // password changes are ignored for now
                 updateUser(argsLine)
                 userResult.put('status', 'updated')
