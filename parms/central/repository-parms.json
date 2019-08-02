@@ -4,7 +4,7 @@
     "type": "maven",
     "hostedtype": "proxy",
     "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "http://arender.fr/artifactory/repository/"
+    "url": "https://artifactory.arondor.cloud/artifactory/arondor-release/"
   },
   {
     "name": "daily-snapshots",
