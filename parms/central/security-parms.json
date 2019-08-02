@@ -5,7 +5,9 @@
     "firstname": "Administrator",
     "lastname": "admin",
     "mail": "devtools+central-admin@nuxeo.com",
-    "roles": ["nx-admin"]
+    "roles": [
+      "nx-admin"
+    ]
   },
   {
     "type": "user",
@@ -13,7 +15,10 @@
     "firstname": "NA",
     "lastname": "anonymous",
     "mail": "devnull@nuxeo.com",
-    "roles": ["nuxeo-anonymous", "nx-anonymous"]
+    "roles": [
+      "nuxeo-anonymous",
+      "nx-anonymous"
+    ]
   },
   {
     "type": "user",
@@ -21,7 +26,9 @@
     "firstname": "Deployment",
     "lastname": "User",
     "mail": "devtools+central-deployment@nuxeo.com",
-    "roles": ["nuxeo-developer"]
+    "roles": [
+      "nuxeo-developer"
+    ]
   },
   {
     "type": "user",
@@ -29,62 +36,86 @@
     "firstname": "NA",
     "lastname": "NA",
     "mail": "devtools+central-readonly@nuxeo.com",
-    "roles": ["nx-anonymous"]
+    "roles": [
+      "nx-anonymous"
+    ]
   },
   {
-    "type":"role",
+    "type": "role",
     "id": "nx2-anonymous",
     "name": "nuxeo-anonymous",
     "description": "Anonymous role for Nuxeo",
-    "privileges": ["nx-healthcheck-read", "nx-healthcheck-summary-read",
-      "nx-repository-view-maven2-public-releases-browse", "nx-repository-view-maven2-public-releases-read",
-      "nx-repository-view-maven2-public-snapshots-browse", "nx-repository-view-maven2-public-snapshots-read",
-      "nx-search-read"],
+    "privileges": [
+      "nx-healthcheck-read",
+      "nx-healthcheck-summary-read",
+      "nx-repository-view-maven2-public-releases-browse",
+      "nx-repository-view-maven2-public-releases-read",
+      "nx-repository-view-maven2-public-snapshots-browse",
+      "nx-repository-view-maven2-public-snapshots-read",
+      "nx-search-read"
+    ],
     "roles": []
   },
   {
-    "type":"role",
+    "type": "role",
     "id": "nuxeodev",
     "name": "nuxeo-developer",
     "description": "Developer role for Nuxeo",
-    "privileges": ["nx-apikey-all", "nx-component-upload", "nx-iq-violation-summary-read", "nx-tags-all", "nx-repository-view-*-*-*"],
-    "roles": ["nx2-anonymous"]
+    "privileges": [
+      "nx-apikey-all",
+      "nx-component-upload",
+      "nx-iq-violation-summary-read",
+      "nx-tags-all",
+      "nx-repository-view-*-*-*"
+    ],
+    "roles": [
+      "nx2-anonymous"
+    ]
   },
   {
-    "type":"role",
+    "type": "role",
     "id": "nuxeo/Developers",
     "name": "nuxeo-Developers-github",
     "description": "Developer role for Nuxeo (GitHub)",
     "privileges": [],
-    "roles": ["nuxeodev"]
+    "roles": [
+      "nuxeodev"
+    ]
   },
   {
-    "type":"role",
+    "type": "role",
     "id": "nuxeo",
     "name": "nuxeo-ldap",
     "description": "Developer role for nuxeo (LDAP)",
     "privileges": [],
-    "roles": ["nx2-anonymous", "nuxeodev"]
+    "roles": [
+      "nx2-anonymous",
+      "nuxeodev"
+    ]
   },
   {
-    "type":"role",
+    "type": "role",
     "id": "nuxeoadm",
     "name": "nuxeo-admin",
     "description": "Administration role for Nuxeo",
     "privileges": [],
-    "roles": ["nx-admin", "nuxeodev"]
+    "roles": [
+      "nx-admin",
+      "nuxeodev"
+    ]
   },
   {
-    "type":"role",
+    "type": "role",
     "id": "nuxeo/Administrators",
     "name": "nuxeo-Administrators-github",
     "description": "Administration role for Nuxeo (GitHub)",
     "privileges": [],
-    "roles": ["nuxeoadm"]
+    "roles": [
+      "nuxeoadm"
+    ]
   },
   {
     "type": "anonymous",
     "enabled": true
   }
 ]
-

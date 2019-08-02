@@ -26,14 +26,14 @@ import org.sonatype.nexus.script.ScriptXO
 import com.fasterxml.jackson.databind.ObjectMapper
 
 CliBuilder cli = new CliBuilder(
-    usage: 'groovy addUpdateScriptBody.groovy -f scriptFile.groovy [-n explicitName]')
+                usage: 'groovy addUpdateScriptBody.groovy -f scriptFile.groovy [-n explicitName]')
 cli.with {
-  f longOpt: 'file', args: 1, required: true, 'Script file to send to NX3'
-  n longOpt: 'name', args: 1, required: false, 'name of script in NX3'
+    f longOpt: 'file', args: 1, required: true, 'Script file to send to NX3'
+    n longOpt: 'name', args: 1, required: false, 'name of script in NX3'
 }
 def options = cli.parse(args)
 if (!options) {
-  return
+    return
 }
 
 def file = new File(options.f)
