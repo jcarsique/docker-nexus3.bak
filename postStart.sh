@@ -14,7 +14,7 @@ done
 #find /nexus-data -type d -exec chmod g+x {} +
 
 USERNAME=admin
-PASSWORD=admin123
+PASSWORD="$(cat /nexus-data/admin.password || true)"
 PASSWORD_FROM_FILE="$(cat /opt/sonatype/nexus/config/password || true)"
 declare -a SCRIPT_LIST=
 
@@ -36,7 +36,11 @@ function createOrUpdateAndRun() {
         curl --fail -X PUT -u $USERNAME:$PASSWORD --header "Content-Type: application/json" "http://$HOST/service/rest/v1/script/$scriptName" -d @$scriptFile
     fi
     echo "Running $scriptName repository script"
-    curl --fail -X POST -u $USERNAME:$PASSWORD --header "Content-Type: text/plain" "http://$HOST/service/rest/v1/script/$scriptName/run" -d @$scriptParms
+    if [ -z "${scriptParms}" ]; then
+      curl --fail -X POST -u $USERNAME:$PASSWORD --header "Content-Type: text/plain" "http://$HOST/service/rest/v1/script/$scriptName/run"
+    else
+      curl --fail -X POST -u $USERNAME:$PASSWORD --header "Content-Type: text/plain" "http://$HOST/service/rest/v1/script/$scriptName/run" -d @$scriptParms
+    fi
     echo
 }
 
@@ -57,7 +61,10 @@ function setPasswordFromFile() {
 if curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping; then
     echo "Login to nexus succeeded. Default password worked. Updating password if available..."
     setScriptList
+    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
+    setPasswordFromFile
 elif [ -n "${PASSWORD_FROM_FILE}" ]; then
+    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
     setPasswordFromFile
     echo "Default password failed. Checking password file..."
     if curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping; then
