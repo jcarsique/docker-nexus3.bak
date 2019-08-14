@@ -146,5 +146,12 @@
     "hostedtype": "hosted",
     "blobstore": "nuxeo-devtools-nexus-central",
     "httpPort": 32005
+  },
+  {
+    "name": "docker-arender",
+    "type": "docker",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "httpPort": 32500 
   }
 ]
