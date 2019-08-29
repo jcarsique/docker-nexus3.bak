@@ -64,8 +64,8 @@ if curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping
     createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
     setPasswordFromFile
 elif [ -n "${PASSWORD_FROM_FILE}" ]; then
-    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
     setPasswordFromFile
+    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
     echo "Default password failed. Checking password file..."
     if curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping; then
         echo "Login to nexus succeeded. Password from secret file worked."
