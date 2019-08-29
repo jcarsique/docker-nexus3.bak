@@ -24,7 +24,7 @@ build:
         buildArgs:
          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
          VERSION: ${VERSION}
-         NEXUS3_VERSION: 3.16.2
+         NEXUS3_VERSION: 3.18.1
         flags:
         - --insecure
         - --insecure-pull
