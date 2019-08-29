@@ -23,6 +23,7 @@ RUN pip3 install supervisor
 COPY ./supervisord.conf /etc/supervisord.conf
 COPY ./supervisord-boot.conf /etc/supervisord.d/boot.conf
 COPY ./supervisord-nexus-config-license.conf /etc/supervisord.d/nexus-config-license.conf
+COPY ./supervisord-nexus-config-license.sh /etc/supervisord.d/nexus-config-license.sh
 COPY ./supervisord-nexus-github-plugin.conf /etc/supervisord.d/nexus-github-plugin.conf
 COPY ./supervisord-nexus.conf /etc/supervisord.d/nexus.conf
 COPY ./githuboauth.properties /opt/sonatype/nexus/etc/githuboauth.properties
