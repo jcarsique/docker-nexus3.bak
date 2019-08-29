@@ -1,89 +1,5 @@
 [
   {
-    "name": "arender",
-    "type": "maven",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://artifactory.arondor.cloud/artifactory/arondor-release/"
-  },
-  {
-    "name": "daily-snapshots",
-    "type": "maven",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "hotfix-releases",
-    "type": "maven",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "hotfix-snapshots",
-    "type": "maven",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "nightly-staging",
-    "type": "maven",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "npmjs",
-    "type": "npm",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://registry.npmjs.org"
-  },
-  {
-    "name": "npmjs-nuxeo",
-    "type": "npm",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "nuxeo-studio",
-    "type": "maven",
-    "hostedtype": "proxy",
-    "url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "nuxeo-studio-snapshots",
-    "type": "maven",
-    "hostedtype": "proxy",
-    "url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "public-releases",
-    "type": "maven",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "public-snapshots",
-    "type": "maven",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "thirdparty-releases",
-    "type": "maven",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "http://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-releases/"
-  },
-  {
-    "name": "thirdparty-snapshots",
-    "type": "maven",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "http://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-snapshots/"
-  },
-  {
     "name": "internal-releases",
     "type": "maven",
     "hostedtype": "group",
@@ -117,6 +33,16 @@
     ]
   },
   {
+    "name": "nuget-group",
+    "type": "nuget",
+    "hostedtype": "group",
+    "blobstore": "default",
+    "members": [
+      "nuget-hosted",
+      "nuget.org-proxy"
+    ]
+  },
+  {
     "name": "public",
     "type": "maven",
     "hostedtype": "group",
@@ -141,17 +67,121 @@
     ]
   },
   {
-    "name": "docker-registry",
-    "type": "docker",
+    "name": "daily-snapshots",
+    "type": "maven",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "httpPort": 32005
+    "blobstore": "nuxeo-devtools-nexus-central"
   },
   {
     "name": "docker-arender",
     "type": "docker",
     "hostedtype": "hosted",
     "blobstore": "nuxeo-devtools-nexus-central",
-    "httpPort": 32500 
+    "httpPort": 5001 
+  },
+  {
+    "name": "docker-registry",
+    "type": "docker",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "httpPort": 5000
+  },
+  {
+    "name": "hotfix-releases",
+    "type": "maven",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "hotfix-snapshots",
+    "type": "maven",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "nightly-staging",
+    "type": "maven",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "npmjs-nuxeo",
+    "type": "npm",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "nuget-hosted",
+    "type": "nuget",
+    "hostedtype": "hosted",
+    "blobstore": "default"
+  },
+  {
+    "name": "public-releases",
+    "type": "maven",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "public-snapshots",
+    "type": "maven",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "arender",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "url": "https://artifactory.arondor.cloud/artifactory/arondor-release/"
+  },
+  {
+    "name": "maven-central",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "default",
+    "url": "https://repo1.maven.org/maven2/"
+  },
+  {
+    "name": "npmjs",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "url": "https://registry.npmjs.org"
+  },
+  {
+    "name": "nuget.org-proxy",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "default",
+    "url": "https://www.nuget.org/api/v2/"
+  },
+  {
+    "name": "nuxeo-studio",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "nuxeo-studio-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/",
+    "blobstore": "nuxeo-devtools-nexus-central"
+  },
+  {
+    "name": "thirdparty-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "url": "https://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-releases/"
+  },
+  {
+    "name": "thirdparty-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "url": "https://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-snapshots/"
   }
 ]
