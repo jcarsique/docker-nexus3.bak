@@ -15,8 +15,10 @@ LABEL com.sonatype.version=${NEXUS3_VERSION}
 
 USER root
 
-RUN yum -y makecache && yum -y install epel-release && yum -y install supervisor && \
-    yum install -y unzip wget
+RUN yum -y makecache && \
+    yum install -y unzip wget python36 python3-pip
+
+RUN pip3 install supervisor
 
 COPY ./supervisord.conf /etc/supervisord.conf
 COPY ./supervisord-boot.conf /etc/supervisord.d/boot.conf
@@ -29,4 +31,4 @@ RUN chown -R nexus:nexus /opt/sonatype
 
 VOLUME /nexus-data /nexus-store
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
