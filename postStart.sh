@@ -58,20 +58,16 @@ function setPasswordFromFile() {
     fi
 }
 
-if curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping; then
+if test -n "$PASSWORD_FROM_FILE" && curl --fail --silent -u $USERNAME:$PASSWORD_FROM_FILE http://$HOST/service/metrics/ping; then
+    echo "Loging to nexues suceeded. kubernetes provided password worked."
+    setPasswordFromFile
+    setScriptList
+elif curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping; then
     echo "Login to nexus succeeded. Default password worked. Updating password if available..."
     setScriptList
-    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
-    setPasswordFromFile
-elif [ -n "${PASSWORD_FROM_FILE}" ]; then
-    setPasswordFromFile
-    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
-    echo "Default password failed. Checking password file..."
-    if curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping; then
-        echo "Login to nexus succeeded. Password from secret file worked."
-        setScriptList
-    else
-        die "Login to nexus failed. Tried both the default password and the provided password secret file."
+    if test -n "$PASSWORD_FROM_FILE"; then
+	createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
+	setPasswordFromFile
     fi
 else
     die "Login to nexus failed. Tried the default password only since no password secret file was provided."
@@ -87,6 +83,3 @@ fi
 for script in blobstore repository security; do
     createOrUpdateAndRun ${script} /opt/sonatype/nexus/scripts/${script}-body.json /opt/sonatype/nexus/scripts/${script}-parms.json
 done
-
-
-
