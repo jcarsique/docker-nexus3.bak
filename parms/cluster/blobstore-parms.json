@@ -2,6 +2,6 @@
   {
       "name": "store",
       "type": "file",
-      "path": "/nexus-store"
+      "path": "/nexus-data/store"
   }
 ]

@@ -21,6 +21,13 @@
     "url": "https://packages.nuxeo.com/repository/npm-all/"
   }, 
   {
+    "name": "nuget-group",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/nuget-group/"
+  }, 
+  {
     "name": "public",
     "type": "maven",
     "hostedtype": "proxy",
@@ -35,11 +42,20 @@
     "url": "https://packages.nuxeo.com/repository/public-snapshot/"
   },
   {
-    "name": "public-snapshot",
+    "name": "daily-snapshots",
     "type": "maven", 
     "hostedtype": "proxy",
     "blobstore": "store",
-    "url": "https://packages.nuxeo.com/repository/public-snapshot/"
+    "url": "https://packages.nuxeo.com/repository/daily-snapshots/"
+  },
+  {
+    "name": "docker-arender",
+    "type": "docker",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "indexType": "REGISTRY",
+    "httpPort": 5001,
+    "url": "https://packages.nuxeo.com/repository/docker-registry/"
   },
   {
     "name": "docker-registry",
@@ -47,7 +63,125 @@
     "hostedtype": "proxy",
     "blobstore": "store",
     "indexType": "REGISTRY",
-    "httpsPort": 5000,
+    "httpPort": 5000,
     "url": "https://packages.nuxeo.com/repository/docker-registry/"
+  },
+  {
+    "name": "hotfix-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/hotfix-releases/"
+  },
+  {
+    "name": "hotfix-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/hotfix-snapshots/"
+  },
+  {
+    "name": "nightly-staging",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/nightly-staging/"
+  },
+  {
+    "name": "npmjs-nuxeo",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/npmjs-nuxeo/"
+  },
+  {
+    "name": "nuget-hosted",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/nuget-hosted/"
+  },
+  {
+    "name": "nuget-hosted",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/nuget-hosted/"
+  },
+  {
+    "name": "public-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/public-releases/"
+  },
+  {
+    "name": "public-snasphots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/public-snapshots/"
+  },
+  {
+    "name": "arender",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/arender/"
+  },
+  {
+    "name": "maven-central",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/maven-central/"
+  },
+  {
+    "name": "npmjs",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/npmjs/"
+  },
+  {
+    "name": "nuget.org-proxy",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "default",
+    "url": "https://packages.nuxeo.com/repository/nuget.org-proxy/"
+  },
+  {
+    "name": "nuxeo-studio",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/nuxeo-studio/"
+  },
+  {
+    "name": "nuxeo-studio-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/nuxeo-studio-snapshots/"
+  },
+  {
+    "name": "thirdparty-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/thirdparty-releases/"
+  },
+  {
+    "name": "thirdparty-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://packages.nuxeo.com/repository/thirdparty-releases/"
+  },
+  {
+    "name": "team-snapshots",
+    "type": "maven",
+    "hostedtype": "hosted",
+    "blobstore": "store"
   }
 ]
