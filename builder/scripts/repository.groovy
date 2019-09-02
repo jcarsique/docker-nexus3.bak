@@ -32,9 +32,9 @@ def createProxy(Map repoDef) {
     String blobstore = repoDef.blobstore
     String url = repoDef.url
     String indexType = repoDef.indexType
-    String indexUrl = repoDef.indexUrl
-    String httpPort = repoDef.httpPort
-    String httpsPort = repoDef.httpsPort
+    String indexUrl = repoDef.indexUrl ? repodef.indexUrl : repoDef.url;
+    Integer httpPort = repoDef.httpPort ? new Integer(repoDef.httpPort) : null;
+    Integer httpsPort = repoDef.httpsPort ? new Integer(repoDef.httpsPort) : null;
     if (url == null) {
         throw new Exception("Missing proxy URL for {}", name)
     }
@@ -50,7 +50,7 @@ def createProxy(Map repoDef) {
     } else if (type == "bower") {
         repository.createBowerProxy(name, url, blobstore)
     } else if (type == "docker") {
-        repository.createDockerProxy(name, url, indexType, indexUrl, httpPort, httpsPort, blobstore)
+        repository.createDockerProxy(name, url, indexType, indexUrl, httpPort, httpsPort, blobstore, true, true)
     }
     // repository.getRepositoryManager().get(name).getConfiguration().getAttributes().'proxy'.'contentMaxAge' = contentMaxAge
 }

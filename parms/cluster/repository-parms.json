@@ -47,8 +47,7 @@
     "hostedtype": "proxy",
     "blobstore": "store",
     "indexType": "REGISTRY",
-    "indexUrl": null,
-    "httpPort": 5000,
+    "httpsPort": 5000,
     "url": "https://packages.nuxeo.com/repository/docker-registry/"
   }
 ]
