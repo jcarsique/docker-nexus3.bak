@@ -1,0 +1,53 @@
+[
+  {
+    "name": "packages",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io/packages"
+  },
+  {
+    "name": "admin",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io/team"
+  },
+  {
+    "name": "team",
+    "type": "maven",
+    "hostedtype": "group",
+    "blobstore": "store",
+    "members": [
+	"maven-releases",
+	"maven-snapshots"
+    ]
+  },
+  {
+    "name": "nexus",
+    "type": "maven",
+    "hostedtype": "group",
+    "blobstore": "store",
+    "members": [
+	"packages",
+	"admin",
+	"team"
+    ]
+  },
+  {
+    "name": "docker-registry",
+    "type": "docker",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "indexType": "REGISTRY",
+    "httpPort": 5000,
+    "url": "https://packages.nuxeo.com/repository/docker-registry/"
+  },
+  {
+    "name": "docker-arender",
+    "type": "docker",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "httpPort": 5001
+  }
+]
