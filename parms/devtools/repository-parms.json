@@ -1,0 +1,187 @@
+[
+  {
+    "name": "internal-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "internal-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "npm-all",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "nuget-group",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "public",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+ {
+    "name": "public-snapshot",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "daily-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "docker-arender",
+    "type": "docker",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "indexType": "REGISTRY",
+    "httpPort": 5001,
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "docker-registry",
+    "type": "docker",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "indexType": "REGISTRY",
+    "httpPort": 5000,
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "hotfix-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "hotfix-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "nightly-staging",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "npmjs-nuxeo",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "nuget-hosted",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "nuget-hosted",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "public-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "public-snasphots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "arender",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "maven-central",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "npmjs",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "nuget.org-proxy",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "default",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "nuxeo-studio",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "nuxeo-studio-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "thirdparty-releases",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "thirdparty-snapshots",
+    "type": "maven",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "http://nexus.admin.34.74.59.50.nip.io"
+  },
+  {
+    "name": "team-snapshots",
+    "type": "maven",
+    "hostedtype": "hosted",
+    "blobstore": "store"
+  }
+]

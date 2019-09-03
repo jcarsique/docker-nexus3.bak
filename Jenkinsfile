@@ -72,6 +72,7 @@ pipeline {
           sh 'make jenkins'
           sh 'make central'
           sh 'make cluster'
+          sh 'make devtools'
         }
       }
       post {

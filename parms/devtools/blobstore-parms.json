@@ -1,0 +1,7 @@
+[
+  {
+      "name": "store",
+      "type": "file",
+      "path": "/nexus-data/store"
+  }
+]
