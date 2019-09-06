@@ -3,6 +3,9 @@ import groovy.json.JsonOutput
 import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl
 import groovy.json.JsonSlurper
 import org.sonatype.nexus.repository.storage.WritePolicy
+import org.sonatype.nexus.repository.maven.VersionPolicy
+import org.sonatype.nexus.repository.maven.LayoutPolicy
+
 
 def createHosted(Map repoDef) {
     String name = repoDef.name
@@ -10,9 +13,10 @@ def createHosted(Map repoDef) {
     String blobstore = repoDef.blobstore
     String httpPort = repoDef.httpPort
     String httpsPort = repoDef.httpsPort
+    VersionPolicy versionPolicy = VersionPolicy.valueOf(repoDef.versionPolicy)
     log.info("Create hosted repository {}", name)
     if (type == "maven") {
-        repository.createMavenHosted(name, blobstore)
+        repository.createMavenHosted(name, blobstore, true, versionPolicy, WritePolicy.ALLOW, LayoutPolicy.STRICT)
     } else if (type == "npm") {
         repository.createNpmHosted(name, blobstore)
     } else if (type == "nuget") {
@@ -33,6 +37,7 @@ def createProxy(Map repoDef) {
     String url = repoDef.url
     String indexType = repoDef.indexType
     String indexUrl = repoDef.indexUrl ? repodef.indexUrl : repoDef.url;
+    VersionPolicy versionPolicy = VersionPolicy.valueOf(repoDef.versionPolicy)
     Integer httpPort = repoDef.httpPort ? new Integer(repoDef.httpPort) : null;
     Integer httpsPort = repoDef.httpsPort ? new Integer(repoDef.httpsPort) : null;
     if (url == null) {
@@ -40,7 +45,7 @@ def createProxy(Map repoDef) {
     }
     log.info("Create proxy repository {}", name)
     if (type == "maven") {
-        repository.createMavenProxy(name, url, blobstore)
+        repository.createMavenProxy(name, url, blobstore, true, versionPolicy, LayoutPolicy.STRICT)
     } else if (type == "npm") {
         repository.createNpmProxy(name, url, blobstore)
     } else if (type == "nuget") {
