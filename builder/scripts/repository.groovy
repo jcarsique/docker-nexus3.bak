@@ -1,21 +1,24 @@
-import org.sonatype.nexus.script.plugin.RepositoryApi
-import groovy.json.JsonOutput
-import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl
-import groovy.json.JsonSlurper
-import org.sonatype.nexus.repository.storage.WritePolicy
-import org.sonatype.nexus.repository.maven.VersionPolicy
+import static java.lang.String.format
+import static org.sonatype.nexus.common.text.Strings2.mask
+
+import org.sonatype.nexus.common.io.SanitizingJsonOutputStream
+import org.sonatype.nexus.repository.config.Configuration
 import org.sonatype.nexus.repository.maven.LayoutPolicy
+import org.sonatype.nexus.repository.maven.VersionPolicy
+import org.sonatype.nexus.repository.storage.WritePolicy
+import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl
+
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 
 
 def createHosted(Map repoDef) {
     String name = repoDef.name
     String type = repoDef.type
     String blobstore = repoDef.blobstore
-    String httpPort = repoDef.httpPort
-    String httpsPort = repoDef.httpsPort
-    VersionPolicy versionPolicy = VersionPolicy.valueOf(repoDef.versionPolicy)
     log.info("Create hosted repository {}", name)
     if (type == "maven") {
+        VersionPolicy versionPolicy = repoDef.versionPolicy == null ? VersionPolicy.MIXED : VersionPolicy.valueOf(repoDef.versionPolicy)
         repository.createMavenHosted(name, blobstore, true, versionPolicy, WritePolicy.ALLOW, LayoutPolicy.STRICT)
     } else if (type == "npm") {
         repository.createNpmHosted(name, blobstore)
@@ -26,6 +29,8 @@ def createHosted(Map repoDef) {
     } else if (type == "bower") {
         repository.createBowerHosted(name, blobstore)
     } else if (type == "docker") {
+        String httpPort = repoDef.httpPort
+        String httpsPort = repoDef.httpsPort
         repository.createDockerHosted(name, httpPort, httpsPort, blobstore, true, true, WritePolicy.ALLOW, false)
     }
 }
@@ -35,29 +40,29 @@ def createProxy(Map repoDef) {
     String type = repoDef.type
     String blobstore = repoDef.blobstore
     String url = repoDef.url
-    String indexType = repoDef.indexType
-    String indexUrl = repoDef.indexUrl ? repodef.indexUrl : repoDef.url;
-    VersionPolicy versionPolicy = VersionPolicy.valueOf(repoDef.versionPolicy)
-    Integer httpPort = repoDef.httpPort ? new Integer(repoDef.httpPort) : null;
-    Integer httpsPort = repoDef.httpsPort ? new Integer(repoDef.httpsPort) : null;
     if (url == null) {
         throw new Exception("Missing proxy URL for {}", name)
     }
     log.info("Create proxy repository {}", name)
     if (type == "maven") {
-        repository.createMavenProxy(name, url, blobstore, true, versionPolicy, LayoutPolicy.STRICT)
+        VersionPolicy versionPolicy = repoDef.versionPolicy == null ? VersionPolicy.MIXED : VersionPolicy.valueOf(repoDef.versionPolicy)
+        return repository.createMavenProxy(name, url, blobstore, true, versionPolicy, LayoutPolicy.STRICT)
     } else if (type == "npm") {
-        repository.createNpmProxy(name, url, blobstore)
+        return repository.createNpmProxy(name, url, blobstore)
     } else if (type == "nuget") {
-        repository.createNugetProxy(name, url, blobstore)
+        return repository.createNugetProxy(name, url, blobstore)
     } else if (type == "raw") {
-        repository.createRawProxy(name, url, blobstore)
+        return repository.createRawProxy(name, url, blobstore)
     } else if (type == "bower") {
-        repository.createBowerProxy(name, url, blobstore)
+        return repository.createBowerProxy(name, url, blobstore)
     } else if (type == "docker") {
-        repository.createDockerProxy(name, url, indexType, indexUrl, httpPort, httpsPort, blobstore, true, true)
+        String indexType = repoDef.indexType
+        String indexUrl = repoDef.indexUrl ? repodef.indexUrl : repoDef.url;
+        Integer httpPort = repoDef.httpPort ? new Integer(repoDef.httpPort) : null;
+        Integer httpsPort = repoDef.httpsPort ? new Integer(repoDef.httpsPort) : null;
+        return repository.createDockerProxy(name, url, indexType, indexUrl, httpPort, httpsPort, blobstore, true, true)
     }
-    // repository.getRepositoryManager().get(name).getConfiguration().getAttributes().'proxy'.'contentMaxAge' = contentMaxAge
+    throw new Exception("wrong repository type for {}", name)
 }
 
 def createGroup(Map repoDef) {
@@ -79,9 +84,24 @@ def createGroup(Map repoDef) {
     }
 }
 
+
 List<Map<String, String>> actionDetails = []
 Map scriptResults = [changed: false, error: false]
 scriptResults.put('action_details', actionDetails)
+
+serversFile = new File('/opt/sonatype/nexus/scripts/servers.json')
+if (serversFile.exists()) {
+	servers = new JsonSlurper().parseText(serversFile.text)
+} else {
+	servers = [:]
+}
+
+pwdFile = new File('/opt/sonatype/nexus/config/passwords.json')
+if (pwdFile.exists()) {
+	passwords = new JsonSlurper().parseText(pwdFile.text)
+} else {
+	passwords = [:]
+}
 
 /**
  * JSON repository definition
@@ -111,7 +131,25 @@ new JsonSlurper().parseText(args).each { repoDef ->
             if (hostedtype == "hosted") {
                 createHosted(repoDef)
             }  else if (hostedtype == "proxy") {
-                createProxy(repoDef)
+                Configuration configuration = createProxy(repoDef).configuration
+				String remoteUrl = configuration.attributes('proxy').get('remoteUrl', String.class)
+				log.info("remoteUrl {}", remoteUrl)
+				if (remoteUrl != null) {
+					String remoteHost = new URL(remoteUrl).getHost();
+					log.info("host {}", remoteHost)
+					Map server = servers[remoteHost]
+					log.info("server {}", server)
+					if (server != null) {
+						authentication = configuration.attributes('httpclient').child('connection').child('authentication');
+						authentication.set('type', server.get('type'))
+						authentication.set('username', server.get('username'))
+						authentication.set('password', server[server.get('username')])
+						authentication.set('ntlmHost', server.get('ntlmHost'))
+						authentication.set('ntlmDomain', server.get('ntlmDomain'))
+						api.getRepositoryManager().update(configuration)
+						log.info("injected auth for {} with {}", name, api.getRepositoryManager().get(name))
+					}
+				}
             } else if (hostedtype == "group") {
                 if (repoDef.members == null) {
                     log.warn("Repository group {} is empty", name)
@@ -121,7 +159,7 @@ new JsonSlurper().parseText(args).each { repoDef ->
             currentResult.put('status', 'created')
             scriptResults['changed'] = true
         } catch (Exception e) {
-            log.error('Could not create repository {}: {}', name, e.toString())
+            log.error('Could not create repository ' + name, e)
             currentResult.put('status', 'error')
             scriptResults['error'] = true
             currentResult.put('error_msg', e.toString())

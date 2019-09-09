@@ -1,55 +1,141 @@
 [
   {
-    "name": "packages",
+    "name": "maven-upstream",
     "type": "maven",
+    "versionPolicy": "MIXED",
     "hostedtype": "proxy",
     "blobstore": "store",
-    "versionPolicy": "RELEASE"
-    "url": "http://nexus.admin.34.74.59.50.nip.io/packages"
+    "url": "https://nexus.admin/repository/maven/"
   },
   {
-    "name": "admin",
+    "name": "maven-public-releases",
     "type": "maven",
-    "hostedtype": "proxy",
-    "versionPolicy": "RELEASE"
-    "blobstore": "store",
-    "url": "http://nexus.admin.34.74.59.50.nip.io/team"
+    "versionPolicy": "RELEASE",
+    "hostedtype": "hosted",
+    "blobstore": "store"
   },
   {
-    "name": "team",
+    "name": "maven-public-snapshots",
+    "type": "maven",
+    "versionPolicy": "SNAPSHOT",
+    "hostedtype": "hosted",
+    "blobstore": "store"
+  },
+  {
+    "name": "maven-public",
     "type": "maven",
     "hostedtype": "group",
     "blobstore": "store",
     "members": [
-	"maven-releases",
-	"maven-snapshots"
+      "maven-public-releases",
+      "maven-public-snapshots"
     ]
   },
   {
-    "name": "nexus",
+    "name": "maven-private-releases",
+    "type": "maven",
+    "versionPolicy": "RELEASE",
+    "hostedtype": "hosted",
+    "blobstore": "store"
+  },
+  {
+    "name": "maven-private-snapshots",
+    "type": "maven",
+    "versionPolicy": "SNAPSHOT",
+    "hostedtype": "hosted",
+    "blobstore": "store"
+  },
+  {
+    "name": "maven-private",
     "type": "maven",
     "hostedtype": "group",
     "blobstore": "store",
     "members": [
-	"packages",
-	"admin",
-	"team"
+      "maven-private-releases",
+      "maven-private-snapshots"
     ]
   },
   {
-    "name": "docker-registry",
+    "name": "maven",
+    "type": "maven",
+    "hostedtype": "group",
+    "blobstore": "store",
+    "members": [
+      "maven-upstream",
+      "maven-public",
+      "maven-private"
+    ]
+  },
+  {
+    "name": "npm-upstream",
+    "type": "npm",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://nexus.admin/repository/npm/"
+  },
+  {
+    "name": "npm-hosted",
+    "type": "npm",
+    "hostedtype": "hosted",
+    "blobstore": "store",
+  },
+  {
+    "name": "npm",
+    "type": "npm",
+    "hostedtype": "group",
+    "blobstore": "store",
+    "members": [
+       "npm-upstream",
+       "npm-hosted"
+    ]
+  },
+  {
+    "name": "docker-upstream",
     "type": "docker",
     "hostedtype": "proxy",
     "blobstore": "store",
     "indexType": "REGISTRY",
-    "httpPort": 5000,
-    "url": "https://packages.nuxeo.com/repository/docker-registry/"
+    "url": "https://nexus.admin/repository/docker/"
   },
   {
-    "name": "docker-arender",
+    "name": "docker-hosted",
     "type": "docker",
+    "indexType": "REGISTRY",
     "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "httpPort": 5001
+    "blobstore": "store",
+    "httpPort": 5000
+  },
+  {
+    "name": "docker",
+    "type": "docker",
+    "hostedtype": "group",
+    "blobstore": "store",
+    "members": [
+      "docker-upstream",
+      "docker-hosted"
+    ]
+  },
+  {
+    "name": "nuget-upstream",
+    "type": "nuget",
+    "hostedtype": "proxy",
+    "blobstore": "store",
+    "url": "https://nexus.admin/repository/nuget/"
+  },
+  {
+    "name": "nuget-hosted",
+    "type": "nuget",
+    "hostedtype": "hosted",
+    "blobstore": "store"
+  },
+  {
+    "name": "nuget",
+    "type": "nuget",
+    "hostedtype": "group",
+    "blobstore": "store",
+    "members": [
+      "nuget-upstream",
+      "nuget-hosted"
+    ]
   }
 ]

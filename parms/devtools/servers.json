@@ -1,0 +1,6 @@
+[
+    "nexus.admin": {
+	"type": "user",
+	"username": "deployment"
+    }
+]
