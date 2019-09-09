@@ -5,6 +5,8 @@ import groovy.json.JsonSlurper
 import org.sonatype.nexus.repository.storage.WritePolicy
 import org.sonatype.nexus.repository.maven.VersionPolicy
 import org.sonatype.nexus.repository.maven.LayoutPolicy
+import org.sonatype.nexus.repository.Repository
+import org.sonatype.nexus.repository.config.Configuration
 
 
 def createHosted(Map repoDef) {
@@ -45,19 +47,19 @@ def createProxy(Map repoDef) {
     }
     log.info("Create proxy repository {}", name)
     if (type == "maven") {
-        repository.createMavenProxy(name, url, blobstore, true, versionPolicy, LayoutPolicy.STRICT)
+        return repository.createMavenProxy(name, url, blobstore, true, versionPolicy, LayoutPolicy.STRICT)
     } else if (type == "npm") {
-        repository.createNpmProxy(name, url, blobstore)
+        return repository.createNpmProxy(name, url, blobstore)
     } else if (type == "nuget") {
-        repository.createNugetProxy(name, url, blobstore)
+        return repository.createNugetProxy(name, url, blobstore)
     } else if (type == "raw") {
-        repository.createRawProxy(name, url, blobstore)
+        return repository.createRawProxy(name, url, blobstore)
     } else if (type == "bower") {
-        repository.createBowerProxy(name, url, blobstore)
+        return repository.createBowerProxy(name, url, blobstore)
     } else if (type == "docker") {
-        repository.createDockerProxy(name, url, indexType, indexUrl, httpPort, httpsPort, blobstore, true, true)
+        return repository.createDockerProxy(name, url, indexType, indexUrl, httpPort, httpsPort, blobstore, true, true)
     }
-    // repository.getRepositoryManager().get(name).getConfiguration().getAttributes().'proxy'.'contentMaxAge' = contentMaxAge
+	throw new Exception("wrong repository type for {}", name)
 }
 
 def createGroup(Map repoDef) {
@@ -82,6 +84,20 @@ def createGroup(Map repoDef) {
 List<Map<String, String>> actionDetails = []
 Map scriptResults = [changed: false, error: false]
 scriptResults.put('action_details', actionDetails)
+
+serversFile = new File('/opt/sonatype/nexus/config/servers.json')
+if (serversFile.exists()) {
+	servers = new JsonSlurper().parseText(serversFile.text)
+} else {
+	servers = [:]
+}
+
+pwdFile = new File('/opt/sonatype/nexus/config/passwords.json')
+if (pwdFile.exists()) {
+	passwords = new JsonSlurper().parseText(pwdFile.text)
+} else {
+	passwords = [:]
+}
 
 /**
  * JSON repository definition
@@ -111,7 +127,22 @@ new JsonSlurper().parseText(args).each { repoDef ->
             if (hostedtype == "hosted") {
                 createHosted(repoDef)
             }  else if (hostedtype == "proxy") {
-                createProxy(repoDef)
+                Repository repository = createProxy(repoDef)
+				Configuration confguration = repository.getConfiguration();
+				String remoteUrl = configuration.attributes.get("remoteUrl")
+				if (remoteUrl != null) {
+					String remoteHost = URL.toURL().getHost();
+					Map parms = server[remoteHost]
+					if (parms != null) {
+						authentication = configuration.attributes('httpclient').child('connection').child('authentication');
+						authentication.set('type', server.type)
+						authentication.set('username', server.username)
+						authentication.set('password', passwords[server.username])
+						authentication.set('ntlmHost', server.ntlmHost)
+						authentication.set('ntlmDomain', server.ntlmDomain)
+						repositoryManager.update(configuration)
+					}
+				}
             } else if (hostedtype == "group") {
                 if (repoDef.members == null) {
                     log.warn("Repository group {} is empty", name)
