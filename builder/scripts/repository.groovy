@@ -152,7 +152,7 @@ new JsonSlurper().parseText(args).each { repoDef ->
             currentResult.put('status', 'created')
             scriptResults['changed'] = true
         } catch (Exception e) {
-            log.error('Could not create repository {}: {}', name, e.toString())
+            log.error('Could not create repository ' + name, e)
             currentResult.put('status', 'error')
             scriptResults['error'] = true
             currentResult.put('error_msg', e.toString())
