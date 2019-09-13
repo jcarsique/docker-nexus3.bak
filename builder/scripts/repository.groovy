@@ -13,11 +13,9 @@ def createHosted(Map repoDef) {
     String name = repoDef.name
     String type = repoDef.type
     String blobstore = repoDef.blobstore
-    String httpPort = repoDef.httpPort
-    String httpsPort = repoDef.httpsPort
-    VersionPolicy versionPolicy = VersionPolicy.valueOf(repoDef.versionPolicy)
     log.info("Create hosted repository {}", name)
     if (type == "maven") {
+        VersionPolicy versionPolicy = repoDef.versionPolicy == null ? VersionPolicy.MIXED : VersionPolicy.valueOf(repoDef.versionPolicy)
         repository.createMavenHosted(name, blobstore, true, versionPolicy, WritePolicy.ALLOW, LayoutPolicy.STRICT)
     } else if (type == "npm") {
         repository.createNpmHosted(name, blobstore)
@@ -28,6 +26,8 @@ def createHosted(Map repoDef) {
     } else if (type == "bower") {
         repository.createBowerHosted(name, blobstore)
     } else if (type == "docker") {
+        String httpPort = repoDef.httpPort
+        String httpsPort = repoDef.httpsPort
         repository.createDockerHosted(name, httpPort, httpsPort, blobstore, true, true, WritePolicy.ALLOW, false)
     }
 }
@@ -37,16 +37,12 @@ def createProxy(Map repoDef) {
     String type = repoDef.type
     String blobstore = repoDef.blobstore
     String url = repoDef.url
-    String indexType = repoDef.indexType
-    String indexUrl = repoDef.indexUrl ? repodef.indexUrl : repoDef.url;
-    VersionPolicy versionPolicy = VersionPolicy.valueOf(repoDef.versionPolicy)
-    Integer httpPort = repoDef.httpPort ? new Integer(repoDef.httpPort) : null;
-    Integer httpsPort = repoDef.httpsPort ? new Integer(repoDef.httpsPort) : null;
     if (url == null) {
         throw new Exception("Missing proxy URL for {}", name)
     }
     log.info("Create proxy repository {}", name)
     if (type == "maven") {
+        VersionPolicy versionPolicy = repoDef.versionPolicy == null ? VersionPolicy.MIXED : VersionPolicy.valueOf(repoDef.versionPolicy)
         return repository.createMavenProxy(name, url, blobstore, true, versionPolicy, LayoutPolicy.STRICT)
     } else if (type == "npm") {
         return repository.createNpmProxy(name, url, blobstore)
@@ -57,9 +53,13 @@ def createProxy(Map repoDef) {
     } else if (type == "bower") {
         return repository.createBowerProxy(name, url, blobstore)
     } else if (type == "docker") {
+        String indexType = repoDef.indexType
+        String indexUrl = repoDef.indexUrl ? repodef.indexUrl : repoDef.url;
+        Integer httpPort = repoDef.httpPort ? new Integer(repoDef.httpPort) : null;
+        Integer httpsPort = repoDef.httpsPort ? new Integer(repoDef.httpsPort) : null;
         return repository.createDockerProxy(name, url, indexType, indexUrl, httpPort, httpsPort, blobstore, true, true)
     }
-	throw new Exception("wrong repository type for {}", name)
+    throw new Exception("wrong repository type for {}", name)
 }
 
 def createGroup(Map repoDef) {
