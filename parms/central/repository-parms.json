@@ -1,287 +1,371 @@
-[
-  {
-    "name": "maven-internal",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-private",
-      "maven-public"
-    ]
-  },
-  {
-    "name": "maven-private",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-private-hosted",
-      "maven-private-archived"
-    ]
-  },
-  {
-    "name": "maven-private-hosted",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-private-hosted-releases",
-      "maven-private-hosted-snapshots"
-    ]
-  },
-  {
-    "name": "maven-private-hosted-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-private-hosted-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-private-archived",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-private-archived-releases",
-      "maven-private-archived-snapshots"
-    ]
-  },
-  {
-    "name": "maven-private-archived-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://mavenpriv.nuxeo.com/nexus/content/groups/private-releases/"
-  },
-  {
-    "name": "maven-private-archived-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://mavenpriv.nuxeo.com/nexus/content/groups/private-snapshots/"
-  },
-  {
-    "name": "maven-public",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-public-hosted",
-      "maven-public-archived"
-    ]
-  },
-  {
-    "name": "maven-public-hosted",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-public-hosted-releases",
-      "maven-public-hosted-snapshots"
-    ]
-  },
-  {
-    "name": "maven-public-hosted-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-public-hosted-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-public-archived",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-public-archived-releases",
-      "maven-public-archived-snapshots"
-    ]
-  },
-  {
-    "name": "maven-public-archived-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://mavenin.nuxeo.com/repository/public-releases/"
-  },
-  {
-    "name": "maven-public-archived-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://mavenin.nuxeo.com/repository/public-snapshots/"
-  },
-  {
-    "name": "maven-thirdparty",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-thirdparty-hosted",
-      "maven-thirdparty-archived",
-      "maven-vendor"
-    ]
-  },
-  {
-    "name": "maven-thirdparty-hosted",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-thirdparty-hosted-releases",
-      "maven-thirdparty-hosted-snapshots"
-    ]
-  },
-  {
-    "name": "maven-thirdparty-hosted-releases",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": []
-  },
-  {
-    "name": "maven-thirdparty-hosted-snapshots",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": []
-  },
-  {
-    "name": "maven-vendor",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-vendor-hosted",
-      "maven-vendor-archived"
-    ]
-  },
-  {
-    "name": "maven-vendor-hosted",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-vendor-hosted-releases",
-      "maven-vendor-hosted-snapshots"
-    ]
-  },
-  {
-    "name": "maven-vendor-hosted-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-vendor-hosted-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-vendor-archived",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-vendor-archived-releases",
-      "maven-vendor-archived-snapshots"
-    ]
-  },
-  {
-    "name": "maven-vendor-archived-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://mavenpriv.nuxeo.com/nexus/content/groups/vendor-releases/"
-  },
-  {
-    "name": "maven-vendor-archived-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://mavenpriv.nuxeo.com/nexus/content/groups/vendor-snapshots/"
-  },
-  {
-    "name": "maven-hotfix",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-hotfix-hosted",
-      "maven-hotfix-archived"
-    ]
-  },
-  {
-    "name": "maven-hotfix-hosted",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-hotfix-hosted-releases",
-      "maven-hotfix-hosted-snapshots"
-    ]
-  },
-  {
-    "name": "maven-hotfix-hosted-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-hotfix-hosted-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "hosted",
-    "blobstore": "nuxeo-devtools-nexus-central"
-  },
-  {
-    "name": "maven-hotfix-archived",
-    "type": "maven",
-    "hostedtype": "group",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "members": [
-      "maven-hotfix-archived-releases",
-      "maven-hotfix-archived-snapshots"
-    ]
-  },
-  {
-    "name": "maven-hotfix-archived-releases",
-    "type": "maven",
-    "versionPolicy": "RELEASE",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://maven-eu.nuxeo.org/nexus/repository/hotfix-releases/"
-  },
-  {
-    "name": "maven-hotfix-archived-snapshots",
-    "type": "maven",
-    "versionPolicy": "SNAPSHOT",
-    "hostedtype": "proxy",
-    "blobstore": "nuxeo-devtools-nexus-central",
-    "url": "https://maven-eu.nuxeo.org/nexus/repository/hotfix-snapshots/"
-  }
-]
+{
+	"repositories": {
+		"maven2": {
+			"hosted": {
+				"maven-public-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-public-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "SNAPHOT"
+				},
+				"maven-private-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-private-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-hotfix-release": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-hotfix-snapshot": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-daily": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-nightly-staging": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"version_policy": "MIXED"
+				}
+			},
+			"proxy": {
+				"maven-central": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://repo1.maven.org/maven2/"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-thirdparty-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://maven-eu.nuxeo.org/nexus/content/groups/thirdparty-snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-simplofy-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://nexus.simflofy.com/nexus/content/repositories/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-simplofy-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://nexus.simflofy.com/nexus/content/repositories/snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-arondor-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://artifactory.arondor.cloud/artifactory/arondor-release"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-arondor-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://artifactory.arondor.cloud/artifactory/arondor-snapshot"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-public-archives-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/public-releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-public-archives-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/public-snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-public-nuxeo-studio-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-public-nuxeo-studio-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/private-releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-private-archives-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/private-snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-hotfix-archives-releases": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/hotfix-releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-hotfix-archives-snapshots": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/hotfix-snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				}
+			},
+			"group": {
+				"maven-thirdparty": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-thirdparty-releases",
+						"maven-thirdparty-snapshots",
+						"maven-central"
+					]
+				},
+				"maven-public-archives": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-public-archives-releases",
+						"maven-public-archives-snapshots"
+					]
+				},
+				"maven-public": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-public-archives",
+						"maven-public-releases",
+						"maven-public-snapshots",
+						"maven-public-thirdparty"
+					]
+				},
+				"maven-private-archives": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-private-archives-releases",
+						"maven-private-archives-snapshots"
+					]
+				},
+				"maven-private-thirdparty": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-thirdparty-simplofy-releases",
+						"maven-thirdparty-simplofy-snapshots",
+						"maven-thirdparty-arondor-releases",
+						"maven-thirdparty-arondor-snapshots"
+					]
+				},
+				"maven-private": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-private-archives",
+						"maven-private-releases",
+						"maven-private-snapshots",
+						"maven-private-thirdparty"
+					]
+				},
+				"maven-hotfix-archives": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-hotfix-archives-releases",
+						"maven-hotfix-archives-snapshots"
+					]
+				},
+				"maven-hotfix": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-hotfix-archives",
+						"maven-hotfix-releases",
+						"maven-hotfix-snaphots"
+					]
+				},
+				"maven-public-nuxeo-studio": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-public-nuxeo-studio-releases",
+						"maven-public-nuxeo-studio-snapshots"
+					]
+				},
+				"maven": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"maven-public",
+						"maven-private",
+						"maven-thirdparty",
+						"maven-hotfix"
+					]
+				}
+			}
+		},
+		"npm": {
+			"hosted": {
+				"npm-public": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					}
+				},
+				"npm-private": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					}
+				}
+			},
+			"proxy": {
+				"npm-upstream": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central",
+						"strict_content_type_validation": "true"
+					},
+					"remote": {
+						"url": "https://packages.nuxeo.com/repository/npm-internal/"
+					}
+				}
+			},
+			"group": {
+				"npm": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"npm-public",
+						"npm-private",
+						"npm-upstream"
+					]
+				}
+			}
+		},
+		"nuget": {
+			"hosted": {
+				"nuget-public": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					}
+				},
+				"nuget-private": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					}
+				}
+			},
+			"proxy": {
+				"nuget-upstream": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central",
+						"strict_content_type_validation": "true"
+					},
+					"remote": {
+						"url": "https://packages.nuxeo.com/repository/nuget-internal/"
+					}
+				}
+			},
+			"group": {
+				"nuget": {
+					"blobstore": {
+						"name": "nuxeo-devtools-nexus-central"
+					},
+					"repositories": [
+						"nuget-public",
+						"nuget-private",
+						"nuget-upstream"
+					]
+				}
+			}
+		}
+	},
+	"passwords": {
+		"file": [
+			"/opt/sonatype/nexus/config/passwords.json"
+		]
+	},
+	"remotes": {
+		"packages.nuxeo.com": {
+			"auth_type": "username",
+			"user": "deployment"
+		}
+	}
+}

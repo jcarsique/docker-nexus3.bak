@@ -24,8 +24,8 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
 └── parms                 Nexus 3 image customizations
     ├── central           https://packages.nuxeo.com/
     ├── cluster           https://packages.dev.nuxeo.com/
-    ├── jenkins           Jenkins X default Nexus 3
-    └── <team>..          https://packages-<team>.dev.nuxeo.com
+    ├── jenkins-x         Jenkins X default Nexus 3
+    └── team              Jenkinx X default for team
 ```
 
 ## Usage
@@ -193,6 +193,7 @@ docker run -p 8081:8081 -v <CONFIG>:/opt/sonatype/nexus/config/ \
           "expiration": "3"
         }
       ]
+- `[blobstore|repositor|security].json`: optional configuration which override image parms
 
 ###### `<LICENSE>`: path to the Nexus license file (optional)
 
