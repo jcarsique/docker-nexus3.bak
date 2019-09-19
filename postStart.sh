@@ -70,5 +70,8 @@ if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
 fi
 
 for script in blobstore repository security tasks; do
-    createOrUpdateAndRun ${script} /opt/sonatype/nexus/scripts/${script}-body.json /opt/sonatype/nexus/scripts/${script}-parms.json
+    body=/opt/sonatype/nexus/scripts/${script}-body.json
+    parms=/opt/sonatype/nexus/scripts/${script}-parms.json
+    [ -f /opt/sonatype/nexus/config/${script}.json ] && parms=/opt/sonatype/nexus/config/${script}.json
+    createOrUpdateAndRun ${script} ${body} ${parms}
 done
