@@ -1,12 +1,15 @@
-import org.sonatype.nexus.script.plugin.RepositoryApi
-import groovy.json.JsonOutput
-import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl
-import groovy.json.JsonSlurper
-import org.sonatype.nexus.repository.storage.WritePolicy
-import org.sonatype.nexus.repository.maven.VersionPolicy
-import org.sonatype.nexus.repository.maven.LayoutPolicy
-import org.sonatype.nexus.repository.Repository
+import static java.lang.String.format
+import static org.sonatype.nexus.common.text.Strings2.mask
+
+import org.sonatype.nexus.common.io.SanitizingJsonOutputStream
 import org.sonatype.nexus.repository.config.Configuration
+import org.sonatype.nexus.repository.maven.LayoutPolicy
+import org.sonatype.nexus.repository.maven.VersionPolicy
+import org.sonatype.nexus.repository.storage.WritePolicy
+import org.sonatype.nexus.script.plugin.internal.provisioning.RepositoryApiImpl
+
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 
 
 def createHosted(Map repoDef) {
@@ -81,11 +84,12 @@ def createGroup(Map repoDef) {
     }
 }
 
+
 List<Map<String, String>> actionDetails = []
 Map scriptResults = [changed: false, error: false]
 scriptResults.put('action_details', actionDetails)
 
-serversFile = new File('/opt/sonatype/nexus/config/servers.json')
+serversFile = new File('/opt/sonatype/nexus/scripts/servers.json')
 if (serversFile.exists()) {
 	servers = new JsonSlurper().parseText(serversFile.text)
 } else {
@@ -127,20 +131,23 @@ new JsonSlurper().parseText(args).each { repoDef ->
             if (hostedtype == "hosted") {
                 createHosted(repoDef)
             }  else if (hostedtype == "proxy") {
-                Repository repository = createProxy(repoDef)
-				Configuration confguration = repository.getConfiguration();
-				String remoteUrl = configuration.attributes.get("remoteUrl")
+                Configuration configuration = createProxy(repoDef).configuration
+				String remoteUrl = configuration.attributes('proxy').get('remoteUrl', String.class)
+				log.info("remoteUrl {}", remoteUrl)
 				if (remoteUrl != null) {
-					String remoteHost = URL.toURL().getHost();
-					Map parms = server[remoteHost]
-					if (parms != null) {
+					String remoteHost = new URL(remoteUrl).getHost();
+					log.info("host {}", remoteHost)
+					Map server = servers[remoteHost]
+					log.info("server {}", server)
+					if (server != null) {
 						authentication = configuration.attributes('httpclient').child('connection').child('authentication');
-						authentication.set('type', server.type)
-						authentication.set('username', server.username)
-						authentication.set('password', passwords[server.username])
-						authentication.set('ntlmHost', server.ntlmHost)
-						authentication.set('ntlmDomain', server.ntlmDomain)
-						repositoryManager.update(configuration)
+						authentication.set('type', server.get('type'))
+						authentication.set('username', server.get('username'))
+						authentication.set('password', server[server.get('username')])
+						authentication.set('ntlmHost', server.get('ntlmHost'))
+						authentication.set('ntlmDomain', server.get('ntlmDomain'))
+						api.getRepositoryManager().update(configuration)
+						log.info("injected auth for {} with {}", name, api.getRepositoryManager().get(name))
 					}
 				}
             } else if (hostedtype == "group") {
