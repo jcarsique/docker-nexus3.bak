@@ -64,14 +64,14 @@ List<String> getKnownDesiredBlobStores(Map json) {
     }.flatten().sort().unique()
 }
 
-List<String> getKnownDesiredRepositories(Map json) {
-	json['repositories'].collect { provider_key, provider ->
-        provider.collect { repo_type_key, repo_type ->
-            repo_type.collect { repo_key, repo ->
-                repo_key
+Map<String,?> getKnownDesiredRepositories(Map json) {
+	json['repositories'].collectEntries { provider_key, provider ->
+        provider.collectEntries { repo_type_key, repo_type ->
+            repo_type.collectEntries { repo_key, repo ->
+				[ (repo_key) : [ "type": repo_type_key, "format": provider_key ]]
             }
         }
-    }.flatten().sort().unique()
+    }
 }
 
 
@@ -232,7 +232,6 @@ void validateRemotes(def repositories, def remotes, def passwords) {
 					remote.each {k,v ->
 						repository['remote'].putIfAbsent(k, v)
 					}
-					log.info('injected {} in {} {}', remote, name, repository)
 				}
 			}
 		}
@@ -432,12 +431,16 @@ validateConfiguration(config)
 
 //create non-group repositories second
 if('repositories' in config) {
-	List<String> knownDesiredRepositories = getKnownDesiredRepositories(config)
+	Map<String,?> knownDesiredRepositories = getKnownDesiredRepositories(config)
 	// delete non desired repositories
 	repositoryManager.browse().each { repository ->
-		if (!knownDesiredRepositories.contains(repository['name'])) {
-			repositoryManager.delete(repository['name'])
-		}
+		knownDesiredRepository = knownDesiredRepositories[repository['name']]
+		if (knownDesiredRepository != null &&
+			knownDesiredRepository['format'] == repository['format'].toString() &&
+			knownDesiredRepository['type'] == repository['type'].toString())
+			return
+		log.info("deleting unknown {} {}",repository, knownDesiredRepository)
+		repositoryManager.delete(repository['name'])
 	}
 
 	// create non group first
