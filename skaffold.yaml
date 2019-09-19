@@ -18,13 +18,13 @@ build:
   insecureRegistries:
   - ${DOCKER_REGISTRY}
   artifacts:
-  - image: nuxeo/nexus3/jenkins
+  - image: nuxeo/nexus3/jenkins-x
     kaniko:
         dockerfile: Dockerfile
         buildArgs:
          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
          VERSION: ${VERSION}
-         PARMS: jenkins
+         PARMS: jenkins-x
         flags:
         - --insecure
         - --insecure-pull
@@ -66,13 +66,13 @@ build:
         cache: 
           repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
     context: .
-  - image: nuxeo/nexus3/devtools
+  - image: nuxeo/nexus3/team
     kaniko:
         dockerfile: Dockerfile
         buildArgs:
          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
          VERSION: ${VERSION}
-         PARMS: cluster
+         PARMS: team
         flags:
         - --insecure
         - --insecure-pull
