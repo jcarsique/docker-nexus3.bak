@@ -25,7 +25,7 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
     ├── central           https://packages.nuxeo.com/
     ├── cluster           https://packages.dev.nuxeo.com/
     ├── jenkins-x         Jenkins X default Nexus 3
-    └── team              Jenkinx X default for team
+    └── team              Nuxeo default Nexus 3 for JX team https://packages-<team>.dev.nuxeo.com/
 ```
 
 ## Usage

@@ -231,7 +231,7 @@ void validateRemotes(def repositories, def remotes, def passwords) {
 				k == 'proxy'
 			}.each { type, type_value ->
 				type_value.findAll() { k, v ->
-					host.equals(new URL(v['remote']['url']).getHost())
+                    v['remote'].get('auth', 'false').toBoolean() && host.equals(new URL(v['remote']['url']).getHost())
 				}.each { name, repository ->
 					remote.each {k,v ->
 						repository['remote'].putIfAbsent(k, v)
