@@ -15,8 +15,6 @@
 apiVersion: skaffold/v1beta10
 kind: Config
 build:
-  insecureRegistries:
-  - ${DOCKER_REGISTRY}
   artifacts:
   - image: nuxeo/nexus3/jenkins
     kaniko:
@@ -25,10 +23,6 @@ build:
          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
          VERSION: ${VERSION}
          PARMS: jenkins
-        flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
         cache: 
@@ -41,10 +35,6 @@ build:
          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
          VERSION: ${VERSION}
          PARMS: central
-        flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
         cache: 
@@ -57,17 +47,14 @@ build:
          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
          VERSION: ${VERSION}
          PARMS: cluster
-        flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
         cache: 
           repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
     context: .
   cluster: 
-    namespace: admin
+    pullSecretName: kaniko-secret
+    namespace: ${SKAFFOLD_DEPLOY_NAMESPACE}
   tagPolicy:
     envTemplate:
       template: '{{.DOCKER_REGISTRY}}/{{.IMAGE_NAME}}:{{.VERSION}}'

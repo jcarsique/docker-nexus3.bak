@@ -14,12 +14,12 @@
 
 include ../make.d/skaffold.mk
 
-.PHONY: all build base
+.PHONY: all build builder
 
 all: skaffold@up build skaffold@down
 
 build: builder
 
 builder: skaffold.yaml~gen
-	$(SKAFFOLD) build -f skaffold.yaml~gen
+	$(call SKAFFOLD, build -f skaffold.yaml~gen)
 

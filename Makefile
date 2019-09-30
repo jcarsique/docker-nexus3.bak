@@ -31,11 +31,11 @@ builder: skaffold.yaml~gen
 	$(MAKE) --directory builder build
 
 jenkins: skaffold.yaml~gen
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins 
+	$(call SKAFFOLD, build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins)
 
 central: skaffold.yaml~gen
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
+	$(call SKAFFOLD, build -f skaffold.yaml~gen -b nuxeo/nexus3/central)
 
 cluster: skaffold.yaml~gen
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
+	$(call SKAFFOLD, build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster)
 
