@@ -25,10 +25,10 @@ all: skaffold@up build skaffold@down
 build: base builder jenkins central cluster
 
 base:
-	$(MAKE) --directory base build
+	$(MAKE) -I../shared-make.d --directory base build
 
 builder: skaffold.yaml~gen
-	$(MAKE) --directory builder build
+	$(MAKE) -I../shared-make.d --directory builder build
 
 jenkins: skaffold.yaml~gen
 	$(call SKAFFOLD, build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins)
