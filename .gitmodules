@@ -1,0 +1,3 @@
+[submodule "shared-make.d"]
+	path = shared-make.d
+	url = https://github.com/pfouh/jx-make-rules.git

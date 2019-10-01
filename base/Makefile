@@ -1,5 +1,5 @@
 
-include ../make.d/skaffold.mk
+include skaffold.mk
 
 .PHONY: all build base skaffold.yaml~gen
 

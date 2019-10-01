@@ -50,7 +50,7 @@ pipeline {
     stage('Prepare environment') {
       steps {
         container('jx-base') {
-          sh(script: 'make skaffold@up')
+          sh(script: 'make -I shared-make.d skaffold@up')
         }
       }
     }
@@ -67,11 +67,11 @@ pipeline {
       steps {
         setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
         container('jx-base') {
-          sh 'make base'
-          sh 'make builder'
-          sh 'make jenkins'
-          sh 'make central'
-          sh 'make cluster'
+          sh 'make -I shared-make.d base'
+          sh 'make -I shared-make.d builder'
+          sh 'make -I shared-make.d jenkins'
+          sh 'make -I shared-make.d central'
+          sh 'make -I shared-make.d cluster'
         }
       }
       post {
@@ -104,7 +104,7 @@ jx step git credentials'''
         setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
         container('jx-base') {
           withEnv(["VERSION=${getReleaseVersion()}"]) {
-            sh 'make build'
+            sh 'make -I shared-make.d build'
           }
         }
       }
@@ -133,7 +133,7 @@ jx step git credentials'''
   post {
     always {
       container('jx-base') {
-        sh 'make skaffold@down'
+        sh 'make -I shared-make.d skaffold@down'
         cleanWs()
       }
     }

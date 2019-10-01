@@ -14,7 +14,7 @@
 
 ..NOTPARALLEL: base builder jenkins central
 
-include make.d/skaffold.mk
+include skaffold.mk
 
 .PHONY: all build base builder jenkins central
 

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include ../make.d/skaffold.mk
+include skaffold.mk
 
 .PHONY: all build builder
 
