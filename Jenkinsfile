@@ -38,6 +38,7 @@ pipeline {
   }
   options {
     disableConcurrentBuilds()
+    skipDefaultCheckout(true)
     buildDiscarder(logRotator(daysToKeepStr: '60', numToKeepStr: '60', artifactNumToKeepStr: '1'))
   }
   environment {
@@ -50,6 +51,18 @@ pipeline {
     stage('Prepare environment') {
       steps {
         container('jx-base') {
+          checkout scm: [
+                    $class: 'GitSCM',
+                    branches: scm.branches,
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: scm.extensions + [
+                            [$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: false],
+                            [$class: 'AuthorInChangelog'],
+                            [$class: 'CleanCheckout']
+                    ],
+                    submoduleCfg: [],
+                    userRemoteConfigs: scm.userRemoteConfigs
+               ]
           sh(script: 'make -I shared-make.d skaffold@up')
         }
       }
