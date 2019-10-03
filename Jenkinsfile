@@ -115,7 +115,7 @@ jx step git credentials'''
         setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
         container('jx-base') {
           withEnv(["VERSION=${getReleaseVersion()}"]) {
-            sh 'make -I shared-make.d build'
+            sh 'make -I shared-make.d release'
           }
         }
       }
@@ -135,7 +135,7 @@ jx step git credentials'''
       steps {
         container('jx-base') {
           withEnv(["VERSION=${getReleaseVersion()}"]) {
-            sh 'jx step changelog --version v$VERSION'
+            sh 'make -I shared-make.d promote'
           }
         }
       }

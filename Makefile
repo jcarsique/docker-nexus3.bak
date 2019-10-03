@@ -19,11 +19,18 @@ include skaffold.mk
 .PHONY: all build base builder jenkins central
 
 VERSION ?= 0.0.0
+DOCKER_REGISTRY ?= gcr.io/jx-preprod/nxmatic/jx
 
-all: skaffold@up build skaffold@down
+release: base builder jenkins central cluster
 
-build: base builder jenkins central cluster
+promote: changelog update-environment-nxmatic-dev
 
+changelog:
+	jx step changelog --version v$(VERSION)
+
+update-environment-nxmatic-dev:
+	jx step create pr regex --regex "^(?m)\s+repository: \"$(subst /,\/,$(DOCKER_REGISTRY))\/nuxeo\/nexus3\/cluster\"\s+tag: \"(.*)\"$"" --version $(VERSION) --files env/jenkins-x-platform/values.tmpl.yaml --repo=https://github.com/pfouh/environment-nxmatic-dev.git
+	
 base:
 	$(MAKE) -I../shared-make.d --directory base build
 
