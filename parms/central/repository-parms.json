@@ -87,6 +87,14 @@
     "httpPort": 5000
   },
   {
+    "name": "docker-private",
+    "type": "docker",
+    "hostedtype": "hosted",
+    "blobstore": "nuxeo-devtools-nexus-central",
+    "httpPort": 6000
+
+  },
+  {
     "name": "hotfix-releases",
     "type": "maven",
     "hostedtype": "hosted",
