@@ -12,14 +12,13 @@ import static org.sonatype.nexus.security.user.UserManager.DEFAULT_SOURCE
 
 nexusRealms = ["NexusAuthenticatingRealm",
                "NexusAuthorizingRealm",
-               "DockerToken",
                "Crowd",
-               "LdapRealm",
-               "NpmToken",
                "NuGetApiKey",
                "rutauth-realm",
                "User-Token-Realm",
-               "com.larscheidschmitzhermes.nexus3.github.oauth.plugin.GithubOauthAuthenticatingRealm"]
+               "com.larscheidschmitzhermes.nexus3.github.oauth.plugin.GithubOauthAuthenticatingRealm",
+               "DockerToken",
+               "NpmToken"]
 
 realmManager = container.lookup(RealmManager.class.getName())
 nexusRealms.each {
