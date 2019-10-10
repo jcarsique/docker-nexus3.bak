@@ -66,8 +66,9 @@ elif curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/pi
     echo "Login to nexus succeeded. Default password worked. Updating password if available..."
     setScriptList
     if test -n "$PASSWORD_FROM_FILE"; then
-	createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
-	setPasswordFromFile
+	  createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
+	  setPasswordFromFile
+      setScriptList
     fi
 else
     die "Login to nexus failed. Tried the default password only since no password secret file was provided."
