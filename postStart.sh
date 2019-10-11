@@ -72,3 +72,4 @@ fi
 for script in blobstore repository security; do
     createOrUpdateAndRun ${script} /opt/sonatype/nexus/scripts/${script}-body.json /opt/sonatype/nexus/scripts/${script}-parms.json
 done
+createOrUpdateAndRun cleanup /opt/sonatype/nexus/scripts/cleanup-body.json
