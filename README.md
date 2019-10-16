@@ -112,7 +112,8 @@ Dockerfile build arguments and default values:
   * `DESCRIPTION`="JX default Nexus 3"
 
 ```bash
-docker build --build-arg NEXUS3_VERSION=latest \
+# See https://hub.docker.com/r/sonatype/nexus3/tags
+docker build --build-arg NEXUS3_VERSION=3.19.1 \
              --build-arg SCM_REF="$(git id)" \
              -t localhost:5000/nuxeo/nexus3/base base
 
