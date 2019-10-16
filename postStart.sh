@@ -49,30 +49,18 @@ function setScriptList() {
     SCRIPT_LIST=($(curl --fail -s -u $USERNAME:$PASSWORD http://$HOST/service/rest/v1/script | grep -oE "\"name\" : \"[^\"]+" | sed 's/"name" : "//'))
 }
 
-function setPasswordFromFile() {
-    if [ -n "${PASSWORD_FROM_FILE}" ]; then
-        echo "Updating PASSWORD variable from password file."
-        PASSWORD="${PASSWORD_FROM_FILE}"
-    else
-        echo "Not updating PASSWORD var. Password file either non-existent or not readable."
-    fi
+function testLogin() {
+    curl --fail --silent -u $USERNAME:$1 http://$HOST/service/metrics/ping >/dev/null 2>&1
 }
 
-if test -n "$PASSWORD_FROM_FILE" && curl --fail --silent -u $USERNAME:$PASSWORD_FROM_FILE http://$HOST/service/metrics/ping; then
-    echo "Loging to nexues suceeded. kubernetes provided password worked."
-    setPasswordFromFile
-    setScriptList
-elif curl --fail --silent -u $USERNAME:$PASSWORD http://$HOST/service/metrics/ping; then
-    echo "Login to nexus succeeded. Default password worked. Updating password if available..."
-    setScriptList
-    if test -n "$PASSWORD_FROM_FILE"; then
-	  createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
-	  setPasswordFromFile
-      setScriptList
-    fi
-else
-    die "Login to nexus failed. Tried the default password only since no password secret file was provided."
+# Need password upgrade from file?
+if test -n "$PASSWORD_FROM_FILE" && ! testLogin "$PASSWORD_FROM_FILE"; then
+    echo "Setting password from file"
+    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
 fi
+PASSWORD=${PASSWORD_FROM_FILE:-$PASSWORD}
+testLogin "$PASSWORD" || die "Login fails."
+setScriptList
 
 # if not explicitly enabled, then Helm chart switches to disabled
 if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
