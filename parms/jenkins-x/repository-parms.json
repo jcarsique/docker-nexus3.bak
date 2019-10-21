@@ -3,9 +3,6 @@
     "raw": {
       "proxy": {
         "gradle-distributions": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://services.gradle.org/distributions/"
           }
@@ -15,79 +12,49 @@
     "maven2": {
       "hosted": {
         "maven-releases": {
-          "blobstore": {
-            "name": "store"
-          },
           "version_policy": "RELEASE"
         },
         "maven-snapshots": {
-          "blobstore": {
-            "name": "store"
-          },
           "version_policy": "SNAPSHOT"
         }
       },
       "proxy": {
         "maven-central": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://repo1.maven.org/maven2/"
           }
         },
         "jenkins-public": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://repo.jenkins-ci.org/public/"
           }
         },
         "jenkins-release": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://repo.jenkins-ci.org/releases/"
           }
         },
         "jitpack": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://jitpack.io"
           }
         },
         "maven-jenkinsci": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://repo.jenkins-ci.org/releases/"
           }
         },
         "plugins-gradle": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://plugins.gradle.org/m2"
           }
         },
         "spring-milestone": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "http://repo.spring.io/milestone/"
           }
         },
         "spring-release": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "http://repo.spring.io/release/"
           }
@@ -95,9 +62,6 @@
       },
       "group": {
         "maven-public": {
-          "blobstore": {
-            "name": "store"
-          },
           "repositories": [
             "maven-central",
             "maven-releases",
@@ -105,9 +69,6 @@
           ]
         },
         "maven": {
-          "blobstore": {
-            "name": "store"
-          },
           "repositories": [
             "maven-public",
             "maven-central",
@@ -127,9 +88,6 @@
     "npm": {
       "proxy": {
         "npmjs-registry": {
-          "blobstore": {
-            "name": "store"
-          },
           "remote": {
             "url": "https://registry.npmjs.org"
           }
@@ -143,9 +101,8 @@
     ]
   },
   "remotes": {
-    "packages.nuxeo.com": {
-      "auth_type": "username",
-      "user": "deployment"
-    }
+  },
+  "blobstore": {
+    "name": "store"
   }
 }

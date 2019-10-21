@@ -13,9 +13,11 @@ done
 #chmod -R g+rw /nexus-data
 #find /nexus-data -type d -exec chmod g+x {} +
 
-USERNAME=admin
+USERNAME="admin"
+SCRIPTS_PATH="/opt/sonatype/nexus/scripts/"
+CONFIG_PATH="/opt/sonatype/nexus/config/"
 PASSWORD="$(cat /nexus-data/admin.password || true)"
-PASSWORD_FROM_FILE="$(cat /opt/sonatype/nexus/config/password || true)"
+PASSWORD_FROM_FILE="$(cat $CONFIG_PATH/password || true)"
 declare -a SCRIPT_LIST=
 
 function die() {
@@ -56,7 +58,7 @@ function testLogin() {
 # Need password upgrade from file?
 if test -n "$PASSWORD_FROM_FILE" && ! testLogin "$PASSWORD_FROM_FILE"; then
     echo "Setting password from file"
-    createOrUpdateAndRun set_admin_password /opt/sonatype/nexus/scripts/set_admin_password-body.json
+    createOrUpdateAndRun set_admin_password "$SCRIPTS_PATH/set_admin_password-body.json"
 fi
 PASSWORD=${PASSWORD_FROM_FILE:-$PASSWORD}
 testLogin "$PASSWORD" || die "Login fails."
@@ -64,14 +66,16 @@ setScriptList
 
 # if not explicitly enabled, then Helm chart switches to disabled
 if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
-    secFile="/opt/sonatype/nexus/scripts/security-parms.json"
-    jq '.[] | select (.type == "anonymous") .enabled = "false"' ${secFile} > ${secFile}.tmp && \
-    mv ${secFile}.tmp ${secFile}
+    secFile="$SCRIPTS_PATH/security-parms.json"
+    jq '.[] | select (.type == "anonymous") .enabled = "false"' ${secFile} > ${secFile}.tmp && mv ${secFile}.tmp ${secFile}
 fi
 
 for script in blobstore repository security tasks; do
-    body=/opt/sonatype/nexus/scripts/${script}-body.json
-    parms=/opt/sonatype/nexus/scripts/${script}-parms.json
-    [ -f /opt/sonatype/nexus/config/${script}.json ] && parms=/opt/sonatype/nexus/config/${script}.json
+    body="$SCRIPTS_PATH/${script}-body.json"
+    if [ -f "$CONFIG_PATH/${script}.json" ] ; then
+        parms="$CONFIG_PATH/${script}.json"
+    else
+        parms="$SCRIPTS_PATH/${script}-parms.json"
+    fi
     createOrUpdateAndRun ${script} ${body} ${parms}
 done

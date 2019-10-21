@@ -323,18 +323,23 @@
 				}
 			}
 		},
+		"docker": {
+			"hosted": {
+				"docker-registry": {
+					"httpPort": 5000
+				},
+				"docker-private": {
+					"httpPort": 6000
+				},
+				"docker-arender": {
+					"httpPort": 5001
+				}
+			}
+		},
 		"npm": {
 			"hosted": {
-				"npm-public": {
-					"blobstore": {
-						"name": "nuxeo-devtools-nexus-central"
-					}
-				},
-				"npm-private": {
-					"blobstore": {
-						"name": "nuxeo-devtools-nexus-central"
-					}
-				}
+				"npm-public": {},
+				"npm-private": {}
 			},
 			"proxy": {
 				"npm-upstream": {
@@ -359,34 +364,26 @@
 		},
 		"nuget": {
 			"hosted": {
-				"nuget-public": {
-					"blobstore": {
-						"name": "nuxeo-devtools-nexus-central"
-					}
-				},
-				"nuget-private": {
-					"blobstore": {
-						"name": "nuxeo-devtools-nexus-central"
-					}
-				}
+				"nuget-public": {},
+				"nuget-private": {}
 			},
 			"proxy": {
-				"nuget-upstream": {
+				"nuget.org-proxy": {
 					"blobstore": {
 						"name": "nuxeo-devtools-nexus-central",
 						"strict_content_type_validation": "true"
 					},
 					"remote": {
-						"url": "https://packages.nuxeo.com/repository/nuget-internal/"
+						"url": "https://www.nuget.org/api/v2/"
 					}
 				}
 			},
 			"group": {
-				"nuget": {
+				"nuget-internal": {
 					"repositories": [
 						"nuget-public",
 						"nuget-private",
-						"nuget-upstream"
+						"nuget.org-proxy"
 					]
 				}
 			}
