@@ -3,15 +3,9 @@
 		"maven2": {
 			"hosted": {
 				"maven-public": {
-					"blobstore": {
-						"name": "store"
-					},
 					"version_policy": "MIXED"
 				},
 				"maven-private": {
-					"blobstore": {
-						"name": "store"
-					},
 					"version_policy": "MIXED"
 				}
 			},
@@ -22,16 +16,14 @@
 						"strict_content_type_validation": "true"
 					},
 					"remote": {
-						"url": "https://packages.nuxeo.com/repository/maven-internal/"
+						"url": "https://packages.nuxeo.com/repository/maven-internal/",
+						"auth": "true"
 					},
 					"version_policy": "MIXED"
 				}
 			},
 			"group": {
 				"maven": {
-					"blobstore": {
-						"name": "store"
-					},
 					"repositories": [
 						"maven-public",
 						"maven-private",
@@ -43,14 +35,8 @@
 		"npm": {
 			"hosted": {
 				"npm-public": {
-					"blobstore": {
-						"name": "store"
-					}
 				},
 				"npm-private": {
-					"blobstore": {
-						"name": "store"
-					}
 				}
 			},
 			"proxy": {
@@ -60,15 +46,13 @@
 						"strict_content_type_validation": "true"
 					},
 					"remote": {
-						"url": "https://packages.nuxeo.com/repository/npm-internal/"
+						"url": "https://packages.nuxeo.com/repository/npm-internal/",
+						"auth": "true"
 					}
 				}
 			},
 			"group": {
 				"npm": {
-					"blobstore": {
-						"name": "store"
-					},
 					"repositories": [
 						"npm-public",
 						"npm-private",
@@ -80,14 +64,8 @@
 		"nuget": {
 			"hosted": {
 				"nuget-public": {
-					"blobstore": {
-						"name": "store"
-					}
 				},
 				"nuget-private": {
-					"blobstore": {
-						"name": "store"
-					}
 				}
 			},
 			"proxy": {
@@ -97,15 +75,13 @@
 						"strict_content_type_validation": "true"
 					},
 					"remote": {
-						"url": "https://packages.nuxeo.com/repository/nuget-internal/"
+						"url": "https://packages.nuxeo.com/repository/nuget-internal/",
+						"auth": "true"
 					}
 				}
 			},
 			"group": {
 				"nuget": {
-					"blobstore": {
-						"name": "store"
-					},
 					"repositories": [
 						"nuget-public",
 						"nuget-private",
@@ -125,5 +101,8 @@
 			"auth_type": "username",
 			"user": "deployment"
 		}
+	},
+	"blobstore": {
+		"name": "store"
 	}
 }

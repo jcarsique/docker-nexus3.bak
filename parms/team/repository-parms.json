@@ -3,15 +3,9 @@
 		"maven2": {
 			"hosted": {
 				"maven-public": {
-					"blobstore": {
-						"name": "store"
-					},
 					"version_policy": "MIXED"
 				},
 				"maven-private": {
-					"blobstore": {
-						"name": "store"
-					},
 					"version_policy": "MIXED"
 				}
 			},
@@ -29,9 +23,6 @@
 			},
 			"group": {
 				"maven": {
-					"blobstore": {
-						"name": "store"
-					},
 					"repositories": [
 						"maven-public",
 						"maven-private",
@@ -43,14 +34,8 @@
 		"npm": {
 			"hosted": {
 				"npm-public": {
-					"blobstore": {
-						"name": "store"
-					}
 				},
 				"npm-private": {
-					"blobstore": {
-						"name": "store"
-					}
 				}
 			},
 			"proxy": {
@@ -64,16 +49,10 @@
 					}
 				},
 				"nuget-private": {
-					"blobstore": {
-						"name": "store"
-					}
 				}
 			},
 			"group": {
 				"nuget": {
-					"blobstore": {
-						"name": "store"
-					},
 					"repositories": [
 						"nuget-public",
 						"nuget-private",
@@ -93,5 +72,8 @@
 			"auth_type": "username",
 			"user": "deployment"
 		}
+	},
+	"blobstore": {
+		"name": "store"
 	}
 }
