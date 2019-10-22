@@ -1,0 +1,12 @@
+[
+    {
+        "scriptName": "CleanupOldSnapshots",
+        "repoName": "*",
+        "retained": "2",
+        "retentionDays": "90",
+        "removeReleased": "true",
+        "gracePeriod": 7,
+        "mail": "devtools+packages@nuxeo.com",
+        "cron": "0 0 8 * * ?"
+    }
+]

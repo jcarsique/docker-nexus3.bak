@@ -69,7 +69,6 @@ if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
     mv ${secFile}.tmp ${secFile}
 fi
 
-for script in blobstore repository security; do
+for script in blobstore repository security tasks; do
     createOrUpdateAndRun ${script} /opt/sonatype/nexus/scripts/${script}-body.json /opt/sonatype/nexus/scripts/${script}-parms.json
 done
-createOrUpdateAndRun cleanup /opt/sonatype/nexus/scripts/cleanup-body.json

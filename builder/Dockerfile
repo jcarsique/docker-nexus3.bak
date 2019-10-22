@@ -20,5 +20,5 @@ WORKDIR /scripts
 RUN groovy addUpdateScriptBody.groovy -f blobstore.groovy -n blobstore> blobstore-body.json
 RUN groovy addUpdateScriptBody.groovy -f repository.groovy -n repository > repository-body.json
 RUN groovy addUpdateScriptBody.groovy -f security.groovy -n security > security-body.json
-RUN groovy addUpdateScriptBody.groovy -f cleanup.groovy -n cleanup > cleanup-body.json
+RUN groovy addUpdateScriptBody.groovy -f tasks.groovy -n tasks > tasks-body.json
 RUN groovy addUpdateScriptBody.groovy -f set_admin_password.groovy -n set_admin_password > set_admin_password-body.json
