@@ -69,10 +69,10 @@ List<String> getKnownDesiredBlobStores(Map json) {
 }
 
 Map<String,?> getKnownDesiredRepositories(Map json) {
-	json['repositories'].collectEntries { provider_key, provider ->
+    json['repositories'].collectEntries { provider_key, provider ->
         provider.collectEntries { repo_type_key, repo_type ->
             repo_type.collectEntries { repo_key, repo ->
-				[ (repo_key) : [ "type": repo_type_key, "format": provider_key ]]
+                [ (repo_key) : [ "type": repo_type_key, "format": provider_key ]]
             }
         }
     }
@@ -210,36 +210,36 @@ void validateContentSelectors(def json) {
 }
 
 void validateRemotes(def repositories, def remotes, def passwords) {
-	remotes.each { host, remote ->
-		if (remote['auth_type'] == 'username') {
-			if (!remote.containsKey('user')) {
-				throw new MyException("Remote user not defined for host ${host}")
-			}
-			def user = remote['user']
-			if (!passwords.containsKey(host)) {
-				throw new MyException("No passwords defined for host ${host}")
-			}
-			def hostPasswords = passwords[host]
-			if (!hostPasswords.containsKey(user)) {
-				throw new MyException("No password defined for host ${host} and user ${user}")
-			}
-			remote.put('password', hostPasswords[user])
-		}
-		// update proxies
-		repositories.each { provider, provider_value ->
-			provider_value.findAll() { k, v ->
-				k == 'proxy'
-			}.each { type, type_value ->
-				type_value.findAll() { k, v ->
+    remotes.each { host, remote ->
+        if (remote['auth_type'] == 'username') {
+            if (!remote.containsKey('user')) {
+                throw new MyException("Remote user not defined for host ${host}")
+            }
+            def user = remote['user']
+            if (!passwords.containsKey(host)) {
+                throw new MyException("No passwords defined for host ${host}")
+            }
+            def hostPasswords = passwords[host]
+            if (!hostPasswords.containsKey(user)) {
+                throw new MyException("No password defined for host ${host} and user ${user}")
+            }
+            remote.put('password', hostPasswords[user])
+        }
+        // update proxies
+        repositories.each { provider, provider_value ->
+            provider_value.findAll() { k, v ->
+                k == 'proxy'
+            }.each { type, type_value ->
+                type_value.findAll() { k, v ->
                     v['remote'].get('auth', 'false').toBoolean() && host.equals(new URL(v['remote']['url']).getHost())
-				}.each { name, repository ->
-					remote.each {k,v ->
-						repository['remote'].putIfAbsent(k, v)
-					}
-				}
-			}
-		}
-	}
+                }.each { name, repository ->
+                    remote.each {k,v ->
+                        repository['remote'].putIfAbsent(k, v)
+                    }
+                }
+            }
+        }
+    }
 }
 
 void validateConfiguration(def json) {
@@ -257,15 +257,15 @@ void validateConfiguration(def json) {
         }
     }
 
-	if ('passwords' in json) {
-		json['passwords']['file'].each { path ->
-			json['passwords'].putAll(new JsonSlurper().parseText(new File(path).text))
-		}
-	}
+    if ('passwords' in json) {
+        json['passwords']['file'].each { path ->
+            json['passwords'].putAll(new JsonSlurper().parseText(new File(path).text))
+        }
+    }
 
-	if ('remotes' in config) {
-		validateRemotes(json['repositories'], json['remotes'], json['passwords'])
-	}
+    if ('remotes' in config) {
+        validateRemotes(json['repositories'], json['remotes'], json['passwords'])
+    }
 
     if('repositories' in json) {
         checkForEmptyValidation('repository providers', ((json['repositories']?.keySet() as List) - supported_repository_providers))
@@ -280,7 +280,7 @@ void validateConfiguration(def json) {
 }
 
 void createRepository(String provider, String type, String name, Map json) {
-	log.info("creating " + name)
+    log.info("creating " + name)
     Configuration repo_config
     Boolean exists = repositoryManager.get(name) as Boolean
     if(exists) {
@@ -337,7 +337,7 @@ void createRepository(String provider, String type, String name, Map json) {
             String auth_type = json['remote'].get('auth_type', 'none')
             switch(auth_type) {
                 case ['username', 'ntml']:
-				    def authentication = httpclient.child('authentication')
+                    def authentication = httpclient.child('authentication')
                     authentication.set('type', auth_type);
                     authentication.set('username', json['remote'].get('user', ''))
                     authentication.set('password', json['remote'].get('password', ''))
@@ -420,10 +420,10 @@ void createSelector(String name, Map json) {
 
 
 try {
-	config = (new JsonSlurper()).parseText(args)
+    config = (new JsonSlurper()).parseText(args)
 }
 catch(Exception e) {
-	throw new MyException("Configuration is not valid.  It must be a valid JSON object.")
+    throw new MyException("Configuration is not valid.  It must be a valid JSON object.")
 }
 
 
@@ -435,36 +435,41 @@ validateConfiguration(config)
 
 //create non-group repositories second
 if('repositories' in config) {
-	Map<String,?> knownDesiredRepositories = getKnownDesiredRepositories(config)
-	// delete non desired repositories
-	repositoryManager.browse().each { repository ->
-		knownDesiredRepository = knownDesiredRepositories[repository['name']]
-		if (knownDesiredRepository != null &&
-			knownDesiredRepository['format'] == repository['format'].toString() &&
-			knownDesiredRepository['type'] == repository['type'].toString())
-			return
-		log.info("deleting unknown {} {}",repository, knownDesiredRepository)
-		repositoryManager.delete(repository['name'])
-	}
+    Map<String,?> knownDesiredRepositories = getKnownDesiredRepositories(config)
+    // deactivate non desired repositories
+    repositoryManager.browse().each { repository ->
+        knownDesiredRepository = knownDesiredRepositories[repository['name']]
+        if (knownDesiredRepository != null &&
+            knownDesiredRepository['format'] == repository['format'].toString() &&
+            knownDesiredRepository['type'] == repository['type'].toString())
+            return
+        log.info("Unknown repository {} switched offline", repository)
+        repo = repositoryManager.get(repository['name'])
+        config = repo.getConfiguration()
+        config.setOnline(false)
+        repo.update(config)
+        // log.info("deleting unknown {} {}",repository, knownDesiredRepository)
+        // repositoryManager.delete(repository['name'])
+    }
 
-	// create non group first
-	config['repositories'].each { provider, provider_value ->
-		provider_value.findAll { k, v ->
-			k != 'group'
-		}.each { type, type_value ->
-			type_value.each { name, name_value ->
-				createRepository(provider, type, name, name_value)
-			}
-		}
-	}
+    // create non group first
+    config['repositories'].each { provider, provider_value ->
+        provider_value.findAll { k, v ->
+            k != 'group'
+        }.each { type, type_value ->
+            type_value.each { name, name_value ->
+                createRepository(provider, type, name, name_value)
+            }
+        }
+    }
 
 
-	//create repository groups last
-	config['repositories'].each { provider, provider_value ->
-		provider_value['group'].each { name, name_value ->
-			createRepository(provider, 'group', name, name_value)
-		}
-	}
+    //create repository groups last
+    config['repositories'].each { provider, provider_value ->
+        provider_value['group'].each { name, name_value ->
+            createRepository(provider, 'group', name, name_value)
+        }
+    }
 }
 
 //create content selectors

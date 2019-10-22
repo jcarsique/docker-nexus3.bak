@@ -16,7 +16,8 @@
 						"strict_content_type_validation": "true"
 					},
 					"remote": {
-						"url": "https://nexus.admin/repository/maven-internal/"
+						"url": "https://nexus.admin/repository/maven-internal/",
+						"auth": "true"
 					},
 					"version_policy": "MIXED"
 				}
@@ -45,7 +46,8 @@
 						"strict_content_type_validation": "true"
 					},
 					"remote": {
-						"url": "https://nexus.admin/repository/npm-internal/"
+						"url": "https://nexus.admin/repository/npm-internal/",
+						"auth": "true"
 					}
 				},
 				"nuget-private": {
