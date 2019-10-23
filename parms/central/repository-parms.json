@@ -416,7 +416,7 @@
 			"user": "nuxeo"
 		}
 	},
-	"blobstore": {
-		"name": "nuxeo-devtools-nexus-central"
+	"blobstores": {
+		"default": "nuxeo-devtools-nexus-central"
 	}
 }
