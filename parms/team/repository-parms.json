@@ -75,7 +75,7 @@
 			"user": "deployment"
 		}
 	},
-	"blobstore": {
+	"blobstores": {
 		"name": "store"
 	}
 }

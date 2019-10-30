@@ -438,20 +438,22 @@ if('repositories' in config) {
     Map<String,?> knownDesiredRepositories = getKnownDesiredRepositories(config)
 
     // deactivate non desired repositories
-    // repositoryManager.browse().each { repository ->
-    //     knownDesiredRepository = knownDesiredRepositories[repository['name']]
-    //     if (knownDesiredRepository != null &&
-    //         knownDesiredRepository['format'] == repository['format'].toString() &&
-    //         knownDesiredRepository['type'] == repository['type'].toString())
-    //         return
-    //     log.info("Unknown repository {} switched offline", repository)
-    //     repo = repositoryManager.get(repository['name'])
-    //     config = repo.getConfiguration()
-    //     config.setOnline(false)
-    //     repo.update(config)
-    //     // log.info("deleting unknown {} {}",repository, knownDesiredRepository)
-    //     // repositoryManager.delete(repository['name'])
-    // }
+    repositoryManager.browse().each { repository ->
+        knownDesiredRepository = knownDesiredRepositories[repository['name']]
+        if (knownDesiredRepository != null &&
+            knownDesiredRepository['format'] == repository['format'].toString() &&
+            knownDesiredRepository['type'] == repository['type'].toString()) {
+            return
+        }
+        log.info("Unknown repository {} switched offline", repository)
+        repo = repositoryManager.get(repository['name'])
+        repo_config = repo.getConfiguration()
+        repo_config.setOnline(false)
+        repo.stop()
+        repo.update(repo_config)
+        // log.info("deleting unknown {} {}",repository, knownDesiredRepository)
+        // repositoryManager.delete(repository['name'])
+    }
 
     // create non group first
     config['repositories'].each { provider, provider_value ->

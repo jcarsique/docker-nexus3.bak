@@ -102,7 +102,7 @@
   },
   "remotes": {
   },
-  "blobstore": {
+  "blobstores": {
     "name": "store"
   }
 }
