@@ -446,13 +446,7 @@ if('repositories' in config) {
             return
         }
         log.info("Unknown repository {} switched offline", repository)
-        repo = repositoryManager.get(repository['name'])
-        repo_config = repo.getConfiguration()
-        repo_config.setOnline(false)
-        repo.stop()
-        repo.update(repo_config)
-        // log.info("deleting unknown {} {}",repository, knownDesiredRepository)
-        // repositoryManager.delete(repository['name'])
+        repositoryManager.get(repository['name']).stop()
     }
 
     // create non group first

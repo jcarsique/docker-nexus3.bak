@@ -24,7 +24,7 @@ FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/base:${VERSION} as base
 FROM base
 ARG DOCKER_REGISTRY=jenkins-x-docker-registry
 ARG VERSION=0.1-SNAPSHOT
-ARG PARMS=jenkins
+ARG PARMS=jenkins-x
 ARG DESCRIPTION="JX default Nexus 3"
 ARG SCM_REF=unknown
 

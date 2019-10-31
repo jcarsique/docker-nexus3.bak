@@ -51,8 +51,10 @@ Build and push custom Nexus 3 Docker images:
 
 * `nuxeo/nexus3/base`
 * `nuxeo/nexus3/builder`
-* `nuxeo/nexus3/jenkins`
+* `nuxeo/nexus3/jenkins-x`
 * `nuxeo/nexus3/central`
+* `nuxeo/nexus3/cluster`
+* `nuxeo/nexus3/team`
 
 On `PR-*|feature-*|fix-*` branch pattern, tag is `0.0.0-<branch-name>-<build-number>`
 
@@ -108,7 +110,7 @@ Dockerfile build arguments and default values:
   * `VERSION`=0.1-SNAPSHOT
   * `DOCKER_REGISTRY`=jenkins-x-docker-registry  
   set `DOCKER_REGISTRY`=localhost:5000 for local build
-  * `PARMS`=jenkins
+  * `PARMS`=jenkins-x
   * `DESCRIPTION`="JX default Nexus 3"
 
 ```bash
@@ -122,7 +124,8 @@ docker build -t localhost:5000/nuxeo/nexus3/builder builder
 docker build --build-arg DOCKER_REGISTRY=localhost:5000 \
              --build-arg VERSION=latest \
              --build-arg SCM_REF="$(git id)" \
-             -t localhost:5000/nuxeo/nexus3/jenkins .
+             --build-arg PARMS=jenkins-x \
+             -t localhost:5000/nuxeo/nexus3/jenkins-x .
 ```
 
 ##### Custom Image Build
@@ -152,10 +155,11 @@ docker build --build-arg DOCKER_REGISTRY=localhost:5000 \
 
 The custom parameters folder name:
 
-* [`central`](parms/central): Nuxeo Central Repository <https://packages.nuxeo.com/>
-* [`cluster`](parms/cluster): Cluster Repository <https://packages.dev.nuxeo.com/>
-* `team`: Team Repositories [https://packages-\<team\>.dev.nuxeo.com](https://packages-\<team\>.dev.nuxeo.com)
-* [`jenkins`](parms/jenkins): Jenkins X default Nexus 3. Not used.
+* [`central`](parms/central): Nuxeo Central <https://packages.nuxeo.com/>
+* [`cluster`](parms/cluster): jx-prod cluster <https://packages.dev.nuxeo.com/>
+* [`jenkins-x`](parms/jenkins): Jenkins X default. Not used.
+* [`team`](parms/team): Team sample. Not used.
+* `<team>`: Team customization (dedicated Git repository). <https://packages.<team>.dev.nuxeo.com>
 
 ###### Custom Image Run
 

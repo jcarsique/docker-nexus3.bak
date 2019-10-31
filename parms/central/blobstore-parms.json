@@ -3,7 +3,7 @@
     "name": "nuxeo-devtools-nexus-central",
     "type": "S3",
     "config": {
-      "bucket": "nuxeo-devtools-nexus-central",
+      "bucket": "nuxeo-devtools-nexus-central-test",
       "assumeRole": "arn:aws:iam::762822024843:role/terraform-eks-nexus-central-node",
       "prefix": "storage",
       "region": "eu-west-1",

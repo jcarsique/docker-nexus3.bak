@@ -69,10 +69,10 @@ pipeline {
         container('jx-base') {
           sh 'make base'
           sh 'make builder'
-          sh 'make jenkins'
+          sh 'make jenkins-x'
           sh 'make central'
           sh 'make cluster'
-          sh 'make devtools'
+          sh 'make team'
         }
       }
       post {
@@ -93,7 +93,9 @@ pipeline {
           sh '''#!/bin/sh -xe
 git checkout master
 git config --global credential.helper store
-jx step git credentials'''
+jx step git credentials
+sed -i "s,nuxeo-devtools-nexus-central-test,nuxeo-devtools-nexus-central," parms/central/blobstore-parms.json
+'''
         }
       }
     }
