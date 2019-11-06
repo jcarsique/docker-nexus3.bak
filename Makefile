@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-..NOTPARALLEL: base builder jenkins central
+..NOTPARALLEL: base builder jenkins-x central cluster team
 
 include make.d/skaffold.mk
 
@@ -22,7 +22,7 @@ VERSION ?= 0.0.0
 
 all: skaffold@up build skaffold@down
 
-build: base builder jenkins central cluster devtools
+build: base builder jenkins central cluster team
 
 base:
 	$(MAKE) --directory base build
@@ -30,8 +30,8 @@ base:
 builder: skaffold.yaml~gen
 	$(MAKE) --directory builder build
 
-jenkins: skaffold.yaml~gen
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins 
+jenkins-x: skaffold.yaml~gen
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins-x
 
 central: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
@@ -39,5 +39,5 @@ central: skaffold.yaml~gen
 cluster: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
 
-devtools: skaffold.yaml~gen
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/devtools
+team: skaffold.yaml~gen
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/team

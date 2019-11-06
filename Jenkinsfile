@@ -69,10 +69,10 @@ pipeline {
         container('jx-base') {
           sh 'make base'
           sh 'make builder'
-          sh 'make jenkins'
+          sh 'make jenkins-x'
           sh 'make central'
           sh 'make cluster'
-          sh 'make devtools'
+          sh 'make team'
         }
       }
       post {
