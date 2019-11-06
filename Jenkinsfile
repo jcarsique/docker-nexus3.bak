@@ -93,7 +93,9 @@ pipeline {
           sh '''#!/bin/sh -xe
 git checkout master
 git config --global credential.helper store
-jx step git credentials'''
+jx step git credentials
+sed -i "s,nuxeo-devtools-nexus-central-test,nuxeo-devtools-nexus-central," parms/central/blobstore-parms.json
+'''
         }
       }
     }
