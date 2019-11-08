@@ -335,12 +335,31 @@
 				"docker-private": {
 					"httpPort": 6000
 				},
+				"docker-private-arondor-host": {
+					"httpPort": 6012
+				},
 				"docker-internal-staging": {
 					"httpPort": 7000,
 					"write_policy": "ALLOW"
 				},
-				"docker-arender": {
-					"httpPort": 5001
+				}
+			},
+			"proxy": {
+				"docker-private-arondor-proxy": {
+					"httpPort": 6011,
+					"remote": {
+						"url": "https://artifactory.arondor.cloud:5001",
+						"auth": "true"
+					}
+				}
+			},
+			"group": {
+				"docker-private-arondor-group": {
+					"httpPort": 6010,
+					"repositories": [
+						"docker-private-arondor-host",
+						"docker-private-arondor-proxy"
+					]
 				}
 			}
 		},
