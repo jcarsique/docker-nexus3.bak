@@ -1,4 +1,4 @@
-# Nexus 3
+www.nuxeo.com# Nexus 3
 
 ## About / Synopsis
 
@@ -30,7 +30,7 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
 
 ## Usage
 
-### QA
+### QA/CI
 
 [![master Build Status](http://jenkins.admin.34.74.59.50.nip.io/buildStatus/icon?job=nuxeo/docker-nexus3/master)](http://jenkins.admin.34.74.59.50.nip.io/job/nuxeo/job/docker-nexus3/job/master/)
 
@@ -95,7 +95,7 @@ make central
 
 #### Locally
 
-Dockerfile build arguments and default values:
+Dockerfile build arguments and their default value:
 
 * Builder
   * N/A
@@ -113,69 +113,87 @@ Dockerfile build arguments and default values:
   * `PARMS`=jenkins-x
   * `DESCRIPTION`="JX default Nexus 3"
 
+See [https://hub.docker.com/r/sonatype/nexus3/tags]() for the latest version.
+
 ```bash
-# See https://hub.docker.com/r/sonatype/nexus3/tags
-docker build --build-arg NEXUS3_VERSION=3.19.1 \
-             --build-arg SCM_REF="$(git id)" \
-             -t localhost:5000/nuxeo/nexus3/base base
+export NEXUS3_VERSION=3.19.1
+export SCM_REF=`git id`
+export VERSION=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
+export DOCKER_REGISTRY=localhost:5000
 
-docker build -t localhost:5000/nuxeo/nexus3/builder builder
+docker build --build-arg NEXUS3_VERSION --build-arg SCM_REF \
+             -t $DOCKER_REGISTRY/nuxeo/nexus3/base:$VERSION base
 
-docker build --build-arg DOCKER_REGISTRY=localhost:5000 \
-             --build-arg VERSION=latest \
-             --build-arg SCM_REF="$(git id)" \
-             --build-arg PARMS=jenkins-x \
-             -t localhost:5000/nuxeo/nexus3/jenkins-x .
+docker build -t $DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION builder
+
+docker build --build-arg DOCKER_REGISTRY --build-arg VERSION --build-arg SCM_REF \
+             --build-arg PARMS=jenkins-x -t localhost:5000/nuxeo/nexus3/jenkins-x:$VERSION .
 ```
 
-##### Custom Image Build
-
-A custom image must be built for each deployment. The configuration files (CasC) are stored in the `<PARMS>` folders.
+The custom configuration files are stored in the `<PARMS>` folders.
 
 Usage:
 
 ```bash
-docker build [--build-arg DOCKER_REGISTRY=localhost:5000] \
-             --build-arg VERSION=<VERSION> \
-             [--build-arg PARMS=<PARMS>] \
-             [--build-arg SCM_REF="$(git id)"] \
-             [--build-arg DESCRIPTION="<DESCRIPTION>"] \
-             [-t localhost:5000/nexus3/<PARMS>[:<VERSION>]] .
+export NEXUS3_VERSION=3.19.1
+export SCM_REF=`git id`
+export VERSION=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
+export DOCKER_REGISTRY=localhost:5000
+export PARMS=<PARMS>
+export DESCRIPTION=<DESCRIPTION>
+docker build --build-arg VERSION --build-arg SCM_REF [--build-arg DOCKER_REGISTRY] \
+             [--build-arg PARMS] [--build-arg DESCRIPTION] \
+             [-t nuxeo/nexus3/$PARMS[:$VERSION]] .
 
 # Sample with 'central'
-docker build --build-arg DOCKER_REGISTRY=localhost:5000 \
-             --build-arg VERSION=latest \
-             --build-arg PARMS=central \
-             --build-arg SCM_REF="$(git id)" \
-             --build-arg DESCRIPTION="README sample with 'central' parameter to build packages.nuxeo.com" \
-             -t nuxeo/nexus3/central .
+export PARMS=central
+export DESCRIPTION="README sample with $PARMS parameter to build packages.nuxeo.com"
+docker build --build-arg VERSION --build-arg SCM_REF --build-arg DOCKER_REGISTRY \
+             --build-arg PARMS --build-arg DESCRIPTION \
+             -t nuxeo/nexus3/$PARMS:$VERSION .
 ```
 
-###### `<PARMS>`
-
-The custom parameters folder name:
+The custom parameters folder name, `<PARMS>`:
 
 * [`central`](parms/central): Nuxeo Central <https://packages.nuxeo.com/>
 * [`cluster`](parms/cluster): jx-prod cluster <https://packages.dev.nuxeo.com/>
-* [`jenkins-x`](parms/jenkins): Jenkins X default. Not used.
+* [`jenkins-x`](parms/jenkins-x): Jenkins X default. Not used.
 * [`team`](parms/team): Team sample. Not used.
 * `<team>`: Team customization (dedicated Git repository). <https://packages.<team>.dev.nuxeo.com>
 
-###### Custom Image Run
+### Run
 
-Configuration Data is provided at instance start.
+#### Custom Image Run
+
+The configuration Data is provided at instance start.
 
 Usage:
 
 ```bash
-docker run -p 8081:8081 -v <CONFIG>:/opt/sonatype/nexus/config/ \
+export CONFIG_PATH=<CONFIG>
+export PARMS=<PARMS>
+export VERSION=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
+
+pass show code/ci-casc/tf/nexus/prod/password > $CONFIG_PATH/password
+pass show code/ci-casc/tf/nexus/prod/passwords.json > $CONFIG_PATH/passwords.json
+pass show code/ci-casc/tf/nexus/prod/license_nexus.lic > $CONFIG_PATH/license.lic
+
+docker run -p 8081:8081 -v $CONFIG_PATH:/opt/sonatype/nexus/config/ \
        [-v nexus-store:/nexus-store] \
        [-v nexus-data:/nexus-data] \
-       [-v <LICENSE>:/nexus-data/etc/licence.lic] \
-       -itd localhost:5000/nexus3/<PARMS>
+       [-v $CONFIG_PATH/license.lic:/nexus-data/etc/licence.lic] \
+       --name nexus-$PARMS -itd nuxeo/nexus3/$PARMS:$VERSION
+
+# Alternate method with docker volume (TODO)
+docker run --name nexus -p 8081:8081 --mount source=nexus-config,target=/opt/sonatype/nexus/config/ \
+       --name nexus-$PARMS -itd nuxeo/nexus3/$PARMS:$VERSION
+
+docker exec -u nexus nexus-$PARMS /opt/sonatype/nexus/postStart.sh
 ```
 
-###### `<CONFIG>`: configuration folder containing
+TODO: docker volume is preferred.
+
+#### `<CONFIG>`: configuration folder containing
 
 - `password`: the admin credentials file (mandatory)
 - `passwords.json`: the users credentials file (optional)
@@ -197,16 +215,16 @@ docker run -p 8081:8081 -v <CONFIG>:/opt/sonatype/nexus/config/ \
           "expiration": "3"
         }
       ]
-- `[blobstore|repositor|security].json`: optional configuration which override image parms
+- `[blobstore|repositor|security].json`: optional configuration which overrides image parms
 
-###### `<LICENSE>`: path to the Nexus license file (optional)
+#### `<LICENSE>`: path to the Nexus license file (optional)
 
-Available mount points: `/nexus-store` and `/nexus-data`
+#### Data
 
 Data provisioning is performed on start:
 
-- under K8s, the Helm chart executes the `postStart.sh`
-- for development, see [builder/scripts/README.md]
+- under K8s, the Helm chart executes the [`postStart.sh`](postStart.sh)
+- for development, see [builder/scripts/README.md](builder/scripts/README.md)
 
 ## Resources
 
@@ -237,4 +255,4 @@ The source code, documentation, roadmap, issue tracker, testing, benchmarks are 
 
 Typically, Nuxeo users build different types of information management solutions for document management, case management, and digital asset management, use cases. It uses schema-flexible metadata & content models that allows content to be repurposed to fulfill future use cases.
 
-Learn more at [www.nuxeo.com](www.nuxeo.com).
+Learn more at [www.nuxeo.com](https://www.nuxeo.com/).
