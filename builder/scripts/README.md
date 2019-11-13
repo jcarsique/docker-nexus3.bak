@@ -11,11 +11,11 @@ Scripts to configure Nexus non-interactively once the service is running
 ```shell script
 docker volume create nexus-config
 
-pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/password > password
-pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json > passwords.json
-pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/license_nexus.lic > .license.lic
-pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/datadog_key > .datadog_key
-pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/cluster-agent-token > .cluster-agent-token
+#pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/password > password
+#pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json > passwords.json
+#pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/license_nexus.lic > .license.lic
+#pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/datadog_key > .datadog_key
+#pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/cluster-agent-token > .cluster-agent-token
 ```
 
 ```text
@@ -29,7 +29,6 @@ config
 ### Startup
 
 ```shell script
-docker run -d --name nexus -p 8081:8081 ...
 docker run -itd --name nexus -p 8081:8081 --mount source=nexus-config,target=/opt/sonatype/nexus/config/ <IMAGE>
 
 docker exec nexus cat /nexus-data/admin.password

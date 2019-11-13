@@ -64,14 +64,14 @@
 					},
 					"version_policy": "MIXED"
 				},
-				"maven-private-thirdparty-simplofy-releases": {
+				"maven-private-thirdparty-simflofy-releases": {
 					"remote": {
 						"url": "https://nexus.simflofy.com/nexus/content/repositories/releases/",
 						"auth": "true"
 					},
 					"version_policy": "RELEASE"
 				},
-				"maven-private-thirdparty-simplofy-snapshots": {
+				"maven-private-thirdparty-simflofy-snapshots": {
 					"remote": {
 						"url": "https://nexus.simflofy.com/nexus/content/repositories/snapshots/",
 						"auth": "true"
