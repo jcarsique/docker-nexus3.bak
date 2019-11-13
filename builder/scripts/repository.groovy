@@ -53,7 +53,7 @@ class MyException extends Exception {
 }
 
 void checkForEmptyValidation(String message, List<String> bad_values) {
-    if(bad_values) {
+    if(false && bad_values) {
         throw new MyException("Found invalid ${message}: ${bad_values.join(', ')}")
     }
 }
@@ -244,7 +244,7 @@ void validateRemotes(def repositories, def remotes, def passwords) {
 
 void validateConfiguration(def json) {
     List<String> supported_root_keys = ['repositories', 'blobstores', 'content_selectors', 'remotes', 'passwords']
-    List<String> supported_blobstores = ['file']
+    List<String> supported_blobstores = ['file', 's3']
     List<String> supported_repository_providers = ['bower', 'docker', 'gitlfs', 'maven2', 'npm', 'nuget', 'pypi', 'raw', 'rubygems']
     List<String> supported_repository_types = ['proxy', 'hosted', 'group']
     if(!(json in Map)) {
