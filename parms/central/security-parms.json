@@ -127,6 +127,29 @@
     ]
   },
   {
+    "type": "role",
+    "id": "nuxeo-arondor",
+    "name": "nuxeo-arondor",
+    "description": "Readonly role for Arondor customers",
+    "privileges": [
+      "nx-repository-view-docker-docker-private-arondor-group-browse",
+      "nx-repository-view-docker-docker-private-arondor-group-read"
+    ],
+    "roles": [
+      "nx2-anonymous"
+    ]
+  },
+  {
+    "type": "user",
+    "id": "nuxeo-nike",
+    "firstname": "NA",
+    "lastname": "NA",
+    "mail": "devtools+nuxeo-nike@nuxeo.com",
+    "roles": [
+      "nuxeo-arondor"
+    ]
+  },
+  {
     "type": "anonymous",
     "enabled": true
   }
