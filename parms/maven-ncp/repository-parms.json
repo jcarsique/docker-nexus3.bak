@@ -1,0 +1,334 @@
+{
+	"repositories": {
+		"maven2": {
+			"proxy": {
+				"maven-public-archives": {
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/public-archives/"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-public-nuxeo-studio": {
+					"remote": {
+						"url": "https://connect.nuxeo.com/nuxeo/site/studio/maven/",
+						"auth": "true"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-private-archives": {
+					"remote": {
+						"url": "https://mavenpriv.nuxeo.com/nexus/content/groups/private/",
+						"auth": "true"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-hotfix-archives": {
+					"remote": {
+						"url": "https://mavenin.nuxeo.com/nexus/repository/hotfix/",
+						"auth": "true"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-vendor-archives": {
+					"remote": {
+						"url": "https://maven-eu.nuxeo.org/nexus/content/groups/vendor/"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-central": {
+					"remote": {
+						"url": "https://repo1.maven.org/maven2/"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-private-thirdparty-simflofy-releases": {
+					"remote": {
+						"url": "https://nexus.simflofy.com/nexus/content/repositories/releases/",
+						"auth": "true"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-private-thirdparty-simflofy-snapshots": {
+					"remote": {
+						"url": "https://nexus.simflofy.com/nexus/content/repositories/snapshots/",
+						"auth": "true"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-private-thirdparty-arondor-releases": {
+					"remote": {
+						"url": "https://artifactory.arondor.cloud/artifactory/arondor-release",
+						"auth": "true"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-private-thirdparty-arondor-snapshots": {
+					"remote": {
+						"url": "https://artifactory.arondor.cloud/artifactory/arondor-snapshot",
+						"auth": "true"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-apache-releases": {
+					"remote": {
+						"url": "https://repository.apache.org/content/repositories/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-apache-snapshots": {
+					"remote": {
+						"url": "https://repository.apache.org/content/repositories/snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-atlassian-legacy-releases": {
+					"remote": {
+						"url": "https://packages.atlassian.com/maven-public-legacy/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-atlassian-public-releases": {
+					"remote": {
+						"url": "https://packages.atlassian.com/public/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-atlassian-public-snapshots": {
+					"remote": {
+						"url": "https://packages.atlassian.com/public-snapshot/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-eclipse-releases": {
+					"remote": {
+						"url": "https://repo.eclipse.org/content/groups/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-gridgain-snapshots": {
+					"remote": {
+						"url": "https://gridgainsystems.com/nexus/content/repositories/external/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-inria-gforge-releases": {
+					"remote": {
+						"url": "http://maven-repo.gforge.inria.fr/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-jahia-releases": {
+					"remote": {
+						"url": "http://maven.jahia.org/maven2/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-jboss-releases": {
+					"remote": {
+						"url": "https://repository.jboss.org/nexus/content/repositories/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-jboss-deprecated-releases": {
+					"remote": {
+						"url": "https://repository.jboss.org/nexus/content/repositories/deprecated/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-jboss-deprecated-snapshots": {
+					"remote": {
+						"url": "https://repository.jboss.org/nexus/content/repositories/snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-jboss-thirdparty-releases": {
+					"remote": {
+						"url": "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-jenkins-releases": {
+					"remote": {
+						"url": "https://repo.jenkins-ci.org/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-jenkins-snapshots": {
+					"remote": {
+						"url": "https://repo.jenkins-ci.org/snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-marklogic-releases": {
+					"remote": {
+						"url": "https://developer.marklogic.com/maven2/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-javanet-releases": {
+					"remote": {
+						"url": "https://maven.java.net/content/repositories/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-javanet-snapshots": {
+					"remote": {
+						"url": "https://maven.java.net/content/repositories/snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-ow2-releases": {
+					"remote": {
+						"url": "https://repository.ow2.org/nexus/content/repositories/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-ow2-snapshots": {
+					"remote": {
+						"url": "https://repository.ow2.org/nexus/content/repositories/snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				},
+				"maven-thirdparty-ow2-legacy-releases": {
+					"remote": {
+						"url": "https://repository.ow2.org/nexus/content/repositories/ow2-legacy/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-restlet-releases": {
+					"remote": {
+						"url": "https://maven.restlet.com/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-sonatype-releases": {
+					"remote": {
+						"url": "http://repository.sonatype.org/content/groups/public/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-sonatype-flex-releases": {
+					"remote": {
+						"url": "https://repository.sonatype.org/content/groups/flexgroup/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-sonatype-oss-releases": {
+					"remote": {
+						"url": "https://oss.sonatype.org/content/repositories/releases/"
+					},
+					"version_policy": "RELEASE"
+				},
+				"maven-thirdparty-sonatype-oss-snapshots": {
+					"remote": {
+						"url": "https://oss.sonatype.org/content/repositories/snapshots/"
+					},
+					"version_policy": "SNAPSHOT"
+				}
+			},
+			"group": {
+				"maven-thirdparty": {
+					"repositories": [
+						"maven-vendor",
+						"maven-vendor-archives",
+						"maven-central",
+						"maven-thirdparty-apache-releases",
+						"maven-thirdparty-apache-snapshots",
+						"maven-thirdparty-atlassian-legacy-releases",
+						"maven-thirdparty-atlassian-public-releases",
+						"maven-thirdparty-atlassian-public-snapshots",
+						"maven-thirdparty-eclipse-releases",
+						"maven-thirdparty-gridgain-snapshots",
+						"maven-thirdparty-inria-gforge-releases",
+						"maven-thirdparty-jahia-releases",
+						"maven-thirdparty-jboss-releases",
+						"maven-thirdparty-jboss-deprecated-releases",
+						"maven-thirdparty-jboss-deprecated-snapshots",
+						"maven-thirdparty-jboss-thirdparty-releases",
+						"maven-thirdparty-jenkins-releases",
+						"maven-thirdparty-jenkins-snapshots",
+						"maven-thirdparty-marklogic-releases",
+						"maven-thirdparty-javanet-releases",
+						"maven-thirdparty-javanet-snapshots",
+						"maven-thirdparty-ow2-releases",
+						"maven-thirdparty-ow2-snapshots",
+						"maven-thirdparty-ow2-legacy-releases",
+						"maven-thirdparty-restlet-releases",
+						"maven-thirdparty-sonatype-releases",
+						"maven-thirdparty-sonatype-flex-releases",
+						"maven-thirdparty-sonatype-oss-releases",
+						"maven-thirdparty-sonatype-oss-snapshots"
+					]
+				},
+				"maven-hotfix": {
+					"repositories": [
+						"maven-hotfix-releases",
+						"maven-hotfix-snaphots",
+						"maven-hotfix-archives"
+					]
+				},
+				"maven-public": {
+					"repositories": [
+						"maven-public-releases",
+						"maven-public-snapshots",
+						"maven-public-archives",
+						"maven-thirdparty"
+					]
+				},
+				"maven-private-thirdparty": {
+					"repositories": [
+						"maven-private-thirdparty-simplofy-releases",
+						"maven-private-thirdparty-simplofy-snapshots",
+						"maven-private-thirdparty-arondor-releases",
+						"maven-private-thirdparty-arondor-snapshots"
+					]
+				},
+				"maven-private": {
+					"repositories": [
+						"maven-private-releases",
+						"maven-private-snapshots",
+						"maven-private-archives",
+						"maven-private-thirdparty",
+						"maven-hotfix"
+					]
+				},
+				"maven-internal": {
+					"repositories": [
+						"maven-public",
+						"maven-private"
+					]
+				}
+			}
+		}
+	},
+	"passwords": {
+		"file": [
+			"/opt/sonatype/nexus/config/passwords.json"
+		]
+	},
+	"remotes": {
+		"mavenin.nuxeo.com": {
+			"auth_type": "username",
+			"user": "deployment"
+		},
+		"mavenpriv.nuxeo.com": {
+			"auth_type": "username",
+			"user": "deployment"
+		},
+		"connect.nuxeo.com": {
+			"auth_type": "username",
+			"user": "jenkins_pub"
+		},
+		"nexus.simflofy.com": {
+			"auth_type": "username",
+			"user": "developer-nuxeo"
+		},
+		"artifactory.arondor.cloud": {
+			"auth_type": "username",
+			"user": "nuxeo"
+		}
+	},
+	"blobstores": {
+		"default": "nuxeo-devtools-nexus-ncp"
+	}
+}

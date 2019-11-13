@@ -94,7 +94,9 @@ pipeline {
 git checkout master
 git config --global credential.helper store
 jx step git credentials
+# Set PROD S3 buckets
 sed -i "s,nuxeo-devtools-nexus-central-test,nuxeo-devtools-nexus-central," parms/central/blobstore-parms.json
+sed -i "s,nuxeo-devtools-nexus-ncp-test,nuxeo-devtools-nexus-ncp-prod," parms/maven-ncp/blobstore-parms.json
 '''
         }
       }

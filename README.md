@@ -163,6 +163,13 @@ The custom parameters folder name, `<PARMS>`:
 
 ### Run
 
+#### Environment Setup
+
+```bash
+aws-okta exec devtools -- aws sts get-caller-identity
+```
+
+
 #### Custom Image Run
 
 The configuration Data is provided at instance start.
@@ -188,6 +195,7 @@ docker run -p 8081:8081 -v $CONFIG_PATH:/opt/sonatype/nexus/config/ \
 docker run --name nexus -p 8081:8081 --mount source=nexus-config,target=/opt/sonatype/nexus/config/ \
        --name nexus-$PARMS -itd nuxeo/nexus3/$PARMS:$VERSION
 
+docker exec nexus cat /nexus-data/admin.password
 docker exec -u nexus nexus-$PARMS /opt/sonatype/nexus/postStart.sh
 ```
 
