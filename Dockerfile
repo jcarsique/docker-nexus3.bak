@@ -31,6 +31,7 @@ ARG SCM_REF=unknown
 LABEL description=${DESCRIPTION}
 LABEL version=${VERSION}
 LABEL scm-ref=${SCM_REF}
+LABEL parms=${PARMS}
 
 COPY postStart.sh /opt/sonatype/nexus/
 COPY --from=builder /scripts /opt/sonatype/nexus/scripts/
