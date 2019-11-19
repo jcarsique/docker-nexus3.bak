@@ -22,6 +22,10 @@
 				},
 				"maven-vendor": {
 					"version_policy": "MIXED"
+				},
+				"maven-internal-staging": {
+					"version_policy": "RELEASE",
+					"write_policy": "ALLOW"
 				}
 			},
 			"proxy": {
@@ -331,6 +335,10 @@
 				"docker-private": {
 					"httpPort": 6000
 				},
+				"docker-internal-staging": {
+					"httpPort": 7000,
+					"write_policy": "ALLOW"
+				},
 				"docker-arender": {
 					"httpPort": 5001
 				}
@@ -339,7 +347,10 @@
 		"npm": {
 			"hosted": {
 				"npm-public": {},
-				"npm-private": {}
+				"npm-private": {},
+				"npm-internal-staging": {
+					"write_policy": "ALLOW"
+				}
 			},
 			"proxy": {
 				"npm-upstream": {
