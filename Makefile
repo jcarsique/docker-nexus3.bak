@@ -22,7 +22,7 @@ VERSION ?= 0.0.0
 
 all: skaffold@up build skaffold@down
 
-build: base builder jenkins central cluster team
+build: base builder jenkins central cluster team maven-ncp
 
 base:
 	$(MAKE) --directory base build
@@ -41,3 +41,6 @@ cluster: skaffold.yaml~gen
 
 team: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/team
+
+maven-ncp: skaffold.yaml~gen
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/maven-ncp

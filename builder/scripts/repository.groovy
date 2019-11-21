@@ -33,6 +33,7 @@ import org.sonatype.nexus.repository.config.Configuration
 import org.sonatype.nexus.selector.CselValidator
 import org.sonatype.nexus.selector.SelectorConfiguration
 import org.sonatype.nexus.selector.SelectorManager
+import static org.sonatype.nexus.repository.manager.internal.RepositoryImpl.State.STARTED
 
 blobStoreManager = blobStore.blobStoreManager
 repositoryManager = repository.repositoryManager
@@ -62,7 +63,7 @@ List<String> getKnownDesiredBlobStores(Map json) {
     json['repositories'].collect { provider_key, provider ->
         provider.collect { repo_type_key, repo_type ->
             repo_type.collect { repo_name_key, repo_name ->
-                (repo_name['blobstore']?.get('name', null))?: json['blobstores']['default']
+                (repo_name['blobstore']?.get('name', null))?: defaultBlobStore
             }
         }
     }.flatten().sort().unique()
@@ -77,7 +78,6 @@ Map<String,?> getKnownDesiredRepositories(Map json) {
         }
     }
 }
-
 
 void checkValueInList(String provider, String type, String name, String key, def value, List<String> allowed_values) {
     if(!(value in allowed_values)) {
@@ -280,7 +280,7 @@ void validateConfiguration(def json) {
 }
 
 void createRepository(String provider, String type, String name, Map json) {
-    log.info("creating " + name)
+    log.info("Creating repository {}", name)
     Configuration repo_config
     Boolean exists = repositoryManager.get(name) as Boolean
     if(exists) {
@@ -293,7 +293,7 @@ void createRepository(String provider, String type, String name, Map json) {
     if(!exists) {
         repo_config.repositoryName = name
         repo_config.recipeName = "${provider}-${type}".toString()
-        storage.set('blobStoreName', (json['blobstore']?.get('name', null))?: name)
+        storage.set('blobStoreName', (json['blobstore']?.get('name', null))?: defaultBlobStore)
     }
     repo_config.online = Boolean.parseBoolean(json.get('online', 'true'))
     storage.set('strictContentTypeValidation', Boolean.parseBoolean((json['blobstore']?.get('strict_content_type_validation', null))?: 'false'))
@@ -388,9 +388,11 @@ void createRepository(String provider, String type, String name, Map json) {
         }
     }
     if(exists) {
+        log.info("Updating {} with {}", name, repo_config)
         repositoryManager.update(repo_config)
     }
     else {
+        log.info("Creating {} with {}", name, repo_config)
         repositoryManager.create(repo_config)
     }
 }
@@ -418,23 +420,18 @@ void createSelector(String name, Map json) {
  * Main execution
  */
 
-
 try {
     config = (new JsonSlurper()).parseText(args)
-}
-catch(Exception e) {
+    defaultBlobStore = config['blobstores']['default']
+} catch(Exception e) {
     throw new MyException("Configuration is not valid.  It must be a valid JSON object.")
 }
-
-
 validateConfiguration(config)
-
 //we've come this far so it is probably good?
-
-
 
 //create non-group repositories second
 if('repositories' in config) {
+    def failedRepositoryCreations = []
     Map<String,?> knownDesiredRepositories = getKnownDesiredRepositories(config)
 
     // deactivate non desired repositories
@@ -446,7 +443,10 @@ if('repositories' in config) {
             return
         }
         log.info("Unknown repository {} switched offline", repository)
-        repositoryManager.get(repository['name']).stop()
+        repo = repositoryManager.get(repository['name'])
+        if (repo.getStateGuard().is(STARTED)) {
+            repo.stop()
+        }
     }
 
     // create non group first
@@ -455,7 +455,12 @@ if('repositories' in config) {
             k != 'group'
         }.each { type, type_value ->
             type_value.each { name, name_value ->
-                createRepository(provider, type, name, name_value)
+                try {
+                    createRepository(provider, type, name, name_value)
+                } catch (Exception e) {
+                    failedRepositoryCreations.add(name)
+                    log.error("Repository creation failed: {} {} {} {} {}", provider, type, name, name_value, e)
+                }
             }
         }
     }
@@ -463,8 +468,17 @@ if('repositories' in config) {
     //create repository groups last
     config['repositories'].each { provider, provider_value ->
         provider_value['group'].each { name, name_value ->
-            createRepository(provider, 'group', name, name_value)
+            try {
+                createRepository(provider, 'group', name, name_value)
+            } catch(Exception e) {
+                failedRepositoryCreations.add(name)
+                log.error("Repository creation failed: {} {} {} {} {}", provider, 'group', name, name_value, e)
+            }
         }
+    }
+
+    if (failedRepositoryCreations.size() > 0) {
+        throw new MyException("Failed to create repositories: " + failedRepositoryCreations.join(", "))
     }
 }
 

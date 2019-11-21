@@ -70,7 +70,7 @@ if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
     jq '.[] | select (.type == "anonymous") .enabled = "false"' ${secFile} > ${secFile}.tmp && mv ${secFile}.tmp ${secFile}
 fi
 
-for script in blobstore repository security tasks; do
+for script in blobstore repository security; do
     body="$SCRIPTS_PATH/${script}-body.json"
     if [ -f "$CONFIG_PATH/${script}.json" ] ; then
         parms="$CONFIG_PATH/${script}.json"

@@ -2,6 +2,19 @@
 	"repositories": {
 		"maven2": {
 			"proxy": {
+				"maven-public-proxy": {
+					"remote": {
+						"url": "https://packages.nuxeo.com/repository/public/"
+					},
+					"version_policy": "MIXED"
+				},
+				"maven-private-proxy": {
+					"remote": {
+						"url": "https://packages.nuxeo.com/repository/private/",
+						"auth": "true"
+					},
+					"version_policy": "MIXED"
+				},
 				"maven-public-archives": {
 					"remote": {
 						"url": "https://mavenin.nuxeo.com/nexus/repository/public-archives/"
@@ -269,8 +282,7 @@
 				},
 				"maven-public": {
 					"repositories": [
-						"maven-public-releases",
-						"maven-public-snapshots",
+						"maven-public-proxy",
 						"maven-public-archives",
 						"maven-thirdparty"
 					]
@@ -285,8 +297,7 @@
 				},
 				"maven-private": {
 					"repositories": [
-						"maven-private-releases",
-						"maven-private-snapshots",
+						"maven-private-proxy",
 						"maven-private-archives",
 						"maven-private-thirdparty",
 						"maven-hotfix"
@@ -307,6 +318,10 @@
 		]
 	},
 	"remotes": {
+		"packages.nuxeo.com": {
+			"auth_type": "username",
+			"user": "deployment"
+		},
 		"mavenin.nuxeo.com": {
 			"auth_type": "username",
 			"user": "deployment"

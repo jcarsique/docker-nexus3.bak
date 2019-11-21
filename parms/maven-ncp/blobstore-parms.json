@@ -3,7 +3,7 @@
     "name": "nuxeo-devtools-nexus-ncp",
     "type": "S3",
     "config": {
-      "bucket": "nuxeo-devtools-nexus-ncp-prod",
+      "bucket": "nuxeo-devtools-nexus-ncp-test",
       "assumeRole": "arn:aws:iam::762822024843:role/nexus-ncp-role",
       "prefix": "storage",
       "region": "us-east-1",

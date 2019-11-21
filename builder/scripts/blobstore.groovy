@@ -32,7 +32,7 @@ new JsonSlurper().parseText(args).each { blobstoreDef ->
             currentResult.put('status', 'created')
             scriptResults['changed'] = true
         } catch (Exception e) {
-            log.error('Could not create blobstore {}: {}', blobstoreDef.name, e.toString())
+            log.error('Could not create blobstore {}: {}', blobstoreDef.name, e)
             currentResult.put('status', 'error')
             scriptResults['error'] = true
             currentResult.put('error_msg', e.toString())

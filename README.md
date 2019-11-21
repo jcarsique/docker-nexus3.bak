@@ -121,13 +121,15 @@ export SCM_REF=`git id`
 export VERSION=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
 export DOCKER_REGISTRY=localhost:5000
 
+echo $NEXUS3_VERSION $(git rev-parse --short HEAD) $VERSION $DOCKER_REGISTRY
 docker build --build-arg NEXUS3_VERSION --build-arg SCM_REF \
              -t $DOCKER_REGISTRY/nuxeo/nexus3/base:$VERSION base
 
-docker build -t $DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION builder
+docker build --no-cache -t $DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION builder
 
-docker build --build-arg DOCKER_REGISTRY --build-arg VERSION --build-arg SCM_REF \
-             --build-arg PARMS=jenkins-x -t localhost:5000/nuxeo/nexus3/jenkins-x:$VERSION .
+export PARMS=jenkins-x
+docker build --no-cache --build-arg DOCKER_REGISTRY --build-arg VERSION --build-arg SCM_REF \
+             --build-arg PARMS -t localhost:5000/nuxeo/nexus3/$PARMS:$VERSION .
 ```
 
 The custom configuration files are stored in the `<PARMS>` folders.
@@ -141,6 +143,8 @@ export VERSION=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
 export DOCKER_REGISTRY=localhost:5000
 export PARMS=<PARMS>
 export DESCRIPTION=<DESCRIPTION>
+
+echo $NEXUS3_VERSION $(git rev-parse --short HEAD) $VERSION $DOCKER_REGISTRY
 docker build --build-arg VERSION --build-arg SCM_REF [--build-arg DOCKER_REGISTRY] \
              [--build-arg PARMS] [--build-arg DESCRIPTION] \
              [-t nuxeo/nexus3/$PARMS[:$VERSION]] .

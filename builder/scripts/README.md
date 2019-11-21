@@ -38,13 +38,26 @@ xdg-open http://localhost:8081
 
 ### Upload Script into Nexus
 
+Optional environment variables: `NX_USERNAME` and `NX_PASSWORD`
+
 Usage: `provision.sh <script_name> <path/to/script/file.groovy>`
+
+Sample:
+
+```shell script
+NX_USERNAME=admin NX_PASSWORD=$(cat /tmp/nexus-ncp/config/password) ./provision.sh repository repository.groovy
+
+curl -v -X POST --header 'Content-Type: text/plain' -u admin:$(cat /tmp/nexus-ncp/config/password) http://localhost:8081/service/rest/v1/script/repository/run -d@../../parms/maven-ncp/repository-parms.json
+```
 
 ### Execute Script
 
 ```shell script
-curl -v -d <JSON data> -X POST --header "Content-Type: text/plain" -u admin:<admin_password> \
-http://localhost:8081/service/rest/v1/script/<script_name>/run
+# Provide JSON data file
+curl -v --fail -X POST -u $NX_USERNAME:$NX_PASSWORD --header "Content-Type: text/plain" http://localhost:8081/service/rest/v1/script/<script_name>/run -d @<JSON path>
+
+# Inline JSON data
+curl -v --fail -X POST -u $NX_USERNAME:$NX_PASSWORD --header "Content-Type: text/plain" http://localhost:8081/service/rest/v1/script/<script_name>/run -d <JSON data>
 ```
 
 #### `blobstore.groovy`
@@ -57,7 +70,7 @@ Expected array data:
 
 Samples:
 ```shell script
-curl -v -d @path/to/blobstore-parms.json -X POST --header "Content-Type: text/plain" \
+curl -v -d@path/to/blobstore-parms.json -X POST --header "Content-Type: text/plain" \
 -u admin:password  "http://localhost:8081/service/rest/v1/script/<script_name>/run"
 
 curl -v -d [{"name":"aLocalBlobstore", "type":"file", "path":"/var/lib/nexus/blobstore"}] \
@@ -78,3 +91,12 @@ curl -v -d [{"name":"aLocalBlobstore", "type":"file", "path":"/var/lib/nexus/blo
 #### List remote scripts
 
 `curl -X GET "http://localhost:8081/service/rest/v1/script" -H  "accept:application/json"`
+
+### IDE Debug
+
+Import the project and https://github.com/sonatype/nexus-public in your IDE.
+
+```shell script
+docker run -p 5005:5005 -e INSTALL4J_ADD_VM_PARAMS="-Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=/nexus-data/javaprefs -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" \
+           -p 8081:8081 -v $CONFIG_PATH/:/opt/sonatype/nexus/config/ -v $CONFIG_PATH/license.lic:/nexus-data/etc/licence.lic --name nexus-ncp -itd <IMAGE>
+```
