@@ -127,7 +127,7 @@ echo $NEXUS3_VERSION $(git rev-parse --short HEAD) $VERSION $DOCKER_REGISTRY
 docker build --build-arg NEXUS3_VERSION --build-arg SCM_REF \
              -t $DOCKER_REGISTRY/nuxeo/nexus3/base:$VERSION base
 
-docker build --no-cache -t $DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION builder
+docker build -t $DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION builder
 
 export PARMS=jenkins-x
 docker build --build-arg DOCKER_REGISTRY --build-arg VERSION --build-arg SCM_REF \

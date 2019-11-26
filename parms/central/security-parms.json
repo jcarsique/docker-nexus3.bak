@@ -79,7 +79,6 @@
       "nx-apikey-all",
       "nx-component-upload",
       "nx-iq-violation-summary-read",
-      "nx-tags-all",
       "nx-repository-view-*-*-*"
     ],
     "roles": [

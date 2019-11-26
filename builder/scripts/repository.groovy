@@ -430,11 +430,8 @@ if ('repositories' in config) {
                 knownDesiredRepository['type'] == repository['type'].toString()) {
             return
         }
-        log.info("Unknown repository {} switched offline", repository)
+        log.error("Unknown repository {} TO DELETE", repository)
         repo = repositoryManager.get(repository['name'])
-        if (repo.getStateGuard().is(STARTED)) {
-            repo.stop()
-        }
     }
 
     // create non group first

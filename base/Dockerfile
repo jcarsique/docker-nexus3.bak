@@ -7,12 +7,6 @@ ARG SCM_REF=unknown
 ARG SCM_REPOSITORY=git@github.com:nuxeo/docker-nexus3.git
 ARG DESCRIPTION="Base Nexus 3 image layer for Nuxeo custom deployments"
 
-LABEL description=${DESCRIPTION}
-LABEL version=${VERSION}
-LABEL scm-ref=${SCM_REF}
-LABEL scm-url=${SCM_REPOSITORY}
-LABEL com.sonatype.version=${NEXUS3_VERSION}
-
 USER root
 
 RUN yum -y makecache && \
@@ -39,6 +33,12 @@ COPY ./supervisord-nexus-config-license.sh /etc/supervisord.d/nexus-config-licen
 COPY ./supervisord-nexus-github-plugin.conf /etc/supervisord.d/nexus-github-plugin.conf
 COPY ./supervisord-nexus.conf /etc/supervisord.d/nexus.conf
 COPY ./githuboauth.properties /opt/sonatype/nexus/etc/githuboauth.properties
+
+LABEL description=${DESCRIPTION}
+LABEL version=${VERSION}
+LABEL scm-ref=${SCM_REF}
+LABEL scm-url=${SCM_REPOSITORY}
+LABEL com.sonatype.version=${NEXUS3_VERSION}
 
 RUN chown -R nexus:nexus /opt/sonatype
 
