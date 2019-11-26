@@ -25,6 +25,7 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
     ├── central           https://packages.nuxeo.com/
     ├── cluster           https://packages.dev.nuxeo.com/
     ├── jenkins-x         Jenkins X default Nexus 3
+    ├── maven-ncp         SUPINT-1574 NCP mirror
     └── team              Nuxeo default Nexus 3 for JX team https://packages-<team>.dev.nuxeo.com/
 ```
 
@@ -54,6 +55,7 @@ Build and push custom Nexus 3 Docker images:
 * `nuxeo/nexus3/jenkins-x`
 * `nuxeo/nexus3/central`
 * `nuxeo/nexus3/cluster`
+* `nuxeo/nexus3/maven-ncp`
 * `nuxeo/nexus3/team`
 
 On `PR-*|feature-*|fix-*` branch pattern, tag is `0.0.0-<branch-name>-<build-number>`

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-..NOTPARALLEL: base builder jenkins-x central cluster team
+..NOTPARALLEL: base builder jenkins-x central cluster team maven-ncp
 
 include make.d/skaffold.mk
 
@@ -22,7 +22,7 @@ VERSION ?= 0.0.0
 
 all: skaffold@up build skaffold@down
 
-build: base builder jenkins central cluster team maven-ncp
+build: base builder jenkins-x central cluster team maven-ncp
 
 base:
 	$(MAKE) --directory base build
