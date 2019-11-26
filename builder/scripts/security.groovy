@@ -66,35 +66,51 @@ if (pwdFile.exists()) {
     passwords = [:]
 }
 
+/*
+ * Main execution
+ */
+
+try {
+    config = (new JsonSlurper()).parseText(args)
+} catch (Exception e) {
+    throw new MyException("Configuration is not valid. {}", e)
+}
+
 /**
  * Create a Nexus User or Role
  * type="user", see #createUser()
  * type="role", see #createRole()
  * type="anonymous": whether to activate anonymous access
  */
-new JsonSlurper().parseText(args).each { argsLine ->
-    /**
-     * JSON user definition
-     * @param id ID of the user
-     * @param firstname Firstname of the user
-     * @param lastname Lastname of the user
-     * @param mail Mail of the user
-     * @param password Password of the user
-     * @param roles Roles to be associated with the user (List<String>)
-     */
-    Map<String, String> userResult = [type: argsLine.type, id: argsLine.id, firstname: argsLine.firstname,
-                                      lastname: argsLine.lastname, mail: argsLine.mail, roles: argsLine.roles]
+config.each { argsLine ->
+    log.debug("argsLine: {}", argsLine)
 
-    /**
-     * JSON role definition
-     * @param id ID of the role
-     * @param name Name of the role
-     * @param description Description of the role
-     * @param privileges List of privileges (ie: nx-healthcheck-read)
-     * @param roles List of roles (ie: nx-anonymous / nx-admin)
-     */
-    Map<String, String> roleResult = [type: argsLine.type, id: argsLine.id, name: argsLine.name,
-                                      description: argsLine.description, privileges: argsLine.privileges, roles: argsLine.roles]
+    try {
+        /**
+         * JSON user definition
+         * @param id ID of the user
+         * @param firstname Firstname of the user
+         * @param lastname Lastname of the user
+         * @param mail Mail of the user
+         * @param password Password of the user
+         * @param roles Roles to be associated with the user (List<String>)
+         */
+        Map<String, String> userResult = [type: argsLine.type, id: argsLine.id, firstname: argsLine.firstname,
+                                          lastname: argsLine.lastname, mail: argsLine.mail, roles: argsLine.roles]
+
+        /**
+         * JSON role definition
+         * @param id ID of the role
+         * @param name Name of the role
+         * @param description Description of the role
+         * @param privileges List of privileges (ie: nx-healthcheck-read)
+         * @param roles List of roles (ie: nx-anonymous / nx-admin)
+         */
+        Map<String, String> roleResult = [type: argsLine.type, id: argsLine.id, name: argsLine.name,
+                                          description: argsLine.description, privileges: argsLine.privileges, roles: argsLine.roles]
+    } catch (Exception e) {
+        log.error("Configuration is not valid. {}", e)
+    }
 
     if (argsLine.type == "user") {
         try {
