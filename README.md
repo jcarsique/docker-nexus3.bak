@@ -1,4 +1,4 @@
-www.nuxeo.com# Nexus 3
+# Nexus 3
 
 ## About / Synopsis
 
@@ -128,7 +128,7 @@ docker build --build-arg NEXUS3_VERSION --build-arg SCM_REF \
 docker build --no-cache -t $DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION builder
 
 export PARMS=jenkins-x
-docker build --no-cache --build-arg DOCKER_REGISTRY --build-arg VERSION --build-arg SCM_REF \
+docker build --build-arg DOCKER_REGISTRY --build-arg VERSION --build-arg SCM_REF \
              --build-arg PARMS -t localhost:5000/nuxeo/nexus3/$PARMS:$VERSION .
 ```
 
@@ -163,6 +163,7 @@ The custom parameters folder name, `<PARMS>`:
 * [`cluster`](parms/cluster): jx-prod cluster <https://packages.dev.nuxeo.com/>
 * [`jenkins-x`](parms/jenkins-x): Jenkins X default. Not used.
 * [`team`](parms/team): Team sample. Not used.
+* [`maven-ncp`](parms/maven-ncp): SUPINT-1574 NCP mirror
 * `<team>`: Team customization (dedicated Git repository). <https://packages.<team>.dev.nuxeo.com>
 
 ### Run
@@ -214,20 +215,7 @@ TODO: docker volume is preferred.
           "user1" : "password1",
           "user2" : "password2"
       }
-
-- `<blobstore name>-config.json`: a config file per blobstore (mandatory for S3)
-
-      "config": [
-        {
-          "bucket": "<blobstore name>",
-          "accessKeyId": "****",
-          "secretAccessKey": "****",
-          "prefix": "storage",
-          "region": "<AWS region>",
-          "expiration": "3"
-        }
-      ]
-- `[blobstore|repositor|security].json`: optional configuration which overrides image parms
+- `[blobstore|repository|security].json`: optional configuration which overrides image parms
 
 #### `<LICENSE>`: path to the Nexus license file (optional)
 

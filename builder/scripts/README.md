@@ -45,7 +45,8 @@ Usage: `provision.sh <script_name> <path/to/script/file.groovy>`
 Sample:
 
 ```shell script
-NX_USERNAME=admin NX_PASSWORD=$(cat /tmp/nexus-ncp/config/password) ./provision.sh repository repository.groovy
+export CONFIG_PATH=<CONFIG>
+NX_USERNAME=admin NX_PASSWORD=$(cat $CONFIG_PATH/password) ./provision.sh repository repository.groovy
 
 curl -v -X POST --header 'Content-Type: text/plain' -u admin:$(cat /tmp/nexus-ncp/config/password) http://localhost:8081/service/rest/v1/script/repository/run -d@../../parms/maven-ncp/repository-parms.json
 ```
@@ -98,5 +99,5 @@ Import the project and https://github.com/sonatype/nexus-public in your IDE.
 
 ```shell script
 docker run -p 5005:5005 -e INSTALL4J_ADD_VM_PARAMS="-Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=/nexus-data/javaprefs -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" \
-           -p 8081:8081 -v $CONFIG_PATH/:/opt/sonatype/nexus/config/ -v $CONFIG_PATH/license.lic:/nexus-data/etc/licence.lic --name nexus-ncp -itd <IMAGE>
+           -p 8081:8081 -v $CONFIG_PATH/:/opt/sonatype/nexus/config/ -v $CONFIG_PATH/license.lic:/nexus-data/etc/licence.lic --name nexus -itd <IMAGE>
 ```
