@@ -25,8 +25,7 @@
 import org.sonatype.nexus.script.ScriptXO
 import com.fasterxml.jackson.databind.ObjectMapper
 
-CliBuilder cli = new CliBuilder(
-                usage: 'groovy addUpdateScriptBody.groovy -f scriptFile.groovy [-n explicitName]')
+CliBuilder cli = new CliBuilder(usage: 'groovy addUpdateScriptBody.groovy -f scriptFile.groovy [-n explicitName]')
 cli.with {
     f longOpt: 'file', args: 1, required: true, 'Script file to send to NX3'
     n longOpt: 'name', args: 1, required: false, 'name of script in NX3'

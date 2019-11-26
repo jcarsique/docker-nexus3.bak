@@ -1,108 +1,108 @@
 {
-	"repositories": {
-		"maven2": {
-			"hosted": {
-				"maven-public": {
-					"version_policy": "MIXED"
-				},
-				"maven-private": {
-					"version_policy": "MIXED"
-				}
-			},
-			"proxy": {
-				"maven-upstream": {
-					"blobstore": {
-						"name": "store",
-						"strict_content_type_validation": "true"
-					},
-					"remote": {
-						"url": "https://packages.nuxeo.com/repository/maven-internal/",
-						"auth": "true"
-					},
-					"version_policy": "MIXED"
-				}
-			},
-			"group": {
-				"maven": {
-					"repositories": [
-						"maven-public",
-						"maven-private",
-						"maven-upstream"
-					]
-				}
-			}
-		},
-		"npm": {
-			"hosted": {
-				"npm-public": {
-				},
-				"npm-private": {
-				}
-			},
-			"proxy": {
-				"npm-upstream": {
-					"blobstore": {
-						"name": "store",
-						"strict_content_type_validation": "true"
-					},
-					"remote": {
-						"url": "https://packages.nuxeo.com/repository/npm-internal/",
-						"auth": "true"
-					}
-				}
-			},
-			"group": {
-				"npm": {
-					"repositories": [
-						"npm-public",
-						"npm-private",
-						"npm-upstream"
-					]
-				}
-			}
-		},
-		"nuget": {
-			"hosted": {
-				"nuget-public": {
-				},
-				"nuget-private": {
-				}
-			},
-			"proxy": {
-				"nuget-upstream": {
-					"blobstore": {
-						"name": "store",
-						"strict_content_type_validation": "true"
-					},
-					"remote": {
-						"url": "https://packages.nuxeo.com/repository/nuget-internal/",
-						"auth": "true"
-					}
-				}
-			},
-			"group": {
-				"nuget": {
-					"repositories": [
-						"nuget-public",
-						"nuget-private",
-						"nuget-upstream"
-					]
-				}
-			}
-		}
-	},
-	"passwords": {
-		"file": [
-			"/opt/sonatype/nexus/config/passwords.json"
-		]
-	},
-	"remotes": {
-		"packages.nuxeo.com": {
-			"auth_type": "username",
-			"user": "deployment"
-		}
-	},
-	"blobstores": {
-		"name": "store"
-	}
+  "repositories": {
+    "maven2": {
+      "hosted": {
+        "maven-public": {
+          "version_policy": "MIXED"
+        },
+        "maven-private": {
+          "version_policy": "MIXED"
+        }
+      },
+      "proxy": {
+        "maven-upstream": {
+          "blobstore": {
+            "name": "store",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://packages.nuxeo.com/repository/maven-internal/",
+            "auth": "true"
+          },
+          "version_policy": "MIXED"
+        }
+      },
+      "group": {
+        "maven": {
+          "repositories": [
+            "maven-public",
+            "maven-private",
+            "maven-upstream"
+          ]
+        }
+      }
+    },
+    "npm": {
+      "hosted": {
+        "npm-public": {
+        },
+        "npm-private": {
+        }
+      },
+      "proxy": {
+        "npm-upstream": {
+          "blobstore": {
+            "name": "store",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://packages.nuxeo.com/repository/npm-internal/",
+            "auth": "true"
+          }
+        }
+      },
+      "group": {
+        "npm": {
+          "repositories": [
+            "npm-public",
+            "npm-private",
+            "npm-upstream"
+          ]
+        }
+      }
+    },
+    "nuget": {
+      "hosted": {
+        "nuget-public": {
+        },
+        "nuget-private": {
+        }
+      },
+      "proxy": {
+        "nuget-upstream": {
+          "blobstore": {
+            "name": "store",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://packages.nuxeo.com/repository/nuget-internal/",
+            "auth": "true"
+          }
+        }
+      },
+      "group": {
+        "nuget": {
+          "repositories": [
+            "nuget-public",
+            "nuget-private",
+            "nuget-upstream"
+          ]
+        }
+      }
+    }
+  },
+  "passwords": {
+    "file": [
+      "/opt/sonatype/nexus/config/passwords.json"
+    ]
+  },
+  "remotes": {
+    "packages.nuxeo.com": {
+      "auth_type": "username",
+      "user": "deployment"
+    }
+  },
+  "blobstores": {
+    "name": "store"
+  }
 }

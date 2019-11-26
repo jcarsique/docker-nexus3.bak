@@ -5,15 +5,22 @@
     "firstname": "test",
     "lastname": "user",
     "mail": "",
-    "roles": ["nx-anonymous"]
+    "roles": [
+      "nx-anonymous"
+    ]
   },
   {
-    "type":"role",
+    "type": "role",
     "id": "test_role",
     "name": "test_role",
     "description": "test role",
-    "privileges": ["nx-healthcheck-read", "nx-healthcheck-summary-read"],
-    "roles": ["nx-anonymous"]
+    "privileges": [
+      "nx-healthcheck-read",
+      "nx-healthcheck-summary-read"
+    ],
+    "roles": [
+      "nx-anonymous"
+    ]
   },
   {
     "type": "anonymous",

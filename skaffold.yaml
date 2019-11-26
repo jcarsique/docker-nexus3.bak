@@ -16,73 +16,73 @@ apiVersion: skaffold/v1beta10
 kind: Config
 build:
   insecureRegistries:
-  - ${DOCKER_REGISTRY}
+    - ${DOCKER_REGISTRY}
   artifacts:
-  - image: nuxeo/nexus3/jenkins-x
-    kaniko:
+    - image: nuxeo/nexus3/jenkins-x
+      kaniko:
         dockerfile: Dockerfile
         buildArgs:
-         DOCKER_REGISTRY: ${DOCKER_REGISTRY}
-         VERSION: ${VERSION}
-         PARMS: jenkins-x
+          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
+          VERSION: ${VERSION}
+          PARMS: jenkins-x
         flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
-        buildContext:
-          localDir: {}
-        cache: 
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
-    context: .
-  - image: nuxeo/nexus3/central
-    kaniko:
-        dockerfile: Dockerfile
-        buildArgs:
-         DOCKER_REGISTRY: ${DOCKER_REGISTRY}
-         VERSION: ${VERSION}
-         PARMS: central
-        flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
-        buildContext:
-          localDir: {}
-        cache: 
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
-    context: .
-  - image: nuxeo/nexus3/cluster
-    kaniko:
-        dockerfile: Dockerfile
-        buildArgs:
-         DOCKER_REGISTRY: ${DOCKER_REGISTRY}
-         VERSION: ${VERSION}
-         PARMS: cluster
-        flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
-        buildContext:
-          localDir: {}
-        cache: 
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
-    context: .
-  - image: nuxeo/nexus3/team
-    kaniko:
-        dockerfile: Dockerfile
-        buildArgs:
-         DOCKER_REGISTRY: ${DOCKER_REGISTRY}
-         VERSION: ${VERSION}
-         PARMS: team
-        flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
+          - --insecure
+          - --insecure-pull
+          - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
         cache:
           repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
-    context: .
-  cluster: 
+      context: .
+    - image: nuxeo/nexus3/central
+      kaniko:
+        dockerfile: Dockerfile
+        buildArgs:
+          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
+          VERSION: ${VERSION}
+          PARMS: central
+        flags:
+          - --insecure
+          - --insecure-pull
+          - --insecure-registry=${DOCKER_REGISTRY}
+        buildContext:
+          localDir: {}
+        cache:
+          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
+      context: .
+    - image: nuxeo/nexus3/cluster
+      kaniko:
+        dockerfile: Dockerfile
+        buildArgs:
+          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
+          VERSION: ${VERSION}
+          PARMS: cluster
+        flags:
+          - --insecure
+          - --insecure-pull
+          - --insecure-registry=${DOCKER_REGISTRY}
+        buildContext:
+          localDir: {}
+        cache:
+          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
+      context: .
+    - image: nuxeo/nexus3/team
+      kaniko:
+        dockerfile: Dockerfile
+        buildArgs:
+          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
+          VERSION: ${VERSION}
+          PARMS: team
+        flags:
+          - --insecure
+          - --insecure-pull
+          - --insecure-registry=${DOCKER_REGISTRY}
+        buildContext:
+          localDir: {}
+        cache:
+          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
+      context: .
+  cluster:
     namespace: admin
   tagPolicy:
     envTemplate:

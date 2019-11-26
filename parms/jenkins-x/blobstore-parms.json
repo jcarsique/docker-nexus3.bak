@@ -1,7 +1,7 @@
 [
   {
-      "name": "store",
-      "type": "file",
-      "path": "/nexus-store"
+    "name": "store",
+    "type": "file",
+    "path": "/nexus-store"
   }
 ]

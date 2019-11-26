@@ -29,7 +29,7 @@ import org.jboss.resteasy.client.jaxrs.BasicAuthentication
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder
 
 CliBuilder cli = new CliBuilder(
-                usage: 'groovy addUpdateScript.groovy -u admin -p admin123 -f scriptFile.groovy [-n explicitName] [-h nx3Url]')
+        usage: 'groovy addUpdateScript.groovy -u admin -p admin123 -f scriptFile.groovy [-n explicitName] [-h nx3Url]')
 cli.with {
     u longOpt: 'username', args: 1, required: true, 'A User with permission to use the NX3 Script resource'
     p longOpt: 'password', args: 1, required: true, 'Password for given User'
@@ -49,10 +49,10 @@ def host = options.h ?: 'http://localhost:8081'
 def resource = 'service/rest'
 
 ScriptClient scripts = new ResteasyClientBuilder()
-                .build()
-                .register(new BasicAuthentication(options.u, options.p))
-                .target("$host/$resource")
-                .proxy(ScriptClient)
+        .build()
+        .register(new BasicAuthentication(options.u, options.p))
+        .target("$host/$resource")
+        .proxy(ScriptClient)
 
 String name = options.n ?: file.name
 
@@ -63,15 +63,14 @@ try {
     newScript = false
     println "Existing Script named '$name' will be updated"
 }
-catch (NotFoundException e) {
+catch (NotFoundException ignored) {
     println "Script named '$name' will be created"
 }
 
 def script = new ScriptXO(name, file.text, 'groovy')
 if (newScript) {
     scripts.add(script)
-}
-else {
+} else {
     scripts.edit(name, script)
 }
 

@@ -16,27 +16,27 @@ apiVersion: skaffold/v1beta10
 kind: Config
 build:
   insecureRegistries:
-  - ${DOCKER_REGISTRY}
+    - ${DOCKER_REGISTRY}
   artifacts:
-  - image: nuxeo/nexus3/base
-    kaniko:
+    - image: nuxeo/nexus3/base
+      kaniko:
         dockerfile: Dockerfile
         buildArgs:
-         DOCKER_REGISTRY: ${DOCKER_REGISTRY}
-         VERSION: ${VERSION}
-         NEXUS3_VERSION: 3.18.1
+          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
+          VERSION: ${VERSION}
+          NEXUS3_VERSION: 3.18.1
         flags:
-        - --insecure
-        - --insecure-pull
-        - --insecure-registry=${DOCKER_REGISTRY}
+          - --insecure
+          - --insecure-pull
+          - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
-# waiting for https://github.com/GoogleContainerTools/kaniko/issues/596 and https://github.com/GoogleContainerTools/kaniko/pull/600
-# didn't succeed to validate that fix on this project. the kaniko image version deployed is defined by default by skaffold
-#        cache: 
-#          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
-    context: .
-  cluster: 
+      # waiting for https://github.com/GoogleContainerTools/kaniko/issues/596 and https://github.com/GoogleContainerTools/kaniko/pull/600
+      # didn't succeed to validate that fix on this project. the kaniko image version deployed is defined by default by skaffold
+      #        cache:
+      #          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
+      context: .
+  cluster:
     namespace: admin
   tagPolicy:
     envTemplate:

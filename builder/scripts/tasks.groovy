@@ -48,42 +48,42 @@ new JsonSlurper().parseText(args).each { taskDef ->
     String mail = taskDef.mail
     String cron = taskDef.cron
 
-    Map<String, String> currentResult = [scriptName: scriptName,
-                                         repoName: repoName,
-                                         retained: retained,
-                                         retentionDays: retentionDays,
+    Map<String, String> currentResult = [scriptName    : scriptName,
+                                         repoName      : repoName,
+                                         retained      : retained,
+                                         retentionDays : retentionDays,
                                          removeReleased: removeReleased,
-                                         gracePeriod: gracePeriod,
-                                         mail: mail,
-                                         cron: cron]
+                                         gracePeriod   : gracePeriod,
+                                         mail          : mail,
+                                         cron          : cron]
 
     taskScheduler = container.lookup(TaskScheduler.class)
     TaskInfo existingTask = taskScheduler.listsTasks().find { TaskInfo taskInfo ->
-      taskInfo.name == scriptName
+        taskInfo.name == scriptName
     }
     if (existingTask) {
-      log.debug("Task {} already exists.", scriptName)
-      currentResult.put('status', 'exists')
+        log.debug("Task {} already exists.", scriptName)
+        currentResult.put('status', 'exists')
     } else {
-      try {
-        taskConfiguration = taskScheduler.createTaskConfigurationInstance("repository.maven.remove-snapshots")
-        taskConfiguration.name = scriptName
-        taskConfiguration.setString("repositoryName", repoName)
-        taskConfiguration.setString("minimumRetained", retained)
-        taskConfiguration.setString("snapshotRetentionDays", retentionDays)
-        taskConfiguration.setString("removeIfReleased", removeReleased)
-        taskConfiguration.setInteger("gracePeriodInDays", gracePeriod)
-        taskConfiguration.setAlertEmail(mail)
-        Cron run8amEveryDay = taskScheduler.getScheduleFactory().cron(new Date(), cron);
-        taskScheduler.scheduleTask(taskConfiguration, run8amEveryDay)
-        currentResult.put('status', 'created')
-        scriptResults['changed'] = true
-      } catch (Exception e) {
-        log.error('Could not create task {}: {}', scriptName, e.toString())
-        currentResult.put('status', 'error')
-        scriptResults['error'] = true
-        currentResult.put('error_msg', e.toString())
-      }
+        try {
+            taskConfiguration = taskScheduler.createTaskConfigurationInstance("repository.maven.remove-snapshots")
+            taskConfiguration.name = scriptName
+            taskConfiguration.setString("repositoryName", repoName)
+            taskConfiguration.setString("minimumRetained", retained)
+            taskConfiguration.setString("snapshotRetentionDays", retentionDays)
+            taskConfiguration.setString("removeIfReleased", removeReleased)
+            taskConfiguration.setInteger("gracePeriodInDays", gracePeriod)
+            taskConfiguration.setAlertEmail(mail)
+            Cron run8amEveryDay = taskScheduler.getScheduleFactory().cron(new Date(), cron);
+            taskScheduler.scheduleTask(taskConfiguration, run8amEveryDay)
+            currentResult.put('status', 'created')
+            scriptResults['changed'] = true
+        } catch (Exception e) {
+            log.error('Could not create task {}: {}', scriptName, e.toString())
+            currentResult.put('status', 'error')
+            scriptResults['error'] = true
+            currentResult.put('error_msg', e.toString())
+        }
     }
     scriptResults['action_details'].add(currentResult)
 }

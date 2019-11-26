@@ -1,81 +1,81 @@
 {
-	"repositories": {
-		"maven2": {
-			"hosted": {
-				"maven-public": {
-					"version_policy": "MIXED"
-				},
-				"maven-private": {
-					"version_policy": "MIXED"
-				}
-			},
-			"proxy": {
-				"maven-upstream": {
-					"blobstore": {
-						"name": "store",
-						"strict_content_type_validation": "true"
-					},
-					"remote": {
-						"url": "https://nexus.admin/repository/maven-internal/",
-						"auth": "true"
-					},
-					"version_policy": "MIXED"
-				}
-			},
-			"group": {
-				"maven": {
-					"repositories": [
-						"maven-public",
-						"maven-private",
-						"maven-upstream"
-					]
-				}
-			}
-		},
-		"npm": {
-			"hosted": {
-				"npm-public": {
-				},
-				"npm-private": {
-				}
-			},
-			"proxy": {
-				"npm-upstream": {
-					"blobstore": {
-						"name": "store",
-						"strict_content_type_validation": "true"
-					},
-					"remote": {
-						"url": "https://nexus.admin/repository/npm-internal/",
-						"auth": "true"
-					}
-				},
-				"nuget-private": {
-				}
-			},
-			"group": {
-				"nuget": {
-					"repositories": [
-						"nuget-public",
-						"nuget-private",
-						"nuget-upstream"
-					]
-				}
-			}
-		}
-	},
-	"passwords": {
-		"file": [
-			"/opt/sonatype/nexus/config/passwords.json"
-		]
-	},
-	"remotes": {
-		"nexus.admin": {
-			"auth_type": "username",
-			"user": "deployment"
-		}
-	},
-	"blobstores": {
-		"name": "store"
-	}
+  "repositories": {
+    "maven2": {
+      "hosted": {
+        "maven-public": {
+          "version_policy": "MIXED"
+        },
+        "maven-private": {
+          "version_policy": "MIXED"
+        }
+      },
+      "proxy": {
+        "maven-upstream": {
+          "blobstore": {
+            "name": "store",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://nexus.admin/repository/maven-internal/",
+            "auth": "true"
+          },
+          "version_policy": "MIXED"
+        }
+      },
+      "group": {
+        "maven": {
+          "repositories": [
+            "maven-public",
+            "maven-private",
+            "maven-upstream"
+          ]
+        }
+      }
+    },
+    "npm": {
+      "hosted": {
+        "npm-public": {
+        },
+        "npm-private": {
+        }
+      },
+      "proxy": {
+        "npm-upstream": {
+          "blobstore": {
+            "name": "store",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://nexus.admin/repository/npm-internal/",
+            "auth": "true"
+          }
+        },
+        "nuget-private": {
+        }
+      },
+      "group": {
+        "nuget": {
+          "repositories": [
+            "nuget-public",
+            "nuget-private",
+            "nuget-upstream"
+          ]
+        }
+      }
+    }
+  },
+  "passwords": {
+    "file": [
+      "/opt/sonatype/nexus/config/passwords.json"
+    ]
+  },
+  "remotes": {
+    "nexus.admin": {
+      "auth_type": "username",
+      "user": "deployment"
+    }
+  },
+  "blobstores": {
+    "name": "store"
+  }
 }

@@ -50,7 +50,7 @@ def updateUser(Map argsLine) {
     user.setFirstName(argsLine.firstname)
     user.setLastName(argsLine.lastname)
     user.setEmailAddress(argsLine.mail)
-    user.setRoles(argsLine.roles.collect{ new RoleIdentifier(DEFAULT_SOURCE, it)}.toSet())
+    user.setRoles(argsLine.roles.collect { new RoleIdentifier(DEFAULT_SOURCE, it) }.toSet())
     security.securitySystem.updateUser(user)
 }
 
@@ -83,7 +83,7 @@ new JsonSlurper().parseText(args).each { argsLine ->
      * @param roles Roles to be associated with the user (List<String>)
      */
     Map<String, String> userResult = [type: argsLine.type, id: argsLine.id, firstname: argsLine.firstname,
-        lastname: argsLine.lastname, mail: argsLine.mail, roles: argsLine.roles]
+                                      lastname: argsLine.lastname, mail: argsLine.mail, roles: argsLine.roles]
 
     /**
      * JSON role definition
@@ -94,7 +94,7 @@ new JsonSlurper().parseText(args).each { argsLine ->
      * @param roles List of roles (ie: nx-anonymous / nx-admin)
      */
     Map<String, String> roleResult = [type: argsLine.type, id: argsLine.id, name: argsLine.name,
-        description: argsLine.description, privileges: argsLine.privileges, roles: argsLine.roles]
+                                      description: argsLine.description, privileges: argsLine.privileges, roles: argsLine.roles]
 
     if (argsLine.type == "user") {
         try {
