@@ -290,7 +290,7 @@
         "maven-hotfix": {
           "repositories": [
             "maven-hotfix-releases",
-            "maven-hotfix-snaphots",
+            "maven-hotfix-snapshots",
             "maven-hotfix-archives"
           ]
         },
@@ -304,8 +304,8 @@
         },
         "maven-private-thirdparty": {
           "repositories": [
-            "maven-private-thirdparty-simplofy-releases",
-            "maven-private-thirdparty-simplofy-snapshots",
+            "maven-private-thirdparty-simflofy-releases",
+            "maven-private-thirdparty-simflofy-snapshots",
             "maven-private-thirdparty-arondor-releases",
             "maven-private-thirdparty-arondor-snapshots"
           ]
