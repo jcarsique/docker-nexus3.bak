@@ -371,22 +371,32 @@
         }
       },
       "proxy": {
-        "npm-upstream": {
+        "npm-public-archives": {
           "blobstore": {
             "name": "nuxeo-devtools-nexus-central",
             "strict_content_type_validation": "true"
           },
           "remote": {
-            "url": "https://packages.nuxeo.com/repository/npm-internal/"
+            "url": "https://mavenin.nuxeo.com/nexus/repository/npmjs-nuxeo"
+          }
+        },
+        "npm-thirdparty-npmjs": {
+          "blobstore": {
+            "name": "nuxeo-devtools-nexus-central",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://registry.npmjs.org"
           }
         }
       },
       "group": {
-        "npm": {
+        "npm-internal": {
           "repositories": [
             "npm-public",
             "npm-private",
-            "npm-upstream"
+            "npm-public-archives",
+            "npm-thirdparty-npmjs"
           ]
         }
       }
@@ -397,7 +407,7 @@
         "nuget-private": {}
       },
       "proxy": {
-        "nuget.org-proxy": {
+        "nuget-thirdparty-nuget.org": {
           "blobstore": {
             "name": "nuxeo-devtools-nexus-central",
             "strict_content_type_validation": "true"
@@ -412,7 +422,7 @@
           "repositories": [
             "nuget-public",
             "nuget-private",
-            "nuget.org-proxy"
+            "nuget-thirdparty-nuget.org"
           ]
         }
       }
