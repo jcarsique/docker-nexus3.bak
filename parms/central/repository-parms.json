@@ -342,111 +342,110 @@
           "httpPort": 7000,
           "write_policy": "ALLOW"
         }
-      }
-    },
-    "proxy": {
-      "docker-private-arondor-proxy": {
-        "httpPort": 6011,
-        "remote": {
-          "url": "https://artifactory.arondor.cloud:5001",
-          "auth": "true"
+      },
+      "proxy": {
+        "docker-private-arondor-proxy": {
+          "httpPort": 6011,
+          "remote": {
+            "url": "https://artifactory.arondor.cloud:5001",
+            "auth": "true"
+          }
+        }
+      },
+      "group": {
+        "docker-private-arondor-group": {
+          "httpPort": 6010,
+          "repositories": [
+            "docker-private-arondor-host",
+            "docker-private-arondor-proxy"
+          ]
         }
       }
     },
-    "group": {
-      "docker-private-arondor-group": {
-        "httpPort": 6010,
-        "repositories": [
-          "docker-private-arondor-host",
-          "docker-private-arondor-proxy"
-        ]
+    "npm": {
+      "hosted": {
+        "npm-public": {},
+        "npm-private": {},
+        "npm-internal-staging": {
+          "write_policy": "ALLOW"
+        }
+      },
+      "proxy": {
+        "npm-upstream": {
+          "blobstore": {
+            "name": "nuxeo-devtools-nexus-central",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://packages.nuxeo.com/repository/npm-internal/"
+          }
+        }
+      },
+      "group": {
+        "npm": {
+          "repositories": [
+            "npm-public",
+            "npm-private",
+            "npm-upstream"
+          ]
+        }
+      }
+    },
+    "nuget": {
+      "hosted": {
+        "nuget-public": {},
+        "nuget-private": {}
+      },
+      "proxy": {
+        "nuget.org-proxy": {
+          "blobstore": {
+            "name": "nuxeo-devtools-nexus-central",
+            "strict_content_type_validation": "true"
+          },
+          "remote": {
+            "url": "https://www.nuget.org/api/v2/"
+          }
+        }
+      },
+      "group": {
+        "nuget-internal": {
+          "repositories": [
+            "nuget-public",
+            "nuget-private",
+            "nuget.org-proxy"
+          ]
+        }
       }
     }
   },
-  "npm": {
-    "hosted": {
-      "npm-public": {},
-      "npm-private": {},
-      "npm-internal-staging": {
-        "write_policy": "ALLOW"
-      }
+  "passwords": {
+    "file": [
+      "/opt/sonatype/nexus/config/passwords.json"
+    ]
+  },
+  "remotes": {
+    "mavenin.nuxeo.com": {
+      "auth_type": "username",
+      "user": "deployment"
     },
-    "proxy": {
-      "npm-upstream": {
-        "blobstore": {
-          "name": "nuxeo-devtools-nexus-central",
-          "strict_content_type_validation": "true"
-        },
-        "remote": {
-          "url": "https://packages.nuxeo.com/repository/npm-internal/"
-        }
-      }
+    "mavenpriv.nuxeo.com": {
+      "auth_type": "username",
+      "user": "deployment"
     },
-    "group": {
-      "npm": {
-        "repositories": [
-          "npm-public",
-          "npm-private",
-          "npm-upstream"
-        ]
-      }
+    "connect.nuxeo.com": {
+      "auth_type": "username",
+      "user": "jenkins_pub"
+    },
+    "nexus.simflofy.com": {
+      "auth_type": "username",
+      "user": "developer-nuxeo"
+    },
+    "artifactory.arondor.cloud": {
+      "auth_type": "username",
+      "user": "nuxeo"
     }
   },
-  "nuget": {
-    "hosted": {
-      "nuget-public": {},
-      "nuget-private": {}
-    },
-    "proxy": {
-      "nuget.org-proxy": {
-        "blobstore": {
-          "name": "nuxeo-devtools-nexus-central",
-          "strict_content_type_validation": "true"
-        },
-        "remote": {
-          "url": "https://www.nuget.org/api/v2/"
-        }
-      }
-    },
-    "group": {
-      "nuget-internal": {
-        "repositories": [
-          "nuget-public",
-          "nuget-private",
-          "nuget.org-proxy"
-        ]
-      }
-    }
+  "blobstores": {
+    "default": "nuxeo-devtools-nexus-central"
   }
-},
-"passwords": {
-"file": [
-"/opt/sonatype/nexus/config/passwords.json"
-]
-},
-"remotes": {
-"mavenin.nuxeo.com": {
-"auth_type": "username",
-"user": "deployment"
-},
-"mavenpriv.nuxeo.com": {
-"auth_type": "username",
-"user": "deployment"
-},
-"connect.nuxeo.com": {
-"auth_type": "username",
-"user": "jenkins_pub"
-},
-"nexus.simflofy.com": {
-"auth_type": "username",
-"user": "developer-nuxeo"
-},
-"artifactory.arondor.cloud": {
-"auth_type": "username",
-"user": "nuxeo"
-}
-},
-"blobstores": {
-"default": "nuxeo-devtools-nexus-central"
-}
 }
