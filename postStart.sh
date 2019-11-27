@@ -67,7 +67,7 @@ setScriptList
 # if not explicitly enabled, then Helm chart switches to disabled
 if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
     secFile="$SCRIPTS_PATH/security-parms.json"
-    jq '.[] | select (.type == "anonymous") .enabled = "false"' ${secFile} > ${secFile}.tmp && mv ${secFile}.tmp ${secFile}
+    jq '(.[] | select(.type == "anonymous") | .enabled) |= false' ${secFile} > ${secFile}.tmp && mv ${secFile}.tmp ${secFile}
 fi
 
 for script in blobstore repository security; do
