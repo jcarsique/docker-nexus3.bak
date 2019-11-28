@@ -38,6 +38,8 @@ COPY ./supervisord-nexus-config-license.sh /etc/supervisord.d/nexus-config-licen
 COPY ./supervisord-nexus-github-plugin.conf /etc/supervisord.d/nexus-github-plugin.conf
 COPY ./supervisord-nexus.conf /etc/supervisord.d/nexus.conf
 COPY ./githuboauth.properties /opt/sonatype/nexus/etc/githuboauth.properties
+COPY ./supervisord-nexus-config-ha.sh /etc/supervisord.d/nexus-config-ha.sh
+COPY ./supervisord-nexus-config-ha.conf /etc/supervisord.d/nexus-config-ha.conf
 
 LABEL description=${DESCRIPTION}
 LABEL version=${VERSION}
