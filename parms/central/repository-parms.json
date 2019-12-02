@@ -453,6 +453,10 @@
     "artifactory.arondor.cloud": {
       "auth_type": "username",
       "user": "nuxeo"
+    },
+    "maven-eu.nuxeo.org": {
+      "auth_type": "username",
+      "user": "packages"
     }
   },
   "blobstores": {
