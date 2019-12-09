@@ -195,7 +195,7 @@ pass show code/ci-casc/tf/nexus/prod/license_nexus.lic > $CONFIG_PATH/license.li
 docker run -p 8081:8081 -v $CONFIG_PATH:/opt/sonatype/nexus/config/ \
        [-v nexus-store:/nexus-store] \
        [-v nexus-data:/nexus-data] \
-       [-v $CONFIG_PATH/license.lic:/nexus-data/etc/licence.lic] \
+       [-v $CONFIG_PATH/license.lic:/nexus-data/etc/license/.license.lic] \
        --name nexus-$PARMS -itd nuxeo/nexus3/$PARMS:$VERSION
 
 # Alternate method with docker volume (TODO)
