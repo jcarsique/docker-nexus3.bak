@@ -103,8 +103,7 @@
     "lastname": "anonymous",
     "mail": "devnull@nuxeo.com",
     "roles": [
-      "nuxeo-anonymous",
-      "nx-anonymous"
+      "nx2-anonymous"
     ]
   },
   {
