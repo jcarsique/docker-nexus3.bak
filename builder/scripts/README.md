@@ -99,5 +99,5 @@ Import the project and https://github.com/sonatype/nexus-public in your IDE.
 
 ```shell script
 docker run -p 5005:5005 -e INSTALL4J_ADD_VM_PARAMS="-Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Djava.util.prefs.userRoot=/nexus-data/javaprefs -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" \
-           -p 8081:8081 -v $CONFIG_PATH/:/opt/sonatype/nexus/config/ -v $CONFIG_PATH/license.lic:/nexus-data/etc/licence.lic --name nexus -itd <IMAGE>
+           -p 8081:8081 -v $CONFIG_PATH/:/opt/sonatype/nexus/config/ -v $CONFIG_PATH/license.lic:/nexus-data/etc/license/.license.lic --name nexus -itd <IMAGE>
 ```
