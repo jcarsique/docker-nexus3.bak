@@ -4,10 +4,12 @@
 set -ex
 HOST=localhost:8081
 
+printf 'Waiting for server start...'
 until $(curl --output /dev/null --silent --head --fail http://$HOST/); do
   printf '.'
-  sleep 5
+  sleep 1
 done
+echo 'started'
 
 #chgrp -R 0 /nexus-data
 #chmod -R g+rw /nexus-data
@@ -55,6 +57,11 @@ function testLogin() {
     curl --fail --silent -u $USERNAME:$1 http://$HOST/service/metrics/ping >/dev/null 2>&1
 }
 
+function healthcheck() {
+    curl --fail -s -u $USERNAME:$PASSWORD http://$HOST/service/metrics/healthcheck |jq || \
+    curl -s -u $USERNAME:$PASSWORD http://$HOST/service/metrics/healthcheck
+}
+
 # Need password upgrade from file?
 if test -n "$PASSWORD_FROM_FILE" && ! testLogin "$PASSWORD_FROM_FILE"; then
     echo "Setting password from file"
@@ -63,6 +70,12 @@ fi
 PASSWORD=${PASSWORD_FROM_FILE:-$PASSWORD}
 testLogin "$PASSWORD" || die "Login fails."
 setScriptList
+
+# if not explicitly enabled, then Helm chart switches to disabled
+if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
+    secFile="$SCRIPTS_PATH/security-parms.json"
+    jq '(.[] | select(.type == "anonymous") | .enabled) |= false' ${secFile} > ${secFile}.tmp && mv ${secFile}.tmp ${secFile}
+fi
 
 for script in blobstore repository security task_timeout; do
     body="$SCRIPTS_PATH/${script}-body.json"
@@ -73,3 +86,5 @@ for script in blobstore repository security task_timeout; do
     fi
     createOrUpdateAndRun ${script} ${body} ${parms}
 done
+
+healthcheck
