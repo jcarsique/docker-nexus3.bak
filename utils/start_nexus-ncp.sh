@@ -33,4 +33,3 @@ docker exec -u nexus $NAME /opt/sonatype/nexus/postStart.sh |tee postStart.log
 clear
 cat postStart.log
 docker logs $NAME |grep ERROR
-

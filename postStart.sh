@@ -71,12 +71,6 @@ PASSWORD=${PASSWORD_FROM_FILE:-$PASSWORD}
 testLogin "$PASSWORD" || die "Login fails."
 setScriptList
 
-# if not explicitly enabled, then Helm chart switches to disabled
-if [ -z "${ENABLE_ANONYMOUS_ACCESS}" ]; then
-    secFile="$SCRIPTS_PATH/security-parms.json"
-    jq '(.[] | select(.type == "anonymous") | .enabled) |= false' ${secFile} > ${secFile}.tmp && mv ${secFile}.tmp ${secFile}
-fi
-
 for script in blobstore repository security task_timeout; do
     body="$SCRIPTS_PATH/${script}-body.json"
     if [ -f "$CONFIG_PATH/${script}.json" ] ; then
