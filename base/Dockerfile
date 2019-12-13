@@ -26,6 +26,11 @@ RUN wget --no-check-certificate https://raw.githubusercontent.com/stedolan/jq/ma
     rm -f /tmp/jq-linux64.asc && \
     rm -f /tmp/jq-linux64
 
+ENV GH_PLUGIN_VERSION='2.0.2'
+RUN mkdir -p /opt/sonatype/nexus/system/com/larscheidschmitzhermes/ && \
+    wget https://github.com/larscheid-schmitzhermes/nexus3-github-oauth-plugin/releases/download/${GH_PLUGIN_VERSION}/nexus3-github-oauth-plugin.zip -O /opt/sonatype/nexus/system/com/larscheidschmitzhermes/nexus3-github-oauth-plugin.zip && \
+    unzip /opt/sonatype/nexus/system/com/larscheidschmitzhermes/nexus3-github-oauth-plugin.zip -d /opt/sonatype/nexus/system/com/larscheidschmitzhermes/
+
 COPY ./supervisord.conf /etc/supervisord.conf
 COPY ./supervisord-boot.conf /etc/supervisord.d/boot.conf
 COPY ./supervisord-nexus-config-license.conf /etc/supervisord.d/nexus-config-license.conf
