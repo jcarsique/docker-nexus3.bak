@@ -47,14 +47,10 @@
     "privileges": [
       "nx-healthcheck-read",
       "nx-healthcheck-summary-read",
-      "nx-repository-view-docker-docker-registry-browse",
-      "nx-repository-view-docker-docker-registry-read",
       "nx-repository-view-maven2-maven-public-browse",
       "nx-repository-view-maven2-maven-public-read",
-      "nx-repository-view-maven2-maven-public-releases-browse",
-      "nx-repository-view-maven2-maven-public-releases-read",
-      "nx-repository-view-maven2-maven-public-snapshots-browse",
-      "nx-repository-view-maven2-maven-public-snapshots-read",
+      "nx-repository-view-maven2-maven-public-proxy-browse",
+      "nx-repository-view-maven2-maven-public-proxy-read",
       "nx-repository-view-maven2-maven-thirdparty-browse",
       "nx-repository-view-maven2-maven-thirdparty-read",
       "nx-search-read"
