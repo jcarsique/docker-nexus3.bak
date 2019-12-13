@@ -1,45 +1,5 @@
 [
   {
-    "type": "user",
-    "id": "admin",
-    "firstname": "Administrator",
-    "lastname": "admin",
-    "mail": "devtools+maven-ncp-admin@nuxeo.com",
-    "roles": [
-      "nx-admin"
-    ]
-  },
-  {
-    "type": "user",
-    "id": "anonymous",
-    "firstname": "NA",
-    "lastname": "anonymous",
-    "mail": "devnull@nuxeo.com",
-    "roles": [
-      "nuxeo-anonymous"
-    ]
-  },
-  {
-    "type": "user",
-    "id": "deployment",
-    "firstname": "Deployment",
-    "lastname": "User",
-    "mail": "devtools+maven-ncp-deployment@nuxeo.com",
-    "roles": [
-      "nuxeo-developer"
-    ]
-  },
-  {
-    "type": "user",
-    "id": "readonly",
-    "firstname": "NA",
-    "lastname": "NA",
-    "mail": "devtools+maven-ncp-readonly@nuxeo.com",
-    "roles": [
-      "nx-anonymous"
-    ]
-  },
-  {
     "type": "role",
     "id": "nx2-anonymous",
     "name": "nuxeo-anonymous",
@@ -112,6 +72,46 @@
     "privileges": [],
     "roles": [
       "nuxeoadm"
+    ]
+  },
+  {
+    "type": "user",
+    "id": "admin",
+    "firstname": "Administrator",
+    "lastname": "admin",
+    "mail": "devtools+maven-ncp-admin@nuxeo.com",
+    "roles": [
+      "nx-admin"
+    ]
+  },
+  {
+    "type": "user",
+    "id": "anonymous",
+    "firstname": "NA",
+    "lastname": "anonymous",
+    "mail": "devnull@nuxeo.com",
+    "roles": [
+      "nx2-anonymous"
+    ]
+  },
+  {
+    "type": "user",
+    "id": "deployment",
+    "firstname": "Deployment",
+    "lastname": "User",
+    "mail": "devtools+maven-ncp-deployment@nuxeo.com",
+    "roles": [
+      "nuxeodev"
+    ]
+  },
+  {
+    "type": "user",
+    "id": "readonly",
+    "firstname": "NA",
+    "lastname": "NA",
+    "mail": "devtools+maven-ncp-readonly@nuxeo.com",
+    "roles": [
+      "nx-anonymous"
     ]
   },
   {
