@@ -14,6 +14,9 @@
         "maven-private-snapshots": {
           "version_policy": "SNAPSHOT"
         },
+        "hotfix-releases": {
+          "version_policy": "RELEASE"
+        },
         "maven-hotfix-releases": {
           "version_policy": "RELEASE"
         },
@@ -290,6 +293,7 @@
         "maven-hotfix": {
           "repositories": [
             "maven-hotfix-releases",
+            "hotfix-releases",
             "maven-hotfix-snapshots",
             "maven-hotfix-archives"
           ]
