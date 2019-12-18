@@ -13,17 +13,17 @@
         "maven-upstream": {
           "blobstore": {
             "name": "store",
-            "strict_content_type_validation": "true"
+            "strict_content_type_validation": "false"
           },
           "remote": {
-            "url": "https://nexus.admin/repository/maven-internal/",
+            "url": "https://packages.nuxeo.com/repository/maven-internal/",
             "auth": "true"
           },
           "version_policy": "MIXED"
         }
       },
       "group": {
-        "maven": {
+        "maven-group": {
           "repositories": [
             "maven-public",
             "maven-private",
@@ -46,20 +46,11 @@
             "strict_content_type_validation": "true"
           },
           "remote": {
-            "url": "https://nexus.admin/repository/npm-internal/",
+            "url": "https://packages.nuxeo.com/repository/npm-internal/",
             "auth": "true"
           }
         },
         "nuget-private": {
-        }
-      },
-      "group": {
-        "nuget": {
-          "repositories": [
-            "nuget-public",
-            "nuget-private",
-            "nuget-upstream"
-          ]
         }
       }
     }
@@ -70,7 +61,7 @@
     ]
   },
   "remotes": {
-    "nexus.admin": {
+    "packages.nuxeo.com": {
       "auth_type": "username",
       "user": "deployment"
     }

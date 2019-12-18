@@ -11,20 +11,8 @@
       "nx-repository-view-docker-docker-registry-read",
       "nx-repository-view-maven2-public-browse",
       "nx-repository-view-maven2-public-read",
-      "nx-repository-view-maven2-public-releases-browse",
-      "nx-repository-view-maven2-public-releases-read",
-      "nx-repository-view-maven2-public-snapshot-browse",
-      "nx-repository-view-maven2-public-snapshot-read",
-      "nx-repository-view-maven2-public-snapshots-browse",
-      "nx-repository-view-maven2-public-snapshots-read",
-      "nx-repository-view-npm-npm-all-browse",
-      "nx-repository-view-npm-npm-all-read",
-      "nx-repository-view-npm-npmjs-nuxeo-browse",
-      "nx-repository-view-npm-npmjs-nuxeo-read",
-      "nx-repository-view-nuget-nuget-group-browse",
-      "nx-repository-view-nuget-nuget-group-read",
-      "nx-repository-view-nuget-nuget-hosted-browse",
-      "nx-repository-view-nuget-nuget-hosted-read",
+      "nx-repository-view-npm-npm-public-browse",
+      "nx-repository-view-npm-npm-public-read",
       "nx-search-read"
     ],
     "roles": []
@@ -54,17 +42,6 @@
     "description": "Developer role for Nuxeo (GitHub)",
     "privileges": [],
     "roles": [
-      "nuxeodev"
-    ]
-  },
-  {
-    "type": "role",
-    "id": "nuxeo",
-    "name": "nuxeo-ldap",
-    "description": "Developer role for nuxeo (LDAP)",
-    "privileges": [],
-    "roles": [
-      "nx2-anonymous",
       "nuxeodev"
     ]
   },
