@@ -15,6 +15,15 @@
 # JSON early builder (see addUpdateScriptBody.groovy)
 FROM centos:centos7 as builder
 RUN yum -y makecache && yum install -y groovy
+
+ARG VERSION=0.1-SNAPSHOT
+ARG SCM_REF=unknown
+ARG SCM_REPOSITORY=git@github.com:nuxeo/docker-nexus3.git
+
+LABEL version=${VERSION}
+LABEL scm-ref=${SCM_REF}
+LABEL scm-url=${SCM_REPOSITORY}
+
 COPY scripts /scripts
 WORKDIR /scripts
 RUN groovy addUpdateScriptBody.groovy -f blobstore.groovy -n blobstore> blobstore-body.json
