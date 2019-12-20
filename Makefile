@@ -37,17 +37,13 @@ jenkins-x: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins-x
 
 central: skaffold.yaml~gen
-    DESCRIPTION="packages.nuxeo.com central $VERSION"
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
+	env DESCRIPTION="packages.nuxeo.com central $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
 
 cluster: skaffold.yaml~gen
-    DESCRIPTION="Cluster $VERSION"
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
+	env DESCRIPTION="Cluster $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
 
 team: skaffold.yaml~gen
-    DESCRIPTION="Team (generic) $VERSION"
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/team
+	env DESCRIPTION="Team (generic) $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/team
 
 maven-ncp: skaffold.yaml~gen
-    DESCRIPTION="NCP $VERSION"
-	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/maven-ncp
+	env DESCRIPTION="NCP $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/maven-ncp
