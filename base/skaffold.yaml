@@ -26,6 +26,7 @@ build:
           VERSION: ${VERSION}
           SCM_REF: ${SCM_REF}
           NEXUS3_VERSION: ${NEXUS3_VERSION}
+          DESCRIPTION: ${DESCRIPTION}
         flags:
           - --insecure
           - --insecure-pull
