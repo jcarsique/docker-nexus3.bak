@@ -14,14 +14,14 @@
 
 ..NOTPARALLEL: base builder jenkins-x central cluster team maven-ncp
 
+SCM_REF ?= $(shell git show -s --pretty=format:'%h%d')
+VERSION ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+
+NEXUS3_VERSION = 3.19.1
+
 include make.d/skaffold.mk
 
 .PHONY: all build base builder jenkins central
-
-NEXUS3_VERSION=3.19.1
-VERSION?=0.0.0
-SCM_REF=$(git show -s --pretty=format:'%h%d')
-VERSION=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 
 all: skaffold@up build skaffold@down
 
@@ -36,14 +36,18 @@ builder: skaffold.yaml~gen
 jenkins-x: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins-x
 
+central: DESCRIPTION="packages.nuxeo.com central $VERSION"
 central: skaffold.yaml~gen
-	env DESCRIPTION="packages.nuxeo.com central $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
 
+cluster: DESCRIPTION="Cluster $VERSION"
 cluster: skaffold.yaml~gen
-	env DESCRIPTION="Cluster $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
 
+team: DESCRIPTION="Team (generic) $VERSION"
 team: skaffold.yaml~gen
-	env DESCRIPTION="Team (generic) $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/team
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/team
 
+maven-ncp: DESCRIPTION="NCP $VERSION"
 maven-ncp: skaffold.yaml~gen
-	env DESCRIPTION="NCP $VERSION" $(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/maven-ncp
+	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/maven-ncp

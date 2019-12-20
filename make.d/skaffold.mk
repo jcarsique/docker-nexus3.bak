@@ -20,6 +20,11 @@
 
 VERSION ?= 0.0.0-SNAPSHOT
 DOCKER_REGISTRY ?= jenkins-x-docker-registry
+SCM_REF ?= unknown
+DESCRIPTION ?= empty
+NEXUS3_VERSION ?= unknown
+
+export VERSION DOCKER_REGISTRY SCM_REF DESCRIPTION NEXUS3_VERSION
 
 skaffold-pod-name := $(shell hostname)-skaffold
 define skaffold_pod_template =
@@ -48,4 +53,4 @@ skaffold@up:
 skaffold@down:
 
 skaffold.yaml~gen: skaffold.yaml
-	VERSION=$(VERSION) DOCKER_REGISTRY=$(DOCKER_REGISTRY) envsubst '$$DOCKER_REGISTRY $$VERSION' < skaffold.yaml > skaffold.yaml~gen
+	envsubst '$$NEXUS3_VERSION $$DESCRIPTION $$DOCKER_REGISTRY $$VERSION $$SCM_REF' < skaffold.yaml > skaffold.yaml~gen
