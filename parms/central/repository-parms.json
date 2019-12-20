@@ -335,16 +335,16 @@
       "hosted": {
         "docker-registry": {
           "httpPort": 5000,
-	  "write_policy": "ALLOW"
+          "write_policy": "ALLOW",
           "forceBasicAuth": false
         },
         "docker-private": {
           "httpPort": 6000,
-	  "write_policy": "ALLOW"
+          "write_policy": "ALLOW"
         },
         "docker-private-arondor-host": {
           "httpPort": 6012,
-	  "write_policy": "ALLOW"
+          "write_policy": "ALLOW"
         },
         "docker-internal-staging": {
           "httpPort": 7000,
