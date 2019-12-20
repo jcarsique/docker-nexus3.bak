@@ -64,7 +64,7 @@ PASSWORD=${PASSWORD_FROM_FILE:-$PASSWORD}
 testLogin "$PASSWORD" || die "Login fails."
 setScriptList
 
-for script in blobstore repository security; do
+for script in blobstore repository security task_timeout; do
     body="$SCRIPTS_PATH/${script}-body.json"
     if [ -f "$CONFIG_PATH/${script}.json" ] ; then
         parms="$CONFIG_PATH/${script}.json"
