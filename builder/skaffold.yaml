@@ -24,6 +24,7 @@ build:
         buildArgs:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
+          SCM_REF: ${SCM_REF}
         flags:
           - --insecure
           - --insecure-pull

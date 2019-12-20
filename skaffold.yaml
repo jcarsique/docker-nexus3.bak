@@ -24,6 +24,8 @@ build:
         buildArgs:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
+          SCM_REF: ${SCM_REF}
+          DESCRIPTION: ${DESCRIPTION}
           PARMS: jenkins-x
         flags:
           - --insecure
@@ -40,6 +42,8 @@ build:
         buildArgs:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
+          SCM_REF: ${SCM_REF}
+          DESCRIPTION: ${DESCRIPTION}
           PARMS: central
         flags:
           - --insecure
@@ -56,6 +60,8 @@ build:
         buildArgs:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
+          SCM_REF: ${SCM_REF}
+          DESCRIPTION: ${DESCRIPTION}
           PARMS: cluster
         flags:
           - --insecure
@@ -72,7 +78,27 @@ build:
         buildArgs:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
+          SCM_REF: ${SCM_REF}
+          DESCRIPTION: ${DESCRIPTION}
           PARMS: team
+        flags:
+          - --insecure
+          - --insecure-pull
+          - --insecure-registry=${DOCKER_REGISTRY}
+        buildContext:
+          localDir: {}
+        cache:
+          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
+      context: .
+    - image: nuxeo/nexus3/maven-ncp
+      kaniko:
+        dockerfile: Dockerfile
+        buildArgs:
+          DOCKER_REGISTRY: ${DOCKER_REGISTRY}
+          VERSION: ${VERSION}
+          SCM_REF: ${SCM_REF}
+          DESCRIPTION: ${DESCRIPTION}
+          PARMS: maven-ncp
         flags:
           - --insecure
           - --insecure-pull
