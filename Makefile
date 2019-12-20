@@ -18,7 +18,10 @@ include make.d/skaffold.mk
 
 .PHONY: all build base builder jenkins central
 
-VERSION ?= 0.0.0
+NEXUS3_VERSION=3.19.1
+VERSION?=0.0.0
+SCM_REF=$(git show -s --pretty=format:'%h%d')
+VERSION=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 
 all: skaffold@up build skaffold@down
 
@@ -34,13 +37,17 @@ jenkins-x: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins-x
 
 central: skaffold.yaml~gen
+    DESCRIPTION="packages.nuxeo.com central $VERSION"
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/central
 
 cluster: skaffold.yaml~gen
+    DESCRIPTION="Cluster $VERSION"
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/cluster
 
 team: skaffold.yaml~gen
+    DESCRIPTION="Team (generic) $VERSION"
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/team
 
 maven-ncp: skaffold.yaml~gen
+    DESCRIPTION="NCP $VERSION"
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/maven-ncp

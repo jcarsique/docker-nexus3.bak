@@ -21,7 +21,7 @@
 #
 
 export NEXUS3_VERSION=3.19.1
-export SCM_REF=$(git id)
+export SCM_REF=$(git show -s --pretty=format:'%h%d')
 export VERSION=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 CUSTOM_VERSION=${CUSTOM_VERSION:-$VERSION}
 export DOCKER_REGISTRY=localhost:5000
