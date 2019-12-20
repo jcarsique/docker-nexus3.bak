@@ -336,6 +336,7 @@
         "docker-registry": {
           "httpPort": 5000,
 	  "write_policy": "ALLOW"
+          "forceBasicAuth": false
         },
         "docker-private": {
           "httpPort": 6000,
