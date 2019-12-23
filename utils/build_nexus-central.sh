@@ -28,14 +28,14 @@ export DOCKER_REGISTRY=localhost:5000
 
 echo "Building $CUSTOM_VERSION from Nexus 3 $NEXUS3_VERSION, codebase $VERSION ($(git rev-parse --short HEAD))"
 echo "# Base..."
-docker build --build-arg NEXUS3_VERSION --build-arg SCM_REF --build-arg VERSION -t "$DOCKER_REGISTRY/nuxeo/nexus3/base:$VERSION" base
+docker build --no-cache --build-arg NEXUS3_VERSION --build-arg SCM_REF --build-arg VERSION -t "$DOCKER_REGISTRY/nuxeo/nexus3/base:$VERSION" base
 
 echo "# Builder..."
-docker build --build-arg SCM_REF --build-arg VERSION -t "$DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION" builder
+docker build --no-cache --build-arg SCM_REF --build-arg VERSION -t "$DOCKER_REGISTRY/nuxeo/nexus3/builder:$VERSION" builder
 
 export PARMS=central
 export DESCRIPTION="packages.nuxeo.com $PARMS $CUSTOM_VERSION"
 echo "# Nexus..."
 docker build --no-cache --build-arg SCM_REF --build-arg VERSION --build-arg DOCKER_REGISTRY --build-arg PARMS --build-arg DESCRIPTION -t "devtools/nexus3/$PARMS:$CUSTOM_VERSION" .
 docker tag "devtools/nexus3/$PARMS:$CUSTOM_VERSION" "dockerpriv.nuxeo.com:443/devtools/nexus3/$PARMS:$CUSTOM_VERSION"
-#docker push dockerpriv.nuxeo.com:443/devtools/nexus3/$PARMS:$CUSTOM_VERSION
+echo docker push dockerpriv.nuxeo.com:443/devtools/nexus3/$PARMS:$CUSTOM_VERSION
