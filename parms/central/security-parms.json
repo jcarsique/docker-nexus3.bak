@@ -38,7 +38,12 @@
       "nx-apikey-all",
       "nx-component-upload",
       "nx-iq-violation-summary-read",
-      "nx-repository-view-*-*-*"
+      "nx-repository-view-*-*-*",
+      "nx-repository-view-docker-*-*",
+      "nx-repository-view-npm-*-*",
+      "nx-tags-all",
+      "nx-userschangepw",
+      "nx-usertoken-current"
     ],
     "roles": [
       "nx2-anonymous"
