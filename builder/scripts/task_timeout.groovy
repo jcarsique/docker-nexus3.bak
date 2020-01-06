@@ -57,7 +57,7 @@ new JsonSlurper().parseText(args).each { taskDef ->
             taskConfiguration.name = scriptName
             taskConfiguration.setTypeName("Admin - Execute script")
             taskConfiguration.setAlertEmail(mail)
-            taskConfiguration.setString("source", "core.connectionTimeout(300);")
+            taskConfiguration.setString("source", "core.connectionTimeout(1800);")
             taskConfiguration.setString("schedule", "manual")
             taskConfiguration.setString("language", "groovy")
             taskConfiguration.setString("multinode", "true")
