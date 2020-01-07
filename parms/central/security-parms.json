@@ -41,7 +41,8 @@
       "nx-repository-view-*-*-*",
       "nx-tags-all",
       "nx-userschangepw",
-      "nx-usertoken-current"
+      "nx-usertoken-current",
+      "nx-usertoken-user"
     ],
     "roles": [
       "nx2-anonymous"
@@ -51,7 +52,7 @@
     "type": "role",
     "id": "nuxeo/Developers",
     "name": "nuxeo-Developers-github",
-    "description": "Developer role for Nuxeo (GitHub)",
+    "description": "Nuxeo Developers team (GitHub)",
     "privileges": [],
     "roles": [
       "nuxeodev"
@@ -83,7 +84,17 @@
     "type": "role",
     "id": "nuxeo/Administrators",
     "name": "nuxeo-Administrators-github",
-    "description": "Administration role for Nuxeo (GitHub)",
+    "description": "Nuxeo Administrators team (GitHub)",
+    "privileges": [],
+    "roles": [
+      "nuxeoadm"
+    ]
+  },
+  {
+    "type": "role",
+    "id": "nuxeo/DevTools",
+    "name": "nuxeo-DevTools-github",
+    "description": "Nuxeo DevTools team (GitHub)",
     "privileges": [],
     "roles": [
       "nuxeoadm"
@@ -97,8 +108,10 @@
     "privileges": [
       "nx-apikey-all",
       "nx-iq-violation-summary-read",
+      "nx-tags-read",
       "nx-userschangepw",
       "nx-usertoken-current",
+      "nx-usertoken-user",
       "nx-repository-view-maven2-maven-hotfix-browse",
       "nx-repository-view-maven2-maven-hotfix-read",
       "nx-repository-view-maven2-maven-hotfix-snapshots-browse",
@@ -112,6 +125,30 @@
     ],
     "roles": [
       "nx2-anonymous"
+    ]
+  },
+  {
+    "type": "role",
+    "id": "nuxeocustomeradmin",
+    "name": "nuxeo-customer-admin",
+    "description": "Customers Administration role for Nuxeo",
+    "privileges": [],
+    "roles": [
+      "nuxeocustomer",
+      "nuxeodev",
+      "nx-roles-read",
+      "nx-roles-update",
+      "nx-users-all"
+    ]
+  },
+  {
+    "type": "role",
+    "id": "nuxeo/Support",
+    "name": "nuxeo-Support-github",
+    "description": "Nuxeo Support team (GitHub)",
+    "privileges": [],
+    "roles": [
+      "nuxeocustomeradmin"
     ]
   },
   {
@@ -167,7 +204,8 @@
       "nx-repository-view-docker-docker-private-arondor-group-browse",
       "nx-repository-view-docker-docker-private-arondor-group-read",
       "nx-iq-violation-summary-read",
-      "nx-usertoken-current"
+      "nx-usertoken-current",
+      "nx-usertoken-user"
     ],
     "roles": [
       "nx2-anonymous"
