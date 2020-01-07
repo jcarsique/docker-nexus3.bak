@@ -26,7 +26,10 @@
       "nx-apikey-all",
       "nx-component-upload",
       "nx-iq-violation-summary-read",
-      "nx-repository-view-*-*-*"
+      "nx-repository-view-*-*-*",
+      "nx-tags-all",
+      "nx-userschangepw",
+      "nx-usertoken-current"
     ],
     "roles": [
       "nx2-anonymous"
@@ -110,6 +113,10 @@
     "firstname": "NA",
     "lastname": "NA",
     "mail": "devtools+maven-ncp-readonly@nuxeo.com",
+    "privileges": [
+      "nx-iq-violation-summary-read",
+      "nx-usertoken-current"
+    ],
     "roles": [
       "nx-anonymous"
     ]
