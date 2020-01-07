@@ -49,8 +49,6 @@
             "url": "https://packages.nuxeo.com/repository/npm-internal/",
             "auth": "true"
           }
-        },
-        "nuget-private": {
         }
       }
     }
