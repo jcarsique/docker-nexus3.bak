@@ -125,6 +125,10 @@
     "firstname": "NA",
     "lastname": "NA",
     "mail": "devtools+central-readonly@nuxeo.com",
+    "privileges": [
+      "nx-iq-violation-summary-read",
+      "nx-usertoken-current"
+    ],
     "roles": [
       "nx-anonymous"
     ]
@@ -137,6 +141,7 @@
     "privileges": [
       "nx-repository-view-docker-docker-private-arondor-group-browse",
       "nx-repository-view-docker-docker-private-arondor-group-read",
+      "nx-iq-violation-summary-read",
       "nx-usertoken-current"
     ],
     "roles": [
