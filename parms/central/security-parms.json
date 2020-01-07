@@ -90,6 +90,31 @@
     ]
   },
   {
+    "type": "role",
+    "id": "nuxeocustomer",
+    "name": "nuxeo-customer",
+    "description": "Customer role for Nuxeo",
+    "privileges": [
+      "nx-apikey-all",
+      "nx-iq-violation-summary-read",
+      "nx-userschangepw",
+      "nx-usertoken-current",
+      "nx-repository-view-maven2-maven-hotfix-browse",
+      "nx-repository-view-maven2-maven-hotfix-read",
+      "nx-repository-view-maven2-maven-hotfix-snapshots-browse",
+      "nx-repository-view-maven2-maven-hotfix-snapshots-read",
+      "nx-repository-view-maven2-maven-hotfix-releases-browse",
+      "nx-repository-view-maven2-maven-hotfix-releases-read",
+      "nx-repository-view-maven2-maven-hotfix-archives-browse",
+      "nx-repository-view-maven2-maven-hotfix-archives-read",
+      "nx-repository-view-maven2-hotfix-releases-browse",
+      "nx-repository-view-maven2-hotfix-releases-read"
+    ],
+    "roles": [
+      "nx2-anonymous"
+    ]
+  },
+  {
     "type": "user",
     "id": "admin",
     "firstname": "Administrator",
@@ -156,6 +181,16 @@
     "mail": "devtools+nuxeo-nike@nuxeo.com",
     "roles": [
       "nuxeo-arondor"
+    ]
+  },
+  {
+    "type": "user",
+    "id": "pclm-ps",
+    "firstname": "PCLM",
+    "lastname": "PS",
+    "mail": "mvachette@nuxeo.com",
+    "roles": [
+      "nuxeocustomer"
     ]
   },
   {
