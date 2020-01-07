@@ -39,8 +39,6 @@
       "nx-component-upload",
       "nx-iq-violation-summary-read",
       "nx-repository-view-*-*-*",
-      "nx-repository-view-docker-*-*",
-      "nx-repository-view-npm-*-*",
       "nx-tags-all",
       "nx-userschangepw",
       "nx-usertoken-current"
@@ -138,7 +136,8 @@
     "description": "Readonly role for Arondor customers",
     "privileges": [
       "nx-repository-view-docker-docker-private-arondor-group-browse",
-      "nx-repository-view-docker-docker-private-arondor-group-read"
+      "nx-repository-view-docker-docker-private-arondor-group-read",
+      "nx-usertoken-current"
     ],
     "roles": [
       "nx2-anonymous"
