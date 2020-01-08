@@ -21,7 +21,7 @@ NEXUS3_VERSION = 3.19.1
 
 include make.d/skaffold.mk
 
-.PHONY: all build base builder jenkins central
+.PHONY: all build base builder central
 
 all: skaffold@up build skaffold@down
 

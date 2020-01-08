@@ -65,7 +65,7 @@ pipeline {
         VERSION = "$PREVIEW_VERSION"
       }
       steps {
-        setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
+        setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'PENDING')
         container('jx-base') {
           sh 'make base'
           sh 'make builder'
@@ -73,14 +73,15 @@ pipeline {
           sh 'make central'
           sh 'make cluster'
           sh 'make team'
+          sh 'make maven-ncp'
         }
       }
       post {
         success {
-          setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'SUCCESS')
+          setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'SUCCESS')
         }
         failure {
-          setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'FAILURE')
+          setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'FAILURE')
         }
       }
     }
@@ -106,7 +107,7 @@ sed -i "s,nuxeo-devtools-nexus-ncp-test,nuxeo-devtools-nexus-ncp-prod," parms/ma
         branch 'master'
       }
       steps {
-        setGitHubBuildStatus('snapshot', 'Build and push snapshot image', 'PENDING')
+        setGitHubBuildStatus('release', 'Build and push release images', 'PENDING')
         container('jx-base') {
           withEnv(["VERSION=${getReleaseVersion()}"]) {
             sh 'make build'
