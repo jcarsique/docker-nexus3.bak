@@ -95,6 +95,13 @@ make builder
 make central
 ```
 
+#### Jenkins X
+
+Patch the `nexus` secret with the content of the `passwords.json` file (`pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json`)
+
+    export PASSWORD=$(pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json |base64)
+    kubectl patch secret nexus -p "{\"data\":{\"passwords.json\": \"$PASSWORD\"}}" -n namespace
+
 #### Locally
 
 Dockerfile build arguments and their default value:
