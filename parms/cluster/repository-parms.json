@@ -103,6 +103,6 @@
     }
   },
   "blobstores": {
-    "name": "store"
+    "default": "store"
   }
 }

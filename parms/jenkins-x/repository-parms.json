@@ -103,6 +103,6 @@
   "remotes": {
   },
   "blobstores": {
-    "name": "store"
+    "default": "store"
   }
 }

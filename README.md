@@ -202,7 +202,7 @@ docker run -p 8081:8081 -v $CONFIG_PATH:/opt/sonatype/nexus/config/ \
 docker run --name nexus -p 8081:8081 --mount source=nexus-config,target=/opt/sonatype/nexus/config/ \
        --name nexus-$PARMS -itd nuxeo/nexus3/$PARMS:$VERSION
 
-docker exec nexus cat /nexus-data/admin.password
+docker exec nexus-$PARMS cat /nexus-data/admin.password
 docker exec -u nexus nexus-$PARMS /opt/sonatype/nexus/postStart.sh
 ```
 
