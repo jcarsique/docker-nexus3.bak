@@ -54,6 +54,26 @@ build:
         cache:
           repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
       context: .
+
+    - image: nuxeo/nexus3/central
+      kaniko:
+        dockerfile: Dockerfile
+        buildArgs:
+          DOCKER_REGISTRY: dockerpriv.nuxeo.com/nuxeo/nexus3
+          VERSION: ${VERSION}
+          SCM_REF: ${SCM_REF}
+          DESCRIPTION: ${DESCRIPTION}
+          PARMS: central
+        flags:
+          - --insecure
+          - --insecure-pull
+          - --insecure-registry=${DOCKER_REGISTRY}
+        buildContext:
+          localDir: {}
+        cache:
+          repo: dockerpriv.nuxeo.com/nuxeo/nexus3/cache
+      context: .
+
     - image: nuxeo/nexus3/cluster
       kaniko:
         dockerfile: Dockerfile
