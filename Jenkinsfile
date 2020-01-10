@@ -79,6 +79,9 @@ pipeline {
       post {
         success {
           setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'SUCCESS')
+          withEnv(["VERSION=${getReleaseVersion()}"]) {
+            sh 'env && docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION dockerpriv.nuxeo.com/nuxeo/nexus3/central:$VERSION'
+          }
         }
         failure {
           setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'FAILURE')
