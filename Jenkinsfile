@@ -79,8 +79,14 @@ pipeline {
       post {
         success {
           setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'SUCCESS')
-          withEnv(["VERSION=${getReleaseVersion()}"]) {
-            sh 'env && docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION dockerpriv.nuxeo.com/nuxeo/nexus3/central:$VERSION'
+          container('jx-base') {
+            sh '''#!/bin/sh -xe
+docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/central:$BRANCH_NAME
+docker push dockerpriv.nuxeo.com/devtools/nexus3/central:$BRANCH_NAME || true
+
+docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$BRANCH_NAME
+docker push dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$BRANCH_NAME || true
+'''
           }
         }
         failure {
