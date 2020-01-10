@@ -16,14 +16,9 @@ ARG DOCKER_REGISTRY=jenkins-x-docker-registry
 ARG VERSION=0.1-SNAPSHOT
 FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/builder:${VERSION} as builder
 
-ARG DOCKER_REGISTRY=jenkins-x-docker-registry
-ARG VERSION=0.1-SNAPSHOT
-FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/base:${VERSION} as base
-
 # Custom Nexus
-FROM base
-ARG DOCKER_REGISTRY=jenkins-x-docker-registry
-ARG VERSION=0.1-SNAPSHOT
+FROM ${DOCKER_REGISTRY}/nuxeo/nexus3/base:${VERSION} as base
+ARG VERSION
 ARG PARMS=jenkins-x
 ARG DESCRIPTION="JX default Nexus 3"
 ARG SCM_REF=unknown
