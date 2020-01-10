@@ -7,10 +7,8 @@
     "privileges": [
       "nx-healthcheck-read",
       "nx-healthcheck-summary-read",
-      "nx-repository-view-docker-docker-registry-browse",
-      "nx-repository-view-docker-docker-registry-read",
-      "nx-repository-view-maven2-public-browse",
-      "nx-repository-view-maven2-public-read",
+      "nx-repository-view-maven2-maven-public-browse",
+      "nx-repository-view-maven2-maven-public-read",
       "nx-repository-view-npm-npm-public-browse",
       "nx-repository-view-npm-npm-public-read",
       "nx-search-read"
