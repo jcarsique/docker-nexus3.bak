@@ -39,6 +39,13 @@ spec:
     image: $(DOCKER_REGISTRY)/nuxeo/skaffold
     command: ["/usr/bin/tail"]
     args: [ "-f", "/dev/null" ]
+    volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker
+  volumes:
+    - name: docker-config
+      configMap:
+        name: docker-config
 endef
 export skaffold_pod_template
 
