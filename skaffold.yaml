@@ -59,7 +59,7 @@ build:
       kaniko:
         dockerfile: Dockerfile
         buildArgs:
-          DOCKER_REGISTRY: dockerpriv.nuxeo.com/nuxeo/nexus3
+          DOCKER_REGISTRY: dockerpriv.nuxeo.com
           VERSION: ${VERSION}
           SCM_REF: ${SCM_REF}
           DESCRIPTION: ${DESCRIPTION}
