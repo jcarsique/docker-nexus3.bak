@@ -390,7 +390,7 @@ void createSelector(String name, Map json) {
     boolean exists = true
     SelectorConfiguration selector = selectorManager.browse().find { it.name == name }
     if (!selector) {
-        selector = new SelectorConfiguration(name: name, type: 'csel')
+        selector = new org.sonatype.nexus.selector.OrientSelectorConfiguration(name: name, type: 'csel')
         exists = false
     }
     selector.attributes = [
