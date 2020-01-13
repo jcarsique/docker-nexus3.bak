@@ -79,17 +79,6 @@ pipeline {
       post {
         success {
           setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'SUCCESS')
-          container('jx-base') {
-            sh '''#!/bin/sh -xe
-docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION
-docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/central:$BRANCH_NAME
-docker push dockerpriv.nuxeo.com/devtools/nexus3/central:$BRANCH_NAME || true
-
-docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION
-docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$BRANCH_NAME
-docker push dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$BRANCH_NAME || true
-'''
-          }
         }
         failure {
           setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'FAILURE')
@@ -128,6 +117,20 @@ sed -i "s,nuxeo-devtools-nexus-ncp-test,nuxeo-devtools-nexus-ncp-prod," parms/ma
       post {
         success {
           setGitHubBuildStatus('release', 'Build and push release images', 'SUCCESS')
+          container('jx-base') {
+            // TODO push to grc.io the images used in GCP
+            sh '''#!/bin/sh -xe
+docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION
+docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/central:$VERSION
+docker push dockerpriv.nuxeo.com/devtools/nexus3/central:$VERSION
+docker rmi ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/central:$VERSION
+
+docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION
+docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$VERSION
+docker push dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$VERSION
+docker rmi ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$VERSION
+'''
+          }
         }
         failure {
           setGitHubBuildStatus('release', 'Build and push release images', 'FAILURE')
