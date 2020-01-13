@@ -81,9 +81,11 @@ pipeline {
           setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'SUCCESS')
           container('jx-base') {
             sh '''#!/bin/sh -xe
+docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION
 docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/central:$BRANCH_NAME
 docker push dockerpriv.nuxeo.com/devtools/nexus3/central:$BRANCH_NAME || true
 
+docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION
 docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:$VERSION dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$BRANCH_NAME
 docker push dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:$BRANCH_NAME || true
 '''
