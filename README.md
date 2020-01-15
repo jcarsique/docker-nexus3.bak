@@ -9,33 +9,50 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
 ## Table of contents
 
 ```bash
-├── base                  Base layer
+├── base                        Base layer
 │   ├── Dockerfile
 │   ├── Makefile
-├── builder               Builder injecting CasC during image build
+│   ├── skaffold.yaml
+│   ├── supervisord.conf
+│   ├── ...
+├── builder                     Builder injecting CasC during image build
 │   ├── Dockerfile
 │   ├── Makefile
-│   └── scripts
-├── Dockerfile            Nexus 3 image
+│   ├── scripts
+│   └── skaffold.yaml
+├── Dockerfile                  Nexus 3 image
+├── docs
+│   ├── backup_restore.md
+│   ├── CasC.md
+│   ├── jenkins-x-charts-nexus  Extracts from https://github.com/jenkins-x-charts/nexus/
+│   ├── sonatype-nexus-charts   Extracts from https://github.com/helm/charts/tree/master/stable/sonatype-nexus
+│   ├── UPGRADE_NOTES.md
+│   └── values.yaml             Sample
 ├── Jenkinsfile
 ├── make.d
 │   └── skaffold.mk
 ├── Makefile
-└── parms                 Nexus 3 image customizations
-    ├── central           https://packages.nuxeo.com/
-    ├── cluster           https://packages.dev.nuxeo.com/
-    ├── jenkins-x         Jenkins X default Nexus 3
-    ├── maven-ncp         SUPINT-1574 NCP mirror
-    └── team              Nuxeo default Nexus 3 for JX team https://packages-<team>.dev.nuxeo.com/
+├── parms                       Nexus 3 image customizations
+│   ├── central                 https://packages.nuxeo.com/
+│   ├── cluster                 https://packages.dev.nuxeo.com/
+│   ├── jenkins-x               Jenkins X default Nexus 3
+│   ├── maven-ncp               SUPINT-1574 NCP mirror
+│   └── team                    Nuxeo default Nexus 3 for JX team https://packages-<team>.dev.nuxeo.com/
+├── postStart.sh
+├── README.md
+├── skaffold.yaml
+└── utils                       Utilitaries for basic usage
 ```
 
 ## Usage
 
 ### QA/CI
 
-[![master Build Status](http://jenkins.admin.34.74.59.50.nip.io/buildStatus/icon?job=nuxeo/docker-nexus3/master)](http://jenkins.admin.34.74.59.50.nip.io/job/nuxeo/job/docker-nexus3/job/master/)
+[![master Build Status](https://jenkins.admin.dev.nuxeo.com/buildStatus/icon?job=nuxeo/docker-nexus3/master)](https://jenkins.admin.dev.nuxeo.com/job/nuxeo/job/docker-nexus3/job/master/)
 
-### Requirements
+### Development
+
+#### Requirements
 
 * GNU Make
 * Docker
@@ -44,9 +61,14 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
 * Kubectl
 * ksync
 
-### Build
+#### Environment Setup
 
-#### Code Driven
+```bash
+aws-okta exec devtools -- aws sts get-caller-identity
+```
+#### Build
+
+##### Code Driven
 
 Build and push custom Nexus 3 Docker images:
 
@@ -64,7 +86,7 @@ On `master` branch, tag is using `jx-release-version`
 
 The [Jenkins pipeline](Jenkinsfile) is mainly invoking Make steps as described in the [DevPod](#devpod) section.
 
-#### DevPod
+##### DevPod
 
 The DevPod allows to execute Make with the same environment as the CI.
 
@@ -95,33 +117,7 @@ make builder
 make central
 ```
 
-#### Jenkins X
-
-
-Patch the `nexus` secret with the content of the `passwords.json` file (`pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json`)
-
-    export PASSWORD=$(pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json |base64)
-    kubectl patch secret nexus -p "{\"data\":{\"passwords.json\": \"$PASSWORD\"}}" -n <namespace>
-
-Do the same for the license file:
-
-    export LICENSE=$(pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/license_nexus.lic |base64)
-    kubectl patch secret nexus -p "{\"data\":{\"license.lic\": \"$LICENSE\"}}" -n <namespace>
-
-Then in your values.yaml:
-
-nexus:
-  image:
-    repository: jenkins-x-docker-registry.admin:5000/nuxeo/nexus3/team
-    tag: <TO_BE_DEFINED>
-    pullPolicy: IfNotPresent
-  persistence:
-    size: 100Gi
-  env:
-    INSTALL4J_ADD_VM_PARAMS: -Xms4G -Xmx4G -XX:MaxDirectMemorySize=2G
-    ulimit: nofile=65536:65536
-
-#### Locally
+##### Locally
 
 Dockerfile build arguments and their default value:
 
@@ -198,14 +194,96 @@ The custom parameters folder name, `<PARMS>`:
 * [`maven-ncp`](parms/maven-ncp): SUPINT-1574 NCP mirror
 * `<team>`: Team customization (dedicated Git repository). <https://packages.<team>.dev.nuxeo.com>
 
+#### Upgrade Nexus Version
+
+The Nuxeo image build inherits from some resources. Some others have been forked.
+Here are the related resources to look at when upgrading the Nexus version (`NEXUS3_VERSION`):
+* Nexus archive
+  * https://help.sonatype.com/repomanager3/download
+  * https://help.sonatype.com/repomanager3/release-notes/
+* Nexus Docker image `sonatype/nexus3`
+  * https://hub.docker.com/r/sonatype/nexus3
+  * https://github.com/sonatype/docker-nexus3
+* Nuxeo Docker image
+  * [Makefile](Makefile)
+  * [docs/UPGRADE_NOTES.md](docs/UPGRADE_NOTES.md)
+* Forked resources
+  * JX Docker build
+    * see [docs/jenkins-x-charts-nexus](docs/jenkins-x-charts-nexus)
+    * forked from https://github.com/jenkins-x-charts/nexus/
+  * JX chart deploying `gcr.io/jenkinsxio/nexus`
+    * see [docs/jenkins-x-charts-nexus/nexus/values.yaml](docs/jenkins-x-charts-nexus/nexus/values.yaml)
+    * forked from https://github.com/jenkins-x-charts/nexus/tree/master/nexus  
+  * Sonatype Helm chart deploying `sonatype/nexus3`
+    * see [docs/sonatype-nexus-charts/values.yaml](docs/sonatype-nexus-charts/values.yaml)
+    * forked from https://github.com/helm/charts/tree/master/stable/sonatype-nexus
+* JX Deployment
+  * [Team admin values.yaml](https://github.com/nuxeo/jx-admin-env/blob/master/values.yaml)
+  * [Team DevTools values.yaml](https://github.com/nuxeo/jx-devtools-env/blob/master/values.yaml)
+  * ...
+
+##### Sample Case
+
+Complex sample case with the upgrade from 3.19.0 to 3.20.1.
+
+* Jira: https://jira.nuxeo.com/browse/NXBT-3162
+* GitHub PR: https://github.com/nuxeo/docker-nexus3/pull/25
+* CI: https://jenkins.admin.dev.nuxeo.com/job/nuxeo/job/docker-nexus3/job/PR-25
+* Docker images to test: `docker-registry.admin.dev.nuxeo.com/nuxeo/nexus3/<team>:0.0.0-PR-25-<build>`
+
+A lot to read following the above order of resources: release notes, commits...
+* https://help.sonatype.com/repomanager3/release-notes/2019-release-notes#id-2019ReleaseNotes-RepositoryManager3.20.1
+* https://issues.sonatype.org/secure/ReleaseNote.jspa?projectId=10001&version=18778
+* https://issues.sonatype.org/secure/ReleaseNote.jspa?projectId=10001&version=18521
+* https://github.com/sonatype/docker-nexus3/compare/3.19.0...3.20.1
+* https://github.com/jenkins-x-charts/nexus/compare/8f46d405f81e0f8da03f51204cac3f6d512f779c...v0.1.20
+* `[github.com/helm/charts]$ git logone 1516468...master -- stable/sonatype-nexus/`
+
+#### Release Delivery
+
+* deploy on PPEPROD and STAGING environments
+* first validation by the DevTools team
+* orchestrate validation by the various teams
+* schedule deployments to PROD, see [nuxeowiki/DVT/Maintenance on Production](https://nuxeowiki.atlassian.net/wiki/spaces/DVT/pages/949780624/Maintenance+on+Production)
+
+### Configuration
+
+#### Static
+
+Most configuration data is embedded in the image at build time, coming from the [parms](parms).
+
+#### Secrets
+
+Secrets are injected at run time.
+
+#### Runtime Parameters
+
+* `HAZELCAST`: activate clustering if `true`
+* `INSTALL4J_ADD_VM_PARAMS`: JVM parameters
+* `ENABLE_ANONYMOUS_ACCESS`: **parameter is ignored** in favor to the JSON security definition.
+* `NEXUS_SECURITY_RANDOMPASSWORD`: generate a random admin password if `true`
+
+See also:
+* [Sonatype Chart parameters](https://github.com/helm/charts/blob/master/stable/sonatype-nexus/README.md#configuration)
+
 ### Run
 
-#### Environment Setup
+#### Jenkins X
+
+Patch the `nexus` secret in the target namespace:
 
 ```bash
-aws-okta exec devtools -- aws sts get-caller-identity
+VAULT="nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod"
+NAMESPACE=<TEAM>
+export PASSWORD=$(pass show $VAULT/password |base64)
+kubectl patch secret nexus -p "{\"data\":{\"password\": \"$PASSWORD\"}}" -n $NAMESPACE
+export PASSWORDS=$(pass show $VAULT/passwords.json |base64)
+kubectl patch secret nexus -p "{\"data\":{\"passwords.json\": \"$PASSWORDS\"}}" -n $NAMESPACE
+export LICENSE=$(pass show $VAULT/license_nexus.lic |base64)
+kubectl patch secret nexus -p "{\"data\":{\"license.lic\": \"$LICENSE\"}}" -n $NAMESPACE
 ```
 
+Then update the chart template: see [docs/values.yaml](docs/values.yaml)
 
 #### Custom Image Run
 
@@ -260,7 +338,10 @@ Data provisioning is performed on start:
 
 ## Resources
 
+<https://github.com/helm/charts>
+
 <https://github.com/jenkins-x-charts/nexus>
+
 <https://github.com/sonatype-nexus-community/nexus-scripting-examples>
 
 [Nexus Repository Manager 3 > REST and Integration API > Script API > Examples](https://help.sonatype.com/repomanager3/rest-and-integration-api/script-api/examples)
@@ -269,9 +350,10 @@ Data provisioning is performed on start:
 
 ## Contributing / Reporting issues
 
-Link to JIRA component (or project if there is no component for that project).
-Sample: <https://jira.nuxeo.com/browse/NXP/component/14503/>
-Sample: <https://jira.nuxeo.com/secure/CreateIssue!default.jspa?project=NXP>
+See [NXBT Packages Repositories tickets](https://jira.nuxeo.com/issues/?jql=project%20%3D%20NXBT%20AND%20component%20%3D%20%22Package%20Repositories%22)
+
+Create a ticket [NXBT](https://jira.nuxeo.com/secure/CreateIssue!default.jspa?project=NXBT)
+with component "Package Repositories"
 
 ## License
 

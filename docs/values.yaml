@@ -1,0 +1,11 @@
+nexus:
+  image:
+    repository: jenkins-x-docker-registry.admin:5000/nuxeo/nexus3/team
+    tag: <IMAGE_TAG>
+    pullPolicy: IfNotPresent
+  persistence:
+    size: 100Gi
+  env:
+    INSTALL4J_ADD_VM_PARAMS: -Xms4G -Xmx4G -XX:MaxDirectMemorySize=2G
+    ulimit: nofile=65536:65536
+    NEXUS_SECURITY_RANDOMPASSWORD: true
