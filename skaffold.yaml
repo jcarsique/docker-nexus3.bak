@@ -33,8 +33,6 @@ build:
           - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
-        cache:
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
       context: .
     - image: nuxeo/nexus3/central
       kaniko:
@@ -51,8 +49,6 @@ build:
           - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
-        cache:
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
       context: .
     - image: nuxeo/nexus3/cluster
       kaniko:
@@ -69,8 +65,6 @@ build:
           - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
-        cache:
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
       context: .
     - image: nuxeo/nexus3/team
       kaniko:
@@ -87,8 +81,6 @@ build:
           - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
-        cache:
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
       context: .
     - image: nuxeo/nexus3/maven-ncp
       kaniko:
@@ -105,8 +97,6 @@ build:
           - --insecure-registry=${DOCKER_REGISTRY}
         buildContext:
           localDir: {}
-        cache:
-          repo: ${DOCKER_REGISTRY}/nuxeo/nexus3/cache
       context: .
   cluster:
     namespace: admin
