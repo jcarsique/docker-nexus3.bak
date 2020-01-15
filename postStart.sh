@@ -19,7 +19,11 @@ echo "Configuring..."
 USERNAME="admin"
 SCRIPTS_PATH="/opt/sonatype/nexus/scripts"
 CONFIG_PATH="/opt/sonatype/nexus/config"
-PASSWORD="$(cat /nexus-data/admin.password || true)"
+if [ -f "/nexus-data/admin.password" ]; then
+  PASSWORD="$(cat /nexus-data/admin.password || true)"
+else
+  PASSWORD="admin123"
+fi
 PASSWORD_FROM_FILE="$(cat $CONFIG_PATH/password || true)"
 declare -a SCRIPT_LIST=
 
