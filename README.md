@@ -109,23 +109,28 @@ Dockerfile build arguments and their default value:
 * Builder
   * N/A
 * Base
-  * `NEXUS3_VERSION`=latest
-  * `VERSION`=0.1-SNAPSHOT
-  * `SCM_REF`=unknown
-  * `SCM_REPOSITORY`=git@github.com:nuxeo/docker-nexus3.git
-  * `DESCRIPTION`="Base Nexus 3 image layer for Nuxeo custom deployments"
+  * `NEXUS3_VERSION`
+    * [Makefile](Makefile) = 3.20.1
+    * [base/Dockerfile](base/Dockerfile) = unknown
+    * [utils/build.sh](utils/build.sh) = latest
+  * `VERSION`= 0.1-SNAPSHOT
+  * `SCM_REF`= unknown
+  * `SCM_REPOSITORY`= git@github.com:nuxeo/docker-nexus3.git
+  * `DESCRIPTION`= "Base Nexus 3 image layer for Nuxeo custom deployments"
 * Nexus3
   * Base arguments are inherited
-  * `VERSION`=0.1-SNAPSHOT
-  * `DOCKER_REGISTRY`=jenkins-x-docker-registry  
-  set `DOCKER_REGISTRY`=localhost:5000 for local build
-  * `PARMS`=jenkins-x
-  * `DESCRIPTION`="JX default Nexus 3"
+  * `VERSION` = 0.1-SNAPSHOT
+  * `DOCKER_REGISTRY` = jenkins-x-docker-registry
+    * [make.d/skaffold.mk](make.d/skaffold.mk) = jenkins-x-docker-registry
+    * [Dockerfile](Dockerfile) = jenkins-x-docker-registry
+    * [utils/build.sh](utils/build.sh) = localhost:5000
+  * `PARMS` = jenkins-x
+  * `DESCRIPTION` = "JX default Nexus 3"
 
 See [https://hub.docker.com/r/sonatype/nexus3/tags]() for the latest version.
 
 ```bash
-export NEXUS3_VERSION=3.19.1
+export NEXUS3_VERSION=3.20.1
 export SCM_REF=`git id`
 export VERSION=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
 export DOCKER_REGISTRY=localhost:5000
@@ -146,14 +151,13 @@ The custom configuration files are stored in the `<PARMS>` folders.
 Usage:
 
 ```bash
-export NEXUS3_VERSION=3.19.1
 export SCM_REF=`git id`
 export VERSION=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
 export DOCKER_REGISTRY=localhost:5000
 export PARMS=<PARMS>
 export DESCRIPTION=<DESCRIPTION>
 
-echo $NEXUS3_VERSION $(git rev-parse --short HEAD) $VERSION $DOCKER_REGISTRY
+echo $(git rev-parse --short HEAD) $VERSION $DOCKER_REGISTRY
 docker build --build-arg VERSION --build-arg SCM_REF [--build-arg DOCKER_REGISTRY] \
              [--build-arg PARMS] [--build-arg DESCRIPTION] \
              [-t nuxeo/nexus3/$PARMS[:$VERSION]] .

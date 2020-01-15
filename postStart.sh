@@ -1,5 +1,5 @@
 #!/bin/bash
-# Forked from https://github.com/jenkins-x-charts/nexus/blob/master/postStart.sh
+# Forked from https://github.com/jenkins-x-charts/nexus/blob/v0.1.20/postStart.sh
 
 set -e
 HOST=localhost:8081
@@ -19,10 +19,10 @@ echo "Configuring..."
 USERNAME="admin"
 SCRIPTS_PATH="/opt/sonatype/nexus/scripts"
 CONFIG_PATH="/opt/sonatype/nexus/config"
+PASSWORD="admin123"
 if [ -f "/nexus-data/admin.password" ]; then
-  PASSWORD="$(cat /nexus-data/admin.password || true)"
-else
-  PASSWORD="admin123"
+  echo "Read generated admin password"
+  PASSWORD="$(cat /nexus-data/admin.password)"
 fi
 PASSWORD_FROM_FILE="$(cat $CONFIG_PATH/password || true)"
 declare -a SCRIPT_LIST=

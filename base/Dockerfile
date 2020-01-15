@@ -1,4 +1,4 @@
-ARG NEXUS3_VERSION=latest
+ARG NEXUS3_VERSION=unknown
 FROM sonatype/nexus3:${NEXUS3_VERSION} as base
 
 ARG NEXUS3_VERSION
