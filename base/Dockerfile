@@ -42,7 +42,8 @@ COPY ./supervisord-nexus-config-ha.sh /etc/supervisord.d/nexus-config-ha.sh
 COPY ./supervisord-nexus-config-ha.conf /etc/supervisord.d/nexus-config-ha.conf
 COPY ./supervisord-nexus-disable-wizard.sh /etc/supervisord.d/nexus-disable-wizard.sh
 COPY ./supervisord-nexus-disable-wizard.conf /etc/supervisord.d/nexus-disable-wizard.conf
-
+COPY ./supervisord-nexus-vmoptions.sh /etc/supervisord.d/nexus-vmoptions.sh
+COPY ./supervisord-nexus-vmoptions.conf /etc/supervisord.d/nexus-vmoptions.conf
 
 LABEL description=${DESCRIPTION}
 LABEL version=${VERSION}
