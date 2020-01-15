@@ -36,7 +36,7 @@ export PARMS=$1
 shift
 DESCRIPTION="$*"
 
-export NEXUS3_VERSION=3.19.1
+export NEXUS3_VERSION=latest
 export SCM_REF=$(git show -s --pretty=format:'%h%d')
 export VERSION=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 CUSTOM_VERSION=${CUSTOM_VERSION:-$VERSION}
