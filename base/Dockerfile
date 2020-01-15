@@ -15,16 +15,14 @@ RUN yum -y makecache && \
 RUN pip3 install supervisor
 
 ARG JQ_VERSION='1.5'
-RUN wget --no-check-certificate https://raw.githubusercontent.com/stedolan/jq/master/sig/jq-release.key -O /tmp/jq-release.key && \
-    wget --no-check-certificate https://raw.githubusercontent.com/stedolan/jq/master/sig/v${JQ_VERSION}/jq-linux64.asc -O /tmp/jq-linux64.asc && \
-    wget --no-check-certificate https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /tmp/jq-linux64 && \
+RUN wget https://raw.githubusercontent.com/stedolan/jq/master/sig/jq-release.key -O /tmp/jq-release.key && \
+    wget https://raw.githubusercontent.com/stedolan/jq/master/sig/v${JQ_VERSION}/jq-linux64.asc -O /tmp/jq-linux64.asc && \
+    wget https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /tmp/jq-linux64 && \
     gpg --import /tmp/jq-release.key && \
     gpg --verify /tmp/jq-linux64.asc /tmp/jq-linux64 && \
     cp /tmp/jq-linux64 /usr/bin/jq && \
     chmod +x /usr/bin/jq && \
-    rm -f /tmp/jq-release.key && \
-    rm -f /tmp/jq-linux64.asc && \
-    rm -f /tmp/jq-linux64
+    rm -f /tmp/jq-release.key /tmp/jq-linux64.asc /tmp/jq-linux64
 
 ARG GH_PLUGIN_VERSION='2.0.2'
 RUN mkdir -p /opt/sonatype/nexus/system/com/larscheidschmitzhermes/ && \

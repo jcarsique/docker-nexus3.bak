@@ -1,7 +1,7 @@
 #!/bin/sh -ex
 
 if [ "$HAZELCAST" == "true" ]; then
-  # Delete hazelcast db 
+  # Delete hazelcast db
   if test -d /nexus-data/db; then
     rm -rf /nexus-data/db/config
     rm -rf /nexus-data/db/component
