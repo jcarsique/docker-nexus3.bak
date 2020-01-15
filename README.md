@@ -97,10 +97,29 @@ make central
 
 #### Jenkins X
 
+
 Patch the `nexus` secret with the content of the `passwords.json` file (`pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json`)
 
     export PASSWORD=$(pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/passwords.json |base64)
-    kubectl patch secret nexus -p "{\"data\":{\"passwords.json\": \"$PASSWORD\"}}" -n namespace
+    kubectl patch secret nexus -p "{\"data\":{\"passwords.json\": \"$PASSWORD\"}}" -n <namespace>
+
+Do the same for the license file:
+
+    export LICENSE=$(pass show nuxeo/vaultbolt-devtools/code/ci-casc/tf/nexus/prod/license_nexus.lic |base64)
+    kubectl patch secret nexus -p "{\"data\":{\"license.lic\": \"$LICENSE\"}}" -n <namespace>
+
+Then in your values.yaml:
+
+nexus:
+  image:
+    repository: jenkins-x-docker-registry.admin:5000/nuxeo/nexus3/team
+    tag: <TO_BE_DEFINED>
+    pullPolicy: IfNotPresent
+  persistence:
+    size: 100Gi
+  env:
+    INSTALL4J_ADD_VM_PARAMS: -Xms4G -Xmx4G -XX:MaxDirectMemorySize=2G
+    ulimit: nofile=65536:65536
 
 #### Locally
 
