@@ -18,7 +18,10 @@ Leverages Nexus API to upload and run Groovy scripts for configuration at boot.
 ├── builder                     Builder injecting CasC during image build
 │   ├── Dockerfile
 │   ├── Makefile
-│   ├── scripts
+│   ├── scripts                 Groovy builder scripts
+│   │   ├── build.gradle
+│   │   ├── README.md           Developer instructions
+│   │   ├── ...
 │   └── skaffold.yaml
 ├── Dockerfile                  Nexus 3 image
 ├── docs
@@ -126,6 +129,7 @@ Dockerfile build arguments and their default value:
 * Base
   * `NEXUS3_VERSION`
     * [Makefile](Makefile) = 3.20.1
+    * [builder/scripts/build.gradle](builder/scripts/build.gradle) = 3.20.1-01
     * [base/Dockerfile](base/Dockerfile) = unknown
     * [utils/build.sh](utils/build.sh) = latest
   * `VERSION`= 0.1-SNAPSHOT
@@ -206,6 +210,7 @@ Here are the related resources to look at when upgrading the Nexus version (`NEX
   * https://github.com/sonatype/docker-nexus3
 * Nuxeo Docker image
   * [Makefile](Makefile)
+  * [builder/scripts/build.gradle](builder/scripts/build.gradle)
   * [docs/UPGRADE_NOTES.md](docs/UPGRADE_NOTES.md)
 * Forked resources
   * JX Docker build
