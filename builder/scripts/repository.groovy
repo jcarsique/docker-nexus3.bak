@@ -430,8 +430,8 @@ if ('repositories' in config) {
                 knownDesiredRepository['type'] == repository['type'].toString()) {
             return
         }
-        log.error("Unknown repository {} TO DELETE", repository)
-        repo = repositoryManager.get(repository['name'])
+        repo = repositoryManager.delete(repository['name'])
+        log.error("Unknown repository {} DELETED", repository)
     }
 
     // create non group first
