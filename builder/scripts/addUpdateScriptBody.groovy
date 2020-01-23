@@ -2,6 +2,7 @@
  * Similar to addUpdateScript.groovy but earlier executes the JSON generation.
  * No need of Groovy execution within the Docker container.
  */
+@GrabResolver(name="nuxeo-public", root='https://packages.nuxeo.com/repository/public/')
 @Grab('org.sonatype.nexus:nexus-rest-client:3.20.1-01')
 @Grab('org.sonatype.nexus:nexus-rest-jackson2:3.20.1-01')
 @Grab('org.sonatype.nexus:nexus-script:3.20.1-01')
@@ -21,7 +22,6 @@
 @Grab('com.sun.mail:javax.mail:1.6.1')
 @Grab('org.apache.james:apache-mime4j:0.6')
 @Grab('org.apache.httpcomponents:httpclient:4.5.5')
-@GrabExclude('org.codehaus.groovy:groovy-all')
 
 import org.sonatype.nexus.script.ScriptXO
 import com.fasterxml.jackson.databind.ObjectMapper
