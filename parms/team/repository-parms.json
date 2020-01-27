@@ -51,6 +51,11 @@
           }
         }
       }
+    },
+    "yum": {
+      "hosted": {
+        "yum-registry": {}
+      }
     }
   },
   "passwords": {
