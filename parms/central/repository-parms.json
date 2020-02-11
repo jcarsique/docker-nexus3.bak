@@ -409,6 +409,11 @@
         }
       }
     },
+    "yum": {
+      "hosted": {
+        "yum-registry": {}
+      }
+    },
     "nuget": {
       "hosted": {
         "nuget-public": {},
