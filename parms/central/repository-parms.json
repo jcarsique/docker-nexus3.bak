@@ -374,6 +374,9 @@
       "hosted": {
         "npm-public": {},
         "npm-private": {},
+        "npmjs-nuxeo": {
+          "write_policy": "ALLOW"
+        },
         "npm-internal-staging": {
           "write_policy": "ALLOW"
         }
