@@ -118,8 +118,9 @@ sed -i "s,nuxeo-devtools-nexus-ncp-test,nuxeo-devtools-nexus-ncp-prod," parms/ma
         success {
           setGitHubBuildStatus('release', 'Build and push release images', 'SUCCESS')
           container('jx-base') {
-            // TODO push to grc.io the images used in GCP
-            sh '''#!/bin/sh -xe
+            withEnv(["VERSION=${getReleaseVersion()}"]) {
+              // TODO push to grc.io the images used in GCP
+              sh '''#!/bin/sh -xe
 docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:${VERSION}
 docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:${VERSION} dockerpriv.nuxeo.com/devtools/nexus3/central:${VERSION}
 docker push dockerpriv.nuxeo.com/devtools/nexus3/central:${VERSION}
@@ -130,6 +131,7 @@ docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp
 docker push dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:${VERSION}
 docker rmi ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/maven-ncp:${VERSION} dockerpriv.nuxeo.com/devtools/nexus3/maven-ncp:${VERSION}
 '''
+            }
           }
         }
         failure {
