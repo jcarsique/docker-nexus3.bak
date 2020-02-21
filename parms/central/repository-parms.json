@@ -402,6 +402,13 @@
         }
       },
       "group": {
+        "npm-all": {
+          "repositories": [
+            "npm-public",
+            "npm-public-archives",
+            "npm-thirdparty-npmjs"
+          ]
+        },
         "npm-internal": {
           "repositories": [
             "npm-public",
