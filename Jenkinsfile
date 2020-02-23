@@ -67,8 +67,6 @@ pipeline {
       steps {
         setGitHubBuildStatus('snapshot', 'Build and push snapshot images', 'PENDING')
         container('jx-base') {
-          sh 'make base'
-          sh 'make builder'
           sh 'make jenkins-x'
           sh 'make central'
           sh 'make cluster'
