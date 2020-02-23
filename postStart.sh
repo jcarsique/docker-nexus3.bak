@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # Forked from https://github.com/jenkins-x-charts/nexus/blob/v0.1.20/postStart.sh
 
 set -e
@@ -74,20 +74,23 @@ function healthcheck() {
 # Need password upgrade from file?
 if test -n "$PASSWORD_FROM_FILE" && ! testLogin "$PASSWORD_FROM_FILE"; then
     echo "Setting password from file"
-    createOrUpdateAndRun set_admin_password "${SCRIPTS_PATH}/set_admin_password-body.json"
+    ${SCRIPTS_PATH}/convert_groovy_to_json.py set_admin_password
+    json="${SCRIPTS_PATH}/set_admin_password-body.json"
+    createOrUpdateAndRun set_admin_password "${json}"
 fi
 PASSWORD=${PASSWORD_FROM_FILE:-$PASSWORD}
 testLogin "${PASSWORD}" || die "Login fails."
 setScriptList
 
 for script in blobstore repository security task_timeout; do
-    body="${SCRIPTS_PATH}/${script}-body.json"
+    ${SCRIPTS_PATH}/convert_groovy_to_json.py ${script}
+    json="${SCRIPTS_PATH}/${script}-body.json"
     if [ -f "$CONFIG_PATH/${script}.json" ] ; then
         parms="$CONFIG_PATH/${script}.json"
     else
         parms="${SCRIPTS_PATH}/${script}-parms.json"
     fi
-    createOrUpdateAndRun "${script}" "${body}" "${parms}"
+    createOrUpdateAndRun "${script}" "${json}" "${parms}"
 done
 echo "Configuration done."
 

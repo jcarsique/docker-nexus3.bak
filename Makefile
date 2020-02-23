@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-..NOTPARALLEL: base builder jenkins-x central cluster team maven-ncp
+..NOTPARALLEL: jenkins-x central cluster team maven-ncp
 
 SCM_REF ?= $(shell git show -s --pretty=format:'%h%d')
 VERSION ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
@@ -21,17 +21,11 @@ NEXUS3_VERSION = 3.20.1
 
 include make.d/skaffold.mk
 
-.PHONY: all build base builder central
+.PHONY: all build central
 
 all: skaffold@up build skaffold@down
 
-build: base builder jenkins-x central cluster team maven-ncp
-
-base:
-	$(MAKE) --directory base build
-
-builder: skaffold.yaml~gen
-	$(MAKE) --directory builder build
+build: jenkins-x central cluster team maven-ncp
 
 jenkins-x: skaffold.yaml~gen
 	$(SKAFFOLD) build -f skaffold.yaml~gen -b nuxeo/nexus3/jenkins-x
