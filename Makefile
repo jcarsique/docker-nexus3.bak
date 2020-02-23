@@ -17,7 +17,7 @@
 SCM_REF ?= $(shell git show -s --pretty=format:'%h%d')
 VERSION ?= $(shell git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 
-NEXUS3_VERSION = 3.20.1
+export NEXUS3_VERSION := 3.20.1
 
 include make.d/skaffold.mk
 

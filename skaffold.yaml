@@ -25,6 +25,7 @@ build:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
           SCM_REF: ${SCM_REF}
+          NEXUS3_VERSION: ${NEXUS3_VERSION}
           DESCRIPTION: ${DESCRIPTION}
           PARMS: jenkins-x
         flags:
@@ -41,6 +42,7 @@ build:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
           SCM_REF: ${SCM_REF}
+          NEXUS3_VERSION: ${NEXUS3_VERSION}
           DESCRIPTION: ${DESCRIPTION}
           PARMS: central
         flags:
@@ -57,6 +59,7 @@ build:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
           SCM_REF: ${SCM_REF}
+          NEXUS3_VERSION: ${NEXUS3_VERSION}
           DESCRIPTION: ${DESCRIPTION}
           PARMS: cluster
         flags:
@@ -73,6 +76,7 @@ build:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
           SCM_REF: ${SCM_REF}
+          NEXUS3_VERSION: ${NEXUS3_VERSION}
           DESCRIPTION: ${DESCRIPTION}
           PARMS: team
         flags:
@@ -89,6 +93,7 @@ build:
           DOCKER_REGISTRY: ${DOCKER_REGISTRY}
           VERSION: ${VERSION}
           SCM_REF: ${SCM_REF}
+          NEXUS3_VERSION: ${NEXUS3_VERSION}
           DESCRIPTION: ${DESCRIPTION}
           PARMS: maven-ncp
         flags:
