@@ -83,6 +83,27 @@ pipeline {
         }
       }
     }
+    stage('Test push') {
+      when {
+        branch 'PR-34'
+      }
+      steps {
+          container('jx-base') {
+              withDockerRegistry([credentialsId: "dockerpriv_auth", url: "https://dockerpriv.nuxeo.com"]) {
+                sh '''#!/bin/sh -xe
+export VERSION=$(jx-release-version -base-version "0.0.0-$BRANCH_NAME-$BUILD_NUMBER")
+make central
+
+docker pull ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:${VERSION}
+docker tag ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:${VERSION} dockerpriv.nuxeo.com/devtools/nexus3/central:${VERSION}
+docker push dockerpriv.nuxeo.com/devtools/nexus3/central:${VERSION}
+docker rmi ${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:5000/nuxeo/nexus3/central:${VERSION} dockerpriv.nuxeo.com/devtools/nexus3/central:${VERSION}
+'''
+              }
+          }
+      }
+    }
+
     stage('Prepare release') {
       when {
         branch 'master'
